@@ -245,7 +245,7 @@ function handleInputChangeAndApiCall() {
     console.log("data2send||=======|||=====/n", dataToSend);
   
     // Make the API call to your Node.js backend
-    fetch('http://localhost:3000/process-project-data', { 
+    fetch('https://projection-calc-function.onrender.com/process-project-data', { 
       method: 'POST', 
       headers: {
         'Content-Type': 'application/json'
@@ -477,7 +477,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Function to send user data to the backend (replace with your actual API call)
     async function sendUserDataToBackend(userData) {
         try {
-            const response = await fetch('http://localhost:3000/signup-save-project', { // Replace with your backend endpoint
+            const response = await fetch('https://projection-calc-function.onrender.com/signup-save-project', { // Replace with your backend endpoint
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
