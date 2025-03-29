@@ -306,7 +306,7 @@ function populateDashboard(data) {
     projectedEndDateDisplay.textContent = processData.projectedEndDate;
 
     // Project Dashboard
-    totalHoursDisplay.textContent = totalProjectHoursInput;
+    totalHoursDisplay.textContent = totalProjectHoursInput.value;
     costDisplay.textContent = `$ ${(processData.teamCosts).toFixed(2)}`;
     revenueDisplay.textContent = `$ ${(processData.revenueBreakdown.totalRevenue).toFixed(2)}`;
     profitDisplay.textContent = `$ ${(processData.profitLoss).toFixed(2)}`;
