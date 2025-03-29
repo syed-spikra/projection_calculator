@@ -1,0 +1,548 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+body{
+    margin: 0;
+    box-sizing: border-box;
+    padding: 40px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #0d0b0b;
+    color: #fff;
+}
+.main_container,input_container,output_container,.save_btn{
+    padding: 30px 0 30px 0;
+}
+
+/* title tags */
+.maintitle{
+    font-weight: 600;
+    font-style: bold;
+    font-size: 22px;
+    color: #ff8418;
+}
+.title_container{
+    text-align: left;
+}
+.title_name{
+    font-weight: 600;
+    font-style: bold;
+    font-size: 22px;
+    color: #ff8418;
+}
+
+
+/* subtitle tags */
+.subtitle_container{
+    text-align: left;
+}
+.subtitle_name{
+    font-size: 16px;
+    font-weight: 500;
+    font-style: light;
+    padding: 15px 0 15px 0;
+    color: #03a9f4;
+}
+label{
+    font-size: 12px;
+    font-weight: 300;
+    font-style: light;
+    padding: 15px;
+    color: #ffffed;
+}
+/* input tags */
+input{
+    background-color: #d6d6d6;
+    font-size: 15px;
+    padding: 14px;
+    border-radius:8px;
+    width: auto;
+    color: #151515;
+}
+/* row containers */
+.row_container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    padding: 20px 0 30px 0;
+}
+.row_container div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    /* width: 25%; */
+    /* border: 2px solid white; */
+}
+/* subtitle containers */
+.inner_subtitle_container{
+    border-right: 2px dashed rgba(255, 255, 255, 0.338);
+    padding: 20px;
+    font-size: 14px;
+    font-weight: 400;
+    width: 100%;
+}
+.inner_subtitle_container div{
+width: 100%;
+}
+.outer_subtitle_container{
+    padding: 15px;
+    font-size: 22px;
+    font-style: bold;
+    font-weight: 700;
+}
+/* expecteddate */
+.expecteddate{
+    text-wrap: nowrap;
+}
+/* dropdown fields */
+#workWeekDays,#departments{
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #d6d6d6;
+}
+select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff; /* Match your input background */
+    color: #333; /* Match your input text color */
+}
+/* date field */
+#myDate {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+  }
+
+
+  /* input numbers fields */
+  .number-input-group {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    border: 1px ridge #e8e8e829;
+    border-radius: 6px;
+    overflow: hidden;
+    width: 160px;
+    padding: 10px;
+    margin-bottom: 10px; /* Add some spacing between inputs */
+  }
+  
+  .number-input-group input[type="number"] {
+    flex-grow: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 2px;
+    text-align: left;
+    font-size: 16px;
+    /* -moz-appearance: textfield; Hide native arrows in Firefox */
+  }
+  
+  .number-input-group input[type="number"]::-webkit-outer-spin-button,
+  .number-input-group input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Hide native arrows in Chrome, Safari, Edge */
+    margin: 0;
+  }
+  
+  .input-controls {
+    display: flex;
+  }
+  
+  .input-controls button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border: none;
+    background-color: #1d1a1a;
+    color: #555;
+    cursor: pointer;
+    font-size: 1em;
+    outline: none;
+  }
+  
+  .input-controls button.minus-button {
+    border-right: 1px solid #ccc;
+    background-color: #242424;
+    color: #fff;
+    width: 35px;
+    border-radius: 2px;
+  }
+  .input-controls button.minus-button:hover{
+    background-color: #dddddd;
+    color:#171717
+  }
+  
+  .input-controls button.plus-button {
+    background-color: #bdecf9; /* Light blueish background */
+    color: #06b0ff; /* Blue color for the plus */
+    border-radius: 2px;
+    
+  }
+  
+  .input-controls button:hover {
+    background-color: #eee;
+  }
+  
+  .input-controls button.plus-button:hover {
+    background-color: #53dfff;
+    color: #065377;
+  }
+  
+  .input-controls button:active {
+    background-color: #ddd;
+  }
+  
+  .input-controls button.plus-button:active {
+    background-color: #9cdff1;
+  }
+
+
+
+  /* team member table info input side */
+
+  .teammember_infos {
+    width: 100%; /* Adjust as needed */
+    overflow-x: auto; /* Enable horizontal scrolling if the table is too wide */
+    margin-bottom: 20px; /* Add some space below the table container */
+  }
+  
+  .teammember_infos table {
+    width: auto; /* Let the table width be determined by its content */
+    border-collapse: collapse;
+    font-family: sans-serif;
+    /* border: 1px solid #ddd; */
+  }
+  
+  .teammember_infos th,
+  .teammember_infos td {
+    /* border: 1px solid #ddd; */
+    padding: 8px;
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping in cells */
+  }
+  
+  .teammember_infos th {
+    /* background-color: #000; */
+    color: #88f43a;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .teammember_infos tbody tr:nth-child(even) {
+    background-color: #a0da8738;
+  }
+  
+  /* Optional styling to match the image's background (adjust as needed) */
+  /* .teammember_infos table {
+    background-color: #f5f5dc; /* Beige background 
+    } */
+  
+  /* Styling for the numeric input-like columns */
+  .teammember_infos td:nth-child(4), /* Hours / Day */
+  .teammember_infos td:nth-child(5), /* Cost Rate ($ / hr) */
+  .teammember_infos td:nth-child(6), /* Billable Rate */
+  .teammember_infos td:nth-child(7)  /* Billable Ratio */
+  {
+    /* This is a basic attempt to mimic the input look */
+    /* For actual interactive inputs, use <input type="number"> */
+    /* For just visual representation, you can style a span or div */
+    text-align: center; /* Center the numbers */
+  }
+  
+  /* If you were to add +/- buttons (not directly styleable with just CSS for functionality) */
+  /* .input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-group span {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    cursor: default;
+    user-select: none;
+    margin: 0 2px;
+  } */
+
+
+  /* metric card design */
+
+.metrics-card {
+    width: 100%; /* Make it full width */
+    max-width: 800px; /* Limit maximum width */
+    margin: 20px auto; /* Center the card */
+    background-color: #3f51b5; /* Purple background */
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* To contain the floated elements */
+}
+
+.metric-card h2 {
+    padding: 20px;
+    margin: 0;
+    text-align: left;
+    font-size: 1.5em;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.metric-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.metric-item:last-child {
+    border-bottom: none;
+}
+
+.metric-label {
+    font-weight: bold;
+}
+
+
+
+/* Optional: Add a striped background for better readability */
+.metric-item:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.05); /* Slightly darker purple */
+}
+
+
+/* team cost breakdown table */
+.breakdown-table {
+    color: #3b3105;
+    width: 90%;
+    max-width: 600px;
+    border-collapse: collapse;
+    background-color: #faf8e9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.breakdown-table th, .breakdown-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.breakdown-table th {
+    background-color: #fffbf3;
+    font-weight: bold;
+}
+
+.breakdown-table tFoot tr:last-child {
+    border-bottom: none;
+    font-weight: bold;
+}
+
+.breakdown-table td:nth-child(3), /* breakdown / Hour */
+.breakdown-table td:nth-child(4), /* Hours */
+.breakdown-table td:nth-child(5)  /* Total breakdown */
+{
+    text-align: right;
+}
+
+.breakdown-table th:nth-child(3),
+.breakdown-table th:nth-child(4),
+.breakdown-table th:nth-child(5) {
+    text-align: right;
+}
+
+.breakdown-table th:first-child,
+.breakdown-table td:first-child {
+    width: 20%; /* Adjust as needed */
+}
+
+.breakdown-table th:nth-child(2),
+.breakdown-table td:nth-child(2) {
+    width: 15%; /* Adjust as needed */
+}
+
+.breakdown-table th:nth-child(3),
+.breakdown-table td:nth-child(3) {
+    width: 15%; /* Adjust as needed */
+}
+
+.breakdown-table th:nth-child(4),
+.breakdown-table td:nth-child(4) {
+    width: 15%; /* Adjust as needed */
+}
+
+.breakdown-table th:nth-child(5),
+.breakdown-table td:nth-child(5) {
+    width: 15%; /* Adjust as needed */
+}
+
+.breakdown-table th:nth-child(6),
+.breakdown-table td:nth-child(6) {
+    text-wrap: nowrap;
+    text-align: right;
+    width: 35%; /* Adjust as needed */
+}
+
+.revenue_breakdown_table,.teamcost_breakdown_table{
+    display: flex;
+    justify-content: center;
+    width: 80%;
+}
+
+/* save button css */
+.save_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btncontainer{
+    width: 25%;
+}
+.savebutton {
+  background: #e62143;
+  border-radius: 11px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-family: Mija,-apple-system,BlinkMacSystemFont,Roboto,"Roboto Slab","Droid Serif","Segoe UI",system-ui,Arial,sans-serif;
+  font-size: 1.15em;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 33.4929px;
+  padding: .8em 1em;
+  text-align: center;
+  text-decoration: none;
+  text-decoration-skip-ink: auto;
+  text-shadow: rgba(0, 0, 0, .3) 1px 1px 1px;
+  text-underline-offset: 1px;
+  transition: all .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  word-break: break-word;
+  border: 0;
+}
+
+.savebutton:active,
+.savebutton:focus {
+  border-bottom-style: none;
+  border-color: #dadada;
+  box-shadow: rgba(0, 0, 0, .3) 0 3px 3px inset;
+  outline: 0;
+}
+
+.savebutton:hover {
+  border-bottom-style: none;
+  border-color: #dadada;
+}
+
+
+/* sub notes class */
+.subcalcnotes{
+    padding: 15px 0 20px 0;
+    font-size: 11px;
+    color: #7d7d7d;
+}
+
+
+
+/* start_date */
+.start_date p{
+    padding: 10px;
+}
+
+/* The Modal (hidden by default) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    color:rgb(22, 22, 22);
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+    color:rgb(22, 22, 22);
+}
+
+/* modal Close Button */
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    color:rgb(22, 22, 22);
+
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 15px;
+    color:rgb(22, 22, 22);
+
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group .error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.signup-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1em;
+}
+
+.signup-button:hover {
+    background-color: #45a049;
+}
