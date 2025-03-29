@@ -2,7 +2,7 @@ var outputDatares,dataToSend;
 const dateInput = document.getElementById('myDate');
 dateInput.addEventListener('change', function() {
   const selectedDate = dateInput.value; // Returns date in YYYY-MM-DD format
-  console.log('Selected date:', selectedDate);
+  // console.log('Selected date:', selectedDate);
 });
 
 // dateinput = document.getElementById('myDate');
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const newRow = document.createElement('tr');
       newRow.id = "memb"+rcount;
       newRow.innerHTML = '<td> <div class="membername"> <input type="text" placeholder="john Deo"> </div> </td> <td> <div class="role"> <input type="text" placeholder="Team Leader"> </div> </td> <td> <div class="departments"> <select id="departments" name="department"> <option value="Engineer">Engineer</option> <option value="Design">Design</option> <option value="Product">Product</option> <option value="Marketing">Marketing</option> <option value="Others">Others</option> </select> </div> </td> <!-- hrs/day --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="4.00" step="0.5" min="2" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- $cost/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable rate $/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable ratio % --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="100.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td>'
-        console.log(newRow, rcount);
+        // console.log(newRow, rcount);
       return newRow;
     }
   
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const currentRowCount = teamMemberTableBody.querySelectorAll('tr').length;
     
         if (desiredMemberCount > currentRowCount) {
-            console.log("greater value")
+            // console.log("greater value")
             // Add rows
             for (let i = 0; i < desiredMemberCount - currentRowCount; i++) {
             teamMemberTableBody.appendChild(createTeamMemberRow(i+2));
@@ -124,8 +124,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // change occurs
     inputContainer.addEventListener('input', handleInputChangeAndApiCall);
     // inputContainer.addEventListener('input', (e)=>{
-    //     console.log("input change occurs");
-    //     console.log(e.data);
+        // console.log("input change occurs");
+        // console.log(e.data);
     // });
     // ==============================================
 
@@ -181,7 +181,7 @@ function handleInputChangeAndApiCall() {
   
     if (missingFields.length > 0) {
       const missingFieldNames = missingFields.map(field => field.name).join(', ');
-      console.log(`Field missing: ${missingFieldNames}`);
+      // console.log(`Field missing: ${missingFieldNames}`);
       return; // Stop the function if fields are missing
     }
   
@@ -218,12 +218,12 @@ function handleInputChangeAndApiCall() {
           billable_ratio: parseFloat(billableRatioInput.value),
         });
       }else {
-        console.log(`Missing data in row with ID: ${rowId}`);
+        // console.log(`Missing data in row with ID: ${rowId}`);
         hasMissingRowData = true;
       }
     });
     if (hasMissingRowData) {
-        console.log("Stopping API call due to missing data in team member rows.");
+        // console.log("Stopping API call due to missing data in team member rows.");
         return; // Stop the function
       }
 
@@ -242,7 +242,7 @@ function handleInputChangeAndApiCall() {
       // Add other relevant data from your form if needed
     };
   
-    console.log("data2send||=======|||=====/n", dataToSend);
+    // console.log("data2send||=======|||=====/n", dataToSend);
   
     // Make the API call to your Node.js backend
     fetch('https://projection-calc-function.onrender.com/process-project-data', { 
@@ -259,12 +259,12 @@ function handleInputChangeAndApiCall() {
       return response.json(); 
     })
     .then(data => {
-      console.log('API Response:', data);
+      // console.log('API Response:', data);
       outputDatares = data;
       populateDashboard(data);
     })
     .catch(error => {
-      console.error('API call failed:', error);
+      // console.error('API call failed:', error);
     });
   }
 
@@ -306,7 +306,7 @@ function populateDashboard(data) {
     projectedEndDateDisplay.textContent = processData.projectedEndDate;
 
     // Project Dashboard
-    totalHoursDisplay.textContent = processData.totalProjectHoursInput;
+    totalHoursDisplay.textContent = totalProjectHoursInput;
     costDisplay.textContent = `$ ${(processData.teamCosts).toFixed(2)}`;
     revenueDisplay.textContent = `$ ${(processData.revenueBreakdown.totalRevenue).toFixed(2)}`;
     profitDisplay.textContent = `$ ${(processData.profitLoss).toFixed(2)}`;
@@ -464,7 +464,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     projectOutput: outputData.processData
                 }
             };
-            console.log("*****",userData);
+            // console.log("*****",userData);
             // Call the function to send data to the backend
             sendUserDataToBackend(userData);
 
@@ -487,15 +487,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 const result = await response.json();
-                console.log('Success:', result);
+                // console.log('Success:', result);
                 // Handle success (e.g., show a success message)
             } else {
                 const error = await response.json();
-                console.error('Error sending data:', error);
+                // console.error('Error sending data:', error);
                 // Handle error (e.g., display an error message to the user)
             }
         } catch (error) {
-            console.error('Fetch error:', error);
+            // console.error('Fetch error:', error);
             // Handle network errors
         }
     }
