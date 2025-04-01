@@ -308,7 +308,7 @@ function populateDashboard(data) {
     // Project Dashboard
     totalHoursDisplay.textContent = totalProjectHoursInput.value;
     costDisplay.textContent = `$ ${(processData.teamCosts).toFixed(2)}`;
-    revenueDisplay.textContent = `$ ${(processData.revenueBreakdown.totalRevenue).toFixed(2)}`;
+    revenueDisplay.textContent = `$ ${(processData.mainRevenue).toFixed(2)}`;
     profitDisplay.textContent = `$ ${(processData.profitLoss).toFixed(2)}`;
     profitMarginDisplay.textContent = `${(processData.profitMargin).toFixed(2)} %`;
     avgBillableRatioDisplay.textContent = `${(processData.averageBillableRatio).toFixed(2)} % (all)`;
