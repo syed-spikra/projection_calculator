@@ -254,7 +254,7 @@ function handleInputChangeAndApiCall() {
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`HTTP error! status: ${response.status}`); 
       }
       return response.json(); 
     })
@@ -302,7 +302,7 @@ function populateDashboard(data) {
 
     // Project Timeline Projection
     teamDailyCapacityDisplay.textContent = `${processData.teamDailyCapacity} hours/day`;
-    projectedDurationDisplay.textContent = `${(processData.projectedDuration).toFixed(2)} days`;
+    projectedDurationDisplay.textContent = `${(processData.projectedDuration).toFixed(1)} days`;
     projectedEndDateDisplay.textContent = processData.projectedEndDate;
 
     // Project Dashboard
@@ -346,7 +346,7 @@ function populateDashboard(data) {
           <td>${member.role}</td>
           <td>$ ${(member.billable_rate).toFixed(2)}</td>
           <td>${(member.billable_ratio).toFixed(2)}%</td>
-          <td>${(member.billable_hours).toFixed(2)}</td>
+          <td>${(member.billable_hours).toFixed(1)}</td>
           <td>$ ${(member.revenue).toFixed(2)}</td>
         </tr>
       `;
