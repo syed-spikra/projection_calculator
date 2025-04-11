@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project calculator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body onload="checkcurrUser()">
+    <!--  -->
+    <div class="header">
+        <div class="logo-area">
+          <img src="images/LOGO with text (4) 1.png" alt="logo" class="logo" />
+          <div>
+            <span class="tagline"> Project Profitability Estimator</span>
+          </div>
+        </div>
+        <div class="actions">
+          <div class="tokens-remian" style="display: none;">
+            <span class="coins-icon"><img src="./images/Vector.png" height="22px" width="22px" alt=""></span>
+            <span class="token-count">5 Left</span>
+          </div>
+          <div class="toggle-theme" style="display: none;">
+            <span class="sun-dt"><i class='bx bxs-sun'></i></span>
+            <span class="moon-dt"><i class='bx bx-moon'></i></span>
+          </div>
+          <button class="signup-btn" id="signup-btn">Sign Up</button>
+          <div id="dropdownList" class="dropdown-content" style="display: none;">
+            <a onclick="retomyprojects()">My Projects</a>
+          </div>
+        </div>
+    </div>
+    <div class="header-btm"></div>
+    <!-- input container, first top -->
+    <div class="input_container">
+        <!-- sub title -->
+        <div class="subtitle_container">
+            <div class="subtitle_name">
+                Project Timeline
+            </div>
+        </div>
+        <!-- project timeline -->
+        <div class="project_timeline row_container">
+            <!-- start date -->
+            <div class="start_date">
+                <p>Project start Date</p>
+                <input type="date" id="myDate" name="myDate" required>
+            </div>
+            <!-- total project hours -->
+            <div class="totalprojecthrs">
+                <label for="numberInput">Project Total Hours</label>
+                <div class="number-input-group">
+                    <div class="inp-sub">
+                    <input type="number" class="number-input" id="input1" name="input1" value="100.00" step="0.5" min="0" max="100">
+                    <div class="input-controls">
+                        <button type="button" class="minus-button">-</button>
+                        <button type="button" class="plus-button">+</button>
+                    </div>
+                </div>
+                </div>
+            </div>  
+            <!-- work per day -->
+            <div class="workhrsperday">
+                <label for="numberInput">Work Hours/Day</label>
+                <div class="number-input-group">
+                    <div class="inp-sub">
+                    <input type="number" class="number-input" id="input1" name="input1" value="8.00" step="0.5" min="0" max="100">
+                    <div class="input-controls">
+                        <button type="button" class="minus-button">-</button>
+                        <button type="button" class="plus-button">+</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!-- excldue weekends -->
+            <div class="work_weekends">
+                <label for="workWeekDays">Choose Workdays</label>
+                <select id="workWeekDays" name="workWeekDays">
+                    <option value="5">5 days a week (Exclude Weekends)</option>
+                    <option value="6">6 days a week (Exclude only Sundays)</option>
+                </select>
+            </div>
+
+        </div>
+        
+        <!-- project profit target -->
+         <div class="profit-container">
+        <div class="profit_target">
+            <!-- sub title -->
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Profitability Target
+                </div>
+            </div>
+            <!-- profit number input div -->
+            <div class="expectedprofit">
+                <!-- <label for="numberInput">Target Profit Margin (%)</label> -->
+                 <div class="inp-subs">
+                <div class="number-input-group number-input-groups">
+                    <input type="number" class="number-input" id="input1" name="input1" value="25.00" step="0.5" min="0" max="100">
+                    <div class="input-controls">
+                        <button type="button" class="minus-button">-</button>
+                        <button type="button" class="plus-button">+</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- resource information -->
+        <div class="resource_information">
+            <!-- sub title -->
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Resource Information
+                </div>
+            </div>
+            <!-- team member count -->
+            <div class="teammember_count">
+                <!-- <label for="numberInput">Number of Team Members</label> -->
+                 <div class="inp-subs">
+                <div class="number-input-group number-input-groups">
+                    <input type="number" class="number-input" id="input1" name="input1" value="1.00" step="1" min="1" max="100">
+                    <div class="input-controls">
+                        <button type="button" class="minus-button">-</button>
+                        <button type="button" class="plus-button">+</button>
+                    </div>
+                </div>
+            </div>
+            </div>        
+        </div>
+    </div>  
+        <!-- team member details logs -->
+         <div class="teammember_infos">
+            <!-- sub title -->
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Team Members Details
+                </div>
+            </div>
+            <div class="temmember_table_div">
+                <table>
+                    <thead style="border-radius:12px;">
+                      <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>Hours/Day (hrs)</th>
+                        <th>Cost Rate ($ / hr)</th>
+                        <th>Billable Rate ($ / hr)</th>
+                        <th>Billable Ratio (%)</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        <!-- default first row for one member -->
+                      <tr id="memb1">
+                        <td>
+                            <div class="membername">
+                                <input type="text" placeholder="john Deo">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="role">
+                                <input type="text" placeholder="Team Leader">
+                            </div>
+                        </td>
+                        <td>
+                            <div class="departments">
+                                <select id="departments" name="department">
+                                    <option value="Engineer">Engineer</option>
+                                    <option value="Design">Design</option>
+                                    <option value="Product">Product</option>
+                                    <option value="Marketing">Marketing</option>
+                                    <option value="Others">Others</option>
+                                  </select>
+                            </div>
+                        </td>
+                        <!-- hrs/day -->
+                        <td>
+                            <div class="number-input-group">
+                                <input type="number" class="number-input" id="input1" name="input1" value="4.00" step="0.5" min="2" max="100">
+                                <div class="input-controls">
+                                    <button type="button" class="minus-button">-</button>
+                                    <button type="button" class="plus-button">+</button>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- $cost/hr -->
+                        <td>
+                            <div class="number-input-group">
+                                <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100">
+                                <div class="input-controls">
+                                    <button type="button" class="minus-button">-</button>
+                                    <button type="button" class="plus-button">+</button>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- billable rate $/hr -->
+                        <td>
+                            <div class="number-input-group">
+                                <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100">
+                                <div class="input-controls">
+                                    <button type="button" class="minus-button">-</button>
+                                    <button type="button" class="plus-button">+</button>
+                                </div>
+                            </div>
+                        </td>
+                        <!-- billable ratio % -->
+                        <td style="width: 171px;">
+                            <div class="number-input-group">
+                                <input type="number" class="number-input" id="input1" name="input1" value="100.00" step="0.5" min="0" max="100">
+                                <div class="input-controls">
+                                    <button type="button" class="minus-button">-</button>
+                                    <button type="button" class="plus-button">+</button>
+                                </div>
+                            </div>
+                        </td>
+                      </tr>
+                      
+                    </tbody>
+                </table>
+            </div>
+            
+         </div>
+    </div>
+
+
+    <!-- calculate inputs -->
+    <div class="calculate_btn">
+        <div class="btncontainer">
+            <button id="calcbtn" class="disable-calcbtn" role="button">Calculate</button>
+        </div>
+     </div>
+
+
+    <!-- output container, second top -->,
+     <div class="output_container" style="display: none;">
+         <!-- Project Timeline Projection -->
+         <div class="projecttimeline_projections">
+            <!-- sub title -->
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Project Timeline Projection 
+                </div>
+            </div>
+
+            <!-- team daily capacity -->
+            <div class="row_container">
+                <!-- Team Daily Capacity -->
+                 <div class="Team_Daily_Capacity">
+                    <div class="inner_subtitle_container">
+                        <div class="inner_subtitle_name inner_subtitle_name1">
+                            Team Daily Capacity 
+                        </div>
+                    </div>
+                    <div class="outer_subtitle_container">
+                        <div class="outer_subtitle_name">
+                            8.0 hours/day 
+                        </div>
+                    </div>
+                 </div>
+
+                 <!-- Projected Duration -->
+                 <div class="Projected_Duration">
+                    <div class="inner_subtitle_container">
+                        <div class="inner_subtitle_name inner_subtitle_name2">
+                            Projected Duration
+                        </div>
+                    </div>
+                    <div class="outer_subtitle_container">
+                        <div class="outer_subtitle_name">
+                            20 days
+                        </div>
+                    </div>
+                 </div>
+
+                 <!-- Projected End Date -->
+                 <div class="Projected_EndDate">
+                    <div class="inner_subtitle_container">
+                        <div class="inner_subtitle_name inner_subtitle_name3">
+                            Projected End Date
+                        </div>
+                    </div>
+                    <div class="outer_subtitle_container">
+                        <div class="outer_subtitle_name expecteddate">
+                            2025-04-13
+                        </div>
+                    </div>
+                 </div>
+            </div>
+         </div>
+
+         <!-- Project Dashboard -->
+         <div class="project_dashhboard">
+            <!-- <div class="maintitle">
+                Project Dashboard
+            </div> -->
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Project Metrics Summary
+                </div>
+            </div>
+            <div class="metrics-card">
+                <div class="metric-item">
+                    <span class="metric-label">Total Hours</span>
+                    <span class="brds"></span>
+                    <span class="metric-value">160.0</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Cost</span>
+                    <span class="brds"></span>
+                    <span class="metric-value">$ 7,200.00</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Revenue</span>
+                    <span class="brds"></span>
+                    <span class="metric-value">$ 9,600.00</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Profit ($)</span>
+                    <span class="brds"></span>
+                    <span class="metric-value">$ 2,400.00</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Profit Margin</span>
+                    <span class="brds"></span>
+                    <span class="metric-value">25.0 %</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Avg Billable Ratio</span>
+                    <span class="brds"></span>
+                    <span class="metric-value">100.00 % (all)</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">Duration</span>
+                    <span class="brds"></span>
+                    <span class="metric-value">16.0 working days</span>
+                </div>
+                <div class="metric-item">
+                    <span class="metric-label">End Date</span>
+                    <span class="brds"></span>
+                    <span class="metric-value">April 13, 2025</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Analysis -->
+        <div class="Financial_Analysis">
+            <!-- sub title -->
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Financial Analysis
+                </div>
+            </div>
+
+            <!-- team daily capacity -->
+            <div class="row_container">
+                <!-- Revenue -->
+                <div class="Revenue">
+                <div class="inner_subtitle_container">
+                    <div class="inner_subtitle_name2">
+                        Revenue
+                    </div>
+                </div>
+                <div class="outer_subtitle_container">
+                    <div class="outer_subtitle_name">
+                        $9,600.00
+                    </div>
+                </div>
+                </div>
+                
+                <!-- Profit/Loss -->
+                 <div class="Profit_Loss">
+                    <div class="inner_subtitle_container">
+                        <div class="inner_subtitle_names">
+                            Profit/Loss
+                        </div>
+                    </div>
+                    <div class="outer_subtitle_container">
+                        <div class="outer_subtitle_name">
+                            $2,400.00
+                        </div>
+                    </div>
+                 </div>
+
+                 <!-- Profit Margin -->
+                 <div class="Profit_Margin">
+                    <div class="inner_subtitle_container">
+                        <div class="inner_subtitle_name3">
+                            Profit Margin
+                        </div>
+                    </div>
+                    <div class="outer_subtitle_container">
+                        <div class="outer_subtitle_name">
+                            25.0%
+                        </div>
+                    </div>
+                 </div>
+
+                <!-- Team Costs -->
+                <div class="Team_Costs">
+                <div class="inner_subtitle_container">
+                    <div class="inner_subtitle_name1">
+                        Team Costs
+                    </div>
+                </div>
+                <div class="outer_subtitle_container">
+                    <div class="outer_subtitle_name">
+                        $7,200.00
+                    </div>
+                </div>
+                </div>
+                
+                
+            </div>
+         </div>
+
+         <!-- Team Costs breakdown -->
+         <div class="teamcost_breakdown">
+            <!-- sub title -->
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Team Cost Breakdown
+                </div>
+            </div>
+            
+            <div class="teamcost_breakdown_table">
+                <table class="breakdown-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Cost / Hour</th>
+                            <th>Hours</th>
+                            <th>Total Cost</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>name</td>
+                            <td>role</td>
+                            <td>cost</td>
+                            <td>hour</td>
+                            <td>total</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="tot-view">
+                            <td>TOTAL</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>value</td>
+                        </tr>
+                    </tfoot>
+                </table>            
+            </div>
+            <!-- sub formulas notes -->
+            <div class="subcalcnotes">
+                <div class="subnotes">
+                    Total cost = Σ (Cost Rate per hour × Total Hours) per team member
+                </div>
+            </div>
+         </div>
+
+         <!-- Revenue breakdown -->
+          <div class="revenue_breakdown">
+            <!-- sub title -->
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Revenue Breakdown
+                </div>
+            </div>
+            
+            <div class="revenue_breakdown_table">
+                <table class="breakdown-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Billable Rate ($/hr)</th>
+                            <th>Billable ratio %</th>
+                            <th>Billable Hours</th>
+                            <th>Revenue</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>name</td>
+                            <td>role</td>
+                            <td>rate</td>
+                            <td>ratio</td>
+                            <td>hours</td>
+                            <td>total</td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr class="tot-view">
+                            <td>TOTAL</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>value</td>
+                        </tr>
+                    </tfoot>
+                </table>            
+            </div>
+            <!-- sub formulas notes -->
+            <div class="subcalcnotes">
+                <div class="subnotes">
+                    Total Revenue = Σ (Billable Rate × Billable Hours) per team member<br>Billable Hours = Total Hours × (Billable Ratio / 100)
+                </div>
+            </div>
+          </div>
+
+
+    </div>
+
+    <!-- save project / create account -->
+     <div class="save_btn" style="display: none;">
+        <div class="btncontainer">
+            <button id="saveProjectBtn" class="savebutton" role="button">Save Project details</button>
+        </div>
+     </div>
+
+    <!-- save project modal -->
+    <div id="saveProjectModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Sign Up</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="fullname">Username:</label>
+                    <input type="text" id="fullname" name="fullname" required>
+                    <div class="error-message" id="fullnameError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="text" id="password" name="password" required>
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="text" id="confirmPassword" name="confirmPassword" required>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+                <!-- <div class="form-group">
+                    <label for="projectTitle">Project Title:</label>
+                    <input type="text" id="projectTitle" name="projectTitle">
+                    <div class="error-message" id="projectTitleError"></div>
+                </div> -->
+                <button type="submit" class="signup-button">Sign Up & Save Project</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- payment modal -->
+    <div id="paymentModal" class="modal">
+        <h1>Purchase Tokens</h1>
+        <div>
+            <label for="token-quantity">Enter Quantity (increments of 1):</label>
+            <input type="number" id="token-quantity" value="1" min="1">
+        </div>
+
+        <div>
+            <p>Price per 5 tokens: $5 (₹431.85)</p>
+            <button id="buy-tokens">Buy Tokens</button>
+        </div>
+    </div>
+
+
+    <!-- signup modal -->
+     <div id="signupModal" class="modal">
+
+     </div>
+
+    <!-- save project details - name and description -->
+     <div id="projectDetailBottomBox" class="projectDetailBottomBox" style="display: none;">
+        <div id="projectDetailInfo" class="projectDetailInfo">
+            <div class="projinfoboxes1">
+                <label for="projectName">Project Name</label>
+                <input type="text" id="projectName" name="projectName" placeholder="Enter project name" required>
+            </div>
+            <div class="projinfoboxes2">
+                <label for="description">Description <span class="optionalText">(Optional)</span></label>
+                <textarea id="projectDescription" name="description" placeholder="Describe here"></textarea>
+            </div>
+            <div class="projinfoboxes3">
+                <button type="button" id="save-project-button" class="disable-saveprojbtn">Save project</button>
+            </div>
+         </div>
+     </div>
+
+
+    <!-- script file call -->
+    <script src="script.js"></script>
+</body>
+</html>

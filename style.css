@@ -1,0 +1,1078 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+::-webkit-scrollbar {
+    display: none;
+}
+*{
+    padding: 0%;
+    margin: 0%;
+    box-sizing: border-box;
+}
+body{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+/* navbar */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    padding: 35px;
+  }
+  .header-btm{
+    border-bottom: 2px solid #E8E8E8;
+  }
+
+  .logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .logo {
+    width: 151.25px;
+    height: 32px;
+  }
+
+  .brand-name {
+    font-weight: bold;
+  }
+
+  .tagline {
+    font-size: 22px;
+    background: linear-gradient(89.97deg, #AC7300 1.08%, #DD980D 30.71%, #5A3C00 99.98%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  .toggle-theme {
+    display: flex;
+    align-items: center;
+    background:#D9E3EF;
+    border-radius: 20px;
+    padding: 6px 9px;
+    gap: 13px;
+    width: 71px;  
+   }
+  .sun-dt i{
+    color:#FF7F00;
+    background-color: #fff;
+    box-shadow: 0px 4.27px 8.54px -4.27px #00000040;
+    border-radius: 34.15px;
+    padding: 3px 6px;
+    font-size: 20px;
+  }
+  .moon-dt i{
+    color:#75869B;
+  }
+/* navbar */
+  .toggle-theme span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+  }
+
+  .signup-btn {
+    background: #EF8700;
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 400;
+    cursor: pointer;
+  }
+/*  */
+.input_container,.output_container,.save_btn{
+    padding: 35px;
+}
+
+/* title tags */
+.maintitle{
+    font-weight: 600;
+    font-size: 22px;
+    color: #ff8418;
+}
+.astravue-logo{
+    width: 151.25px;
+    height: 25px;
+    vertical-align: bottom;
+    padding-right: 32px;
+}
+.profit-container{
+    display: flex;
+    justify-content: space-between;
+}
+/* subtitle tags */
+.subtitle_container{
+    text-align: left;
+}
+
+.subtitle_name{
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 100%;
+    letter-spacing: -0.6%;
+    color: #000;
+    padding: 24px 0px;
+}
+label{
+    color: #333333;
+    display: block;
+    padding: 16px 0px;
+    text-align: left;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: -0.6%;
+    vertical-align: middle;
+    text-transform: capitalize;
+}
+/* input tags */
+input{
+    font-size: 15px;
+    color: #151515;
+    width: 170.2857208251953px;
+    background: #F4F9FF;
+    height: 52px;
+    border-radius: 8px;
+    border-width: 1px;
+    padding-right: 16px;
+    padding-left: 16px;
+    border: 1px solid #EAEBFB
+}
+/* row containers */
+.row_container{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0 30px 0;
+}
+.row_container div{
+    /* display: flex; */
+    /* justify-content: center; */
+    align-items: center;
+}
+.work_weekends{
+  display: flow-root;
+}
+/* subtitle containers */
+.inner_subtitle_container{
+    border-right: 2px dashed rgba(255, 255, 255, 0.338);
+    padding: 20px;
+    width: 100%;
+}
+.inner_subtitle_name1{
+  color: #2C70DD;
+}
+.inner_subtitle_name2{
+  color: #DD5E2C;
+}
+.inner_subtitle_name3{
+  color: #00A634;
+}
+
+.inner_subtitle_container div{
+width: 100%;
+}
+.outer_subtitle_container{
+    padding: 20px;
+    font-size: 22px;
+    font-style: bold;
+    font-weight: 700;
+}
+.outer_subtitle_name{
+  color: #3D1F00;
+}
+/* expecteddate */
+.expecteddate{
+    text-wrap: nowrap;
+}
+/* dropdown fields */
+#workWeekDays{
+  width: 332.5px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #F4F9FF;
+  border-radius: 8px;
+  padding-left: 12px;
+  border-width: 1px;
+  border: 1px solid #EAEBFB;
+  height: 52px;
+  border-radius: 8px;
+  border-width: 1px;
+  padding-right: 16px;
+  padding-left: 16px;
+}
+ #departments{
+    width: 170.2857208251953px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #F4F9FF;
+    border-radius: 8px;
+    padding-left: 12px;
+    border-width: 1px;
+    border: 1px solid #EAEBFB;
+    height: 52px;
+    border-radius: 8px;
+    border-width: 1px;
+    padding-right: 16px;
+    padding-left: 16px;
+}
+.inp-sub{
+    display: flex;
+    border: 1px solid #EAEBFB;
+    background:#F4F9FF;
+    width: 290.5px;
+    height: 52px;
+    border-radius: 8px;
+    padding-left: 12px;
+    border-width: 1px;
+}
+.inp-subs {
+    display: flex;
+    border: 1px solid #EAEBFB;
+    background: #F4F9FF;
+    border-radius:8px;
+    padding-left: 12px;
+    border-width: 1px;
+}
+select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    background-color: #fff; /* Match your input background */
+    color: #333; /* Match your input text color */
+}
+/* date field */
+#myDate {
+    border: 1px solid #EAEBFB;
+    background: #F4F9FF;
+    border-radius: 4px;
+    font-size: 16px;
+    width: 332.5px;
+    border-radius: 8px;
+    padding-left: 12px;
+    border-width: 1px;
+  }
+  /* input numbers fields */
+
+  .teammember_infos .temmember_table_div tbody .number-input-group{
+    background: #F4F9FF;
+  }
+  .number-input-group {
+    display: flex;
+    /* background: #F4F9FF; */
+    /* border: 1px solid #EAEBFB; */
+    width: 170.2857208251953px;
+    height: 52px;
+    border-radius: 8px;
+    border-width: 1px;
+    padding-left: 16px;
+  }
+  .number-input-groups{
+    width: 698.5px;
+    height: 52px;
+  }
+  .number-input-group input[type="number"] {
+    flex-grow: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 2px;
+    text-align: left;
+    font-size: 16px;
+    background-color: transparent;
+    -moz-appearance: textfield !important;
+    /* -moz-appearance: textfield; Hide native arrows in Firefox */
+  }
+  
+  .number-input-group input[type="number"]::-webkit-outer-spin-button,
+  .number-input-group input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none; /* Hide native arrows in Chrome, Safari, Edge */
+    margin: 0;
+  }
+  
+  .input-controls{
+    display: flex;
+    justify-content:flex-end;
+  }
+  
+  .input-controls button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 12px;
+    border: none;
+    background-color: #1d1a1a;
+    color: #555;
+    cursor: pointer;
+    font-size: 1em;
+    outline: none;
+  }
+  
+  .input-controls button.minus-button {
+    /* border-right: 1px solid #ccc; */
+    background-color: transparent;
+    color: #324562; /* Blue color for the plus */
+    width: 35px;
+  }
+  .input-controls button.minus-button:hover{
+    background-color: transparent;
+    color:#171717
+  }
+  
+  .input-controls button.plus-button {
+    background-color: transparent; /* Light blueish background */
+    color: #324562; /* Blue color for the plus */
+    border-radius: 2px;
+    
+  }
+  
+  .input-controls button:hover {
+    background-color: #eee;
+  }
+  
+  .input-controls button.plus-button:hover {
+    background-color: transparent;
+    color: #065377;
+  }
+  
+  .input-controls button:active {
+    background-color: #ddd;
+  }
+  
+  .input-controls button.plus-button:active {
+    background-color: #9cdff1;
+  }
+
+
+
+  /* team member table info input side */
+
+  .teammember_infos {
+    width: 100%; /* Adjust as needed */
+    overflow-x: hidden; /* Enable horizontal scrolling if the table is too wide */
+    overflow-y: hidden;
+    margin-bottom: 20px; /* Add some space below the table container */
+  }
+  
+  .teammember_infos table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+    /* border: 1px solid #ddd; */
+  }
+  td{
+    /* width: 171px !important; */
+  }
+  .teammember_infos th,
+  .teammember_infos td {
+    /* border: 1px solid #ddd; */
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping in cells */
+    padding-top: 17px;
+  }
+  
+  .teammember_infos th {
+    /* background-color: #000; */
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+    width: 166.8571319580078;
+    height: 44px;
+    gap: 24px;
+    padding-top: 10px;
+    padding-right: 8px;
+    padding-bottom: 10px;
+    padding-left: 8px;
+    background: #27374D;    
+  }
+.Team_Daily_Capacity{
+  width: 576.667px;   
+  height: 116px;
+  border-radius: 12px;
+  border-width: 1px;
+  background: #FBFDFF;
+  border: 1px solid #2C70DD4D;
+}
+.Projected_Duration{
+  width: 576.667px;
+  height: 116px;
+  border-radius: 12px;
+  border-width: 1px;
+  border: 1px solid #DD5E2C4D;
+  background: #DD5E2C0A;
+  margin-left: 25px;
+}
+.Projected_EndDate{
+  width: 576.667px;
+  height: 116px;
+  border-radius: 12px;
+  border-width: 1px;
+  background: #00A6340A;
+  border: 1px solid #00A6344D;
+  margin-left: 25px;
+}
+  
+  .teammember_infos tbody tr:nth-child(even) {
+    padding-bottom: 20px;
+  }
+  .teammember_infos thead tr th:nth-child(1) {
+    border-radius: 12px 0px 0px 12px;
+}
+
+.teammember_infos thead tr th:nth-last-child(1) {
+    border-radius: 0px 12px 12px 0px;
+}
+  .row-bg{
+  }
+  /* Optional styling to match the image's background (adjust as needed) */
+  /* .teammember_infos table {
+    background-color: #f5f5dc; /* Beige background 
+    } */
+  
+  /* Styling for the numeric input-like columns */
+  .teammember_infos td:nth-child(4), /* Hours / Day */
+  .teammember_infos td:nth-child(5), /* Cost Rate ($ / hr) */
+  .teammember_infos td:nth-child(6), /* Billable Rate */
+  .teammember_infos td:nth-child(7)  /* Billable Ratio */
+  {
+    /* This is a basic attempt to mimic the input look */
+    /* For actual interactive inputs, use <input type="number"> */
+    /* For just visual representation, you can style a span or div */
+    text-align: center; /* Center the numbers */
+  }
+  
+  /* If you were to add +/- buttons (not directly styleable with just CSS for functionality) */
+  /* .input-group {
+    display: flex;
+    align-items: center;
+  }
+  
+  .input-group span {
+    padding: 4px 8px;
+    border: 1px solid #ccc;
+    background-color: #eee;
+    cursor: default;
+    user-select: none;
+    margin: 0 2px;
+  } */
+
+
+  /* metric card design */
+
+.metrics-card {
+  width: 100%;
+  margin: 20px auto;
+  color: #000;
+  border-radius: 8px;
+}
+
+.metric-card h2 {
+    padding: 20px;
+    margin: 0;
+    text-align: left;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+.metric-item {
+  display: flex;
+  justify-content: space-between;
+  border-left: 1px solid #D0DCF0;
+  border-right: 1px solid #D0DCF0;
+  border-top: 1px solid #D0DCF0;
+}
+
+.metric-item:last-child {
+    border-bottom: 1px solid #D0DCF0;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.metric-label {
+    font-weight: bold;
+    padding: 15px 20px;
+    width: 733px;
+
+}
+.brds{
+  border-right: 1px solid #D0DCF0;
+}
+.metric-value{
+  padding: 15px 20px;
+  width: 733px;
+}
+
+
+/* Optional: Add a striped background for better readability */
+.metric-item:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.05); /* Slightly darker purple */
+}
+.metric-item:nth-child(2n+1){
+  background: transparent;
+}
+
+
+/* team cost breakdown table */
+.breakdown-table {
+    color: #3b3105;
+    width: 100%;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.breakdown-table th, .breakdown-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.breakdown-table th {
+    background-color: #27374D;
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+.breakdown-table tFoot tr:last-child {
+    border-bottom: none;
+    font-weight: bold;
+}
+
+.breakdown-table td:nth-child(3), /* breakdown / Hour */
+.breakdown-table td:nth-child(4), /* Hours */
+.breakdown-table td:nth-child(5)  /* Total breakdown */
+{
+    text-align: right;
+}
+
+.breakdown-table th:nth-child(3),
+.breakdown-table th:nth-child(4),
+.breakdown-table th:nth-child(5) {
+    text-align: right;
+}
+
+.breakdown-table th:first-child,
+.breakdown-table td:first-child {
+    width: 20%; /* Adjust as needed */
+}
+
+.breakdown-table th:nth-child(2),
+.breakdown-table td:nth-child(2) {
+    width: 15%; /* Adjust as needed */
+}
+
+.breakdown-table th:nth-child(3),
+.breakdown-table td:nth-child(3) {
+    width: 15%; /* Adjust as needed */
+}
+
+.breakdown-table th:nth-child(4),
+.breakdown-table td:nth-child(4) {
+    width: 15%; /* Adjust as needed */
+}
+
+.breakdown-table th:nth-child(5),
+.breakdown-table td:nth-child(5) {
+    width: 15%; /* Adjust as needed */
+}
+
+.breakdown-table th:nth-child(6),
+.breakdown-table td:nth-child(6) {
+    text-wrap: nowrap;
+    text-align: right;
+    width: 35%; /* Adjust as needed */
+}
+.tot-view{
+  background-color: #F4F9FF;
+}
+
+.revenue_breakdown_table,.teamcost_breakdown_table{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.Team_Costs{
+  width: 309.5px;
+  height: 116px;
+  border-radius: 12px;
+  border-width: 1px;
+  background: #FBFDFF;
+  border: 1px solid #2C70DD4D
+}
+.Revenue{
+  width: 309.5px;
+  height: 116px;
+  border-radius: 12px;
+  border-width: 1px;
+  background:#FFFDFB;
+  border: 1px solid #DD872C4D;
+}
+.Profit_Loss{
+  width: 309.5px;
+  height: 116px;
+  border-radius: 12px !important;
+  padding: 1px;
+  
+  background-origin: border-box;
+  background-clip: border-box, content-box;
+  box-sizing: border-box;
+
+  border: 1px solid;
+  border-image-source: linear-gradient(270deg, rgba(221, 44, 70, 0.3) 0%, rgba(20, 164, 77, 0.3) 100%);
+  background: linear-gradient(270deg, rgba(221, 44, 70, 0.04) 0%, rgba(20, 164, 77, 0.04) 100%);
+  border-image-slice: 1; /* This is what makes it work */
+}
+.inner_subtitle_names{
+  /* color: linear-gradient(270deg, #C2142E 40.47%, #14A44D 66.35%); */
+  -webkit-background-clip: text;
+}
+.Profit_Margin{
+  width: 309.5px;
+  height: 116px;
+  border-radius: 12px;
+  border-width: 1px;
+  background: #00A6340A;
+  border: 1px solid #DD872C4D;
+  border: 1px solid #00A6344D
+}
+
+/* save button css */
+.save_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btncontainer{
+    width: 25%;
+}
+.savebutton {
+  background: #e62143;
+  border-radius: 11px;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  font-family: Mija,-apple-system,BlinkMacSystemFont,Roboto,"Roboto Slab","Droid Serif","Segoe UI",system-ui,Arial,sans-serif;
+  font-size: 1.15em;
+  font-weight: 700;
+  justify-content: center;
+  line-height: 33.4929px;
+  padding: .8em 1em;
+  text-align: center;
+  text-decoration: none;
+  text-decoration-skip-ink: auto;
+  text-shadow: rgba(0, 0, 0, .3) 1px 1px 1px;
+  text-underline-offset: 1px;
+  transition: all .2s ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: 100%;
+  word-break: break-word;
+  border: 0;
+}
+
+.savebutton:active,
+.savebutton:focus {
+  border-bottom-style: none;
+  border-color: #dadada;
+  box-shadow: rgba(0, 0, 0, .3) 0 3px 3px inset;
+  outline: 0;
+}
+
+.savebutton:hover {
+  border-bottom-style: none;
+  border-color: #dadada;
+}
+
+
+/* sub notes class */
+.subcalcnotes{
+    padding: 15px 0 20px 0;
+    font-size: 11px;
+    color: #7d7d7d;
+}
+.subnotes{
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 2.1;
+  letter-spacing: -0.6%;
+  vertical-align: middle;
+}
+/* start_date */
+.start_date{
+  width: 332.5px;
+}
+.start_date p{
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: -0.6%;
+    vertical-align: middle;
+    text-transform: capitalize;
+    color: #333333;
+    text-align: left;
+    padding: 16px 0px;
+}
+
+/* The Modal (hidden by default) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    color:rgb(22, 22, 22);
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px;
+    border-radius: 8px;
+    position: relative;
+    color:rgb(22, 22, 22);
+}
+
+/* modal Close Button */
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.form-group {
+    margin-bottom: 15px;
+    color:rgb(22, 22, 22);
+
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 15px;
+    color:rgb(22, 22, 22);
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group .error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+.signup-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1em;
+}
+
+.signup-button:hover {
+    background-color: #45a049;
+}
+
+
+.toggle-theme{
+    display: flex;
+    align-items: center;
+    background:#D9E3EF;
+    border-radius: 20px;
+    padding: 6px 9px;
+    gap: 13px;
+    width: 71px;  
+   }
+   .tokens-remian{
+    width: 102px;
+    /* height: 40px; */
+    border-radius: 42.69px;
+    gap: 8px;
+    padding:4px 12px;
+    border-width: 1px;
+    background: linear-gradient(89.97deg, rgba(255, 170, 0, 0.1) 1.08%, rgba(221, 152, 13, 0.1) 30.71%, rgba(255, 170, 0, 0.1) 99.98%);
+    border: 1px solid #FFD49D;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   }
+.toggle-theme span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+  }
+
+  .tokens-remian span{
+    height: 22px;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 17px;
+  }
+
+  /* calculate btn */
+.calculate_btn{
+    width: 100%;
+    height: 60px;
+    gap: 24px;
+    padding: 0 20px;
+  }
+  .calculate_btn .btncontainer{
+  margin: 0 auto;
+  border: none;
+  width: fit-content;
+  }
+  .calcbtn{
+    cursor: pointer;
+    border: none;
+    width: 171px;
+    height: 60px;
+    border-radius: 12px;
+    gap: 10px;
+    padding: 10px 40px;
+    background: #DD2C46;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fDf7f7;
+  }
+  .calcbtn:hover{
+    background-color: #ED1837;
+    box-shadow: -1px -1px 2px 0px #73202C inset;
+  }
+  
+  .disable-calcbtn{
+    cursor: normal;
+    background-color: #DD2C4680;
+    border: none;
+    width: 171px;
+    height: 60px;
+    border-radius: 12px;
+    gap: 10px;
+    padding: 10px 40px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fDf7f7;
+  }
+
+  
+/* save project box bottom */
+
+.projectDetailBottomBox{
+    width: 100%;
+    height: 511px;
+    padding: 32px;
+    gap: 32px;
+    margin-bottom: 60px;
+  }
+  .projectDetailInfo{
+    width: 100%;
+    height: 511px;
+    border-radius: 16px;
+    border-width: 1px;
+    padding: 32px;
+    background-color: #FFF5F4;
+    border: 1px solid #A87B7B85
+  }
+  .projectDetailInfo .projinfoboxes1{
+    width: 100%;
+    height: 108px;
+    margin-bottom: 24px;
+  
+  }
+  .projectDetailInfo .projinfoboxes1 input[type="text"]{
+    width: 100%;
+    height: 60px;
+    border-radius: 12px;
+    gap: 10px;
+    padding: 10px 16px;
+    margin: 0;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 20px;
+    color: #6D6A6A;
+  
+  }
+  .projectDetailInfo .projinfoboxes1 label{
+    width: 100%;
+    height: 48px;
+    border-radius: 12px;
+    margin-bottom: 10px;
+    padding-bottom: 24px;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 20px;
+  }
+  .projectDetailInfo .projinfoboxes2{
+    width: 100%;
+    height: 223px;
+  }
+  .projectDetailInfo .projinfoboxes2 label{
+    width: 100%;
+    height: 60px;
+    border-radius: 12px;
+    gap: 10px;
+    padding: 10px 0;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 20px; 
+    color: #232428;
+  }
+  .projectDetailInfo .projinfoboxes2 label span{
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 20px;
+    color: #7D7D7D;
+  }
+  .projectDetailInfo .projinfoboxes2 textarea{
+    width: 100%;
+    height: 163px;
+    border-radius: 12px;
+    padding: 16px;
+    gap: 10px;
+    border-width: 1px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 20px;
+    color: #6D6A6A;
+  }
+  
+  .projectDetailInfo .projinfoboxes3{
+    margin-top: 32px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 60px;
+  }
+  
+  .saveprojbtn{
+    width: 184px;
+    height: 60px;
+    border-radius: 12px;
+    text-wrap: nowrap;
+    gap: 10px;
+    padding: 10px 32px;
+    background-color: #DD2C46;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FDF7F7;
+    border: none;
+    cursor: pointer;
+  }
+  .saveprojbtn:hover{
+    background-color: #ED1837;
+    box-shadow: -1px -1px 2px 0px #73202C inset;
+  }
+  .disable-saveprojbtn{
+    width: 184px;
+    height: 60px;
+    border-radius: 12px;
+    text-wrap: nowrap;
+    gap: 10px;
+    padding: 10px 32px;
+    background-color: #DD2C4680;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 20px;
+    color: #FDF7F7;
+    border: none;
+  }
+  
+ 
+
+
+.signup-profile{
+  width: 40px;
+  height: 40px;
+  background: #FFFFFF;
+  border: none;
+  box-shadow: 0px 0px 2.4px 0px #000000;
+  border-radius: 50%;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+} 
+
+
+.dropdown-content {
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 120px;
+  box-shadow: 0px 8px 6px 0px rgba(0,0,0,0.2);
+  z-index: 1; 
+  right: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-top: 84px;
+  margin-right: 30px;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+
+}
+
+.dropdown-content a:hover {
+  background-color: #eeeeee;
+  cursor: pointer;
+}

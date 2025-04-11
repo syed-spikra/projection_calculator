@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="myprojectsstyle.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body onload="fetchcurrentuserprojects()">
+    <div class="header">
+        <div class="logo-area" id="logo-area">
+          <img src="images/LOGO with text (4) 1.png" alt="logo" class="logo" />
+          <div>
+            <span class="tagline"> Project Profitability Estimator</span>
+          </div>
+        </div>
+        <div class="actions">
+          <div class="tokens-remian" style="display: none;">
+            <span class="coins-icon"><img src="./images/Vector.png" height="22px" width="22px" alt=""></span>
+            <span class="token-count">5 Left</span>
+          </div>
+          <div class="toggle-theme" style="display: none;">
+            <span class="sun-dt"><i class='bx bxs-sun'></i></span>
+            <span class="moon-dt"><i class='bx bx-moon'></i></span>
+          </div>
+          <!-- <button class="signup-btn" id="signup-btn">Sign Up</button> -->
+        </div>
+    </div>
+    <div class="header-btm"></div>
+
+    <!-- display saved projects -->
+     <div class="projects_info" id="projects_info">
+        <div id="projectstable" class="projectstable">
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Saved Projects
+                </div>
+            </div>
+            <div class="project_table_div">
+                <table>
+                    <thead style="border-radius:12px;">
+                      <tr>
+                        <th>Project Name</th>
+                        <th>Start Date</th>
+                        <th>Predicted End Date</th>
+                        <th>Revenue</th>
+                        <th>Duration</th>
+                      </tr>
+                    </thead>
+                    <tbody id="projectlistbody">
+                      
+                    </tbody>
+                </table>
+            </div>
+         </div>
+     </div>
+
+     <div id="projectDetailsContainer" class="project-details-container" style="display: none;">
+        <div class="details-header">
+            <button id="backToProjects" class="back-button">&larr;</button>
+            <h3>Project Details</h3>
+        </div>
+        <div id="projectDetailsContent">
+            <div class="output_container">
+                <!-- Project Timeline Projection -->
+                <div class="projecttimeline_projections">
+                   <!-- sub title -->
+                   <div class="subtitle_container">
+                       <div class="subtitle_name">
+                           Project Timeline Projection 
+                       </div>
+                   </div>
+       
+                   <!-- team daily capacity -->
+                   <div class="row_container">
+                       <!-- Team Daily Capacity -->
+                        <div class="Team_Daily_Capacity">
+                           <div class="inner_subtitle_container">
+                               <div class="inner_subtitle_name inner_subtitle_name1">
+                                   Team Daily Capacity 
+                               </div>
+                           </div>
+                           <div class="outer_subtitle_container">
+                               <div class="outer_subtitle_name">
+                                   8.0 hours/day 
+                               </div>
+                           </div>
+                        </div>
+       
+                        <!-- Projected Duration -->
+                        <div class="Projected_Duration">
+                           <div class="inner_subtitle_container">
+                               <div class="inner_subtitle_name inner_subtitle_name2">
+                                   Projected Duration
+                               </div>
+                           </div>
+                           <div class="outer_subtitle_container">
+                               <div class="outer_subtitle_name">
+                                   20 days
+                               </div>
+                           </div>
+                        </div>
+       
+                        <!-- Projected End Date -->
+                        <div class="Projected_EndDate">
+                           <div class="inner_subtitle_container">
+                               <div class="inner_subtitle_name inner_subtitle_name3">
+                                   Projected End Date
+                               </div>
+                           </div>
+                           <div class="outer_subtitle_container">
+                               <div class="outer_subtitle_name expecteddate">
+                                   2025-04-13
+                               </div>
+                           </div>
+                        </div>
+                   </div>
+                </div>
+       
+                <!-- Project Dashboard -->
+                <div class="project_dashhboard">
+                   <!-- <div class="maintitle">
+                       Project Dashboard
+                   </div> -->
+                   <div class="subtitle_container">
+                       <div class="subtitle_name">
+                           Project Metrics Summary
+                       </div>
+                   </div>
+                   <div class="metrics-card">
+                       <div class="metric-item">
+                           <span class="metric-label">Total Hours</span>
+                           <span class="brds"></span>
+                           <span class="metric-value">160.0</span>
+                       </div>
+                       <div class="metric-item">
+                           <span class="metric-label">Cost</span>
+                           <span class="brds"></span>
+                           <span class="metric-value">$ 7,200.00</span>
+                       </div>
+                       <div class="metric-item">
+                           <span class="metric-label">Revenue</span>
+                           <span class="brds"></span>
+                           <span class="metric-value">$ 9,600.00</span>
+                       </div>
+                       <div class="metric-item">
+                           <span class="metric-label">Profit ($)</span>
+                           <span class="brds"></span>
+                           <span class="metric-value">$ 2,400.00</span>
+                       </div>
+                       <div class="metric-item">
+                           <span class="metric-label">Profit Margin</span>
+                           <span class="brds"></span>
+                           <span class="metric-value">25.0 %</span>
+                       </div>
+                       <div class="metric-item">
+                           <span class="metric-label">Avg Billable Ratio</span>
+                           <span class="brds"></span>
+                           <span class="metric-value">100.00 % (all)</span>
+                       </div>
+                       <div class="metric-item">
+                           <span class="metric-label">Duration</span>
+                           <span class="brds"></span>
+                           <span class="metric-value">16.0 working days</span>
+                       </div>
+                       <div class="metric-item">
+                           <span class="metric-label">End Date</span>
+                           <span class="brds"></span>
+                           <span class="metric-value">April 13, 2025</span>
+                       </div>
+                   </div>
+               </div>
+       
+               <!-- Financial Analysis -->
+               <div class="Financial_Analysis">
+                   <!-- sub title -->
+                   <div class="subtitle_container">
+                       <div class="subtitle_name">
+                           Financial Analysis
+                       </div>
+                   </div>
+       
+                   <!-- team daily capacity -->
+                   <div class="row_container">
+                       <!-- Revenue -->
+                       <div class="Revenue">
+                       <div class="inner_subtitle_container">
+                           <div class="inner_subtitle_name2">
+                               Revenue
+                           </div>
+                       </div>
+                       <div class="outer_subtitle_container">
+                           <div class="outer_subtitle_name">
+                               $9,600.00
+                           </div>
+                       </div>
+                       </div>
+                       
+                       <!-- Profit/Loss -->
+                        <div class="Profit_Loss">
+                           <div class="inner_subtitle_container">
+                               <div class="inner_subtitle_names">
+                                   Profit/Loss
+                               </div>
+                           </div>
+                           <div class="outer_subtitle_container">
+                               <div class="outer_subtitle_name">
+                                   $2,400.00
+                               </div>
+                           </div>
+                        </div>
+       
+                        <!-- Profit Margin -->
+                        <div class="Profit_Margin">
+                           <div class="inner_subtitle_container">
+                               <div class="inner_subtitle_name3">
+                                   Profit Margin
+                               </div>
+                           </div>
+                           <div class="outer_subtitle_container">
+                               <div class="outer_subtitle_name">
+                                   25.0%
+                               </div>
+                           </div>
+                        </div>
+       
+                       <!-- Team Costs -->
+                       <div class="Team_Costs">
+                       <div class="inner_subtitle_container">
+                           <div class="inner_subtitle_name1">
+                               Team Costs
+                           </div>
+                       </div>
+                       <div class="outer_subtitle_container">
+                           <div class="outer_subtitle_name">
+                               $7,200.00
+                           </div>
+                       </div>
+                       </div>
+                       
+                       
+                   </div>
+                </div>
+                <!-- Team Costs breakdown -->
+                <div class="teamcost_breakdown">
+                   <!-- sub title -->
+                   <div class="subtitle_container">
+                       <div class="subtitle_name">
+                           Team Cost Breakdown
+                       </div>
+                   </div>
+                   
+                   <div class="teamcost_breakdown_table">
+                       <table class="breakdown-table">
+                           <thead>
+                               <tr>
+                                   <th>Name</th>
+                                   <th>Role</th>
+                                   <th>Cost / Hour</th>
+                                   <th>Hours</th>
+                                   <th>Total Cost</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               <tr>
+                                   <td>name</td>
+                                   <td>role</td>
+                                   <td>cost</td>
+                                   <td>hour</td>
+                                   <td>total</td>
+                               </tr>
+                           </tbody>
+                           <tfoot>
+                               <tr class="tot-view">
+                                   <td>TOTAL</td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td>value</td>
+                               </tr>
+                           </tfoot>
+                       </table>            
+                   </div>
+                   <!-- sub formulas notes -->
+                   <div class="subcalcnotes">
+                       <div class="subnotes">
+                           Total cost = Σ (Cost Rate per hour × Total Hours) per team member
+                       </div>
+                   </div>
+                </div>
+       
+                <!-- Revenue breakdown -->
+                 <div class="revenue_breakdown">
+                   <!-- sub title -->
+                   <div class="subtitle_container">
+                       <div class="subtitle_name">
+                           Revenue Breakdown
+                       </div>
+                   </div>
+                   <div class="revenue_breakdown_table">
+                       <table class="breakdown-table">
+                           <thead>
+                               <tr>
+                                   <th>Name</th>
+                                   <th>Role</th>
+                                   <th>Billable Rate ($/hr)</th>
+                                   <th>Billable ratio %</th>
+                                   <th>Billable Hours</th>
+                                   <th>Revenue</th>
+                               </tr>
+                           </thead>
+                           <tbody>
+                               <tr>
+                                   <td>name</td>
+                                   <td>role</td>
+                                   <td>rate</td>
+                                   <td>ratio</td>
+                                   <td>hours</td>
+                                   <td>total</td>
+                               </tr>
+                           </tbody>
+                           <tfoot>
+                               <tr class="tot-view">
+                                   <td>TOTAL</td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td></td>
+                                   <td>value</td>
+                               </tr>
+                           </tfoot>
+                       </table>            
+                   </div>
+                   <!-- sub formulas notes -->
+                   <div class="subcalcnotes">
+                       <div class="subnotes">
+                           Total Revenue = Σ (Billable Rate × Billable Hours) per team member<br>Billable Hours = Total Hours × (Billable Ratio / 100)
+                       </div>
+                   </div>
+                 </div>
+           </div>
+        </div>
+    </div>
+
+     <script src="myprojects.js"></script>
+
+</body>
+</html>
