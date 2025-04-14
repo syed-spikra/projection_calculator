@@ -102,3 +102,8 @@ function populateMembersdash(membersData){
         nomembersCell.classList.add('no-members-cell');
     }
 }
+
+
+document.getElementById('logo-area').addEventListener('click', function(){
+    window.location.href = "index.html";
+})
