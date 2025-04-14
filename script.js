@@ -735,3 +735,6 @@ function checkcurrUser(){
 function retomyprojects(){
   window.location.href = "myprojects.html";
 }
+function retomymembers(){
+  window.location.href = "mymembers.html";
+}

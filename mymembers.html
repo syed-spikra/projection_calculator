@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project calculator</title>
+    <link rel="icon" href="images/Group 163.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="myprojectsstyle.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+
+<body onload="fetchcurrentusermembers()">
+    <div class="header">
+        <div class="logo-area" id="logo-area">
+          <img src="images/LOGO with text (4) 1.png" alt="logo" class="logo" />
+          <div>
+            <span class="tagline"> Project Profitability Estimator</span>
+          </div>
+        </div>
+        <div class="actions">
+          <div class="tokens-remian" style="display: none;">
+            <span class="coins-icon"><img src="./images/Vector.png" height="22px" width="22px" alt=""></span>
+            <span class="token-count">5 Left</span>
+          </div>
+          <div class="toggle-theme" style="display: none;">
+            <span class="sun-dt"><i class='bx bxs-sun'></i></span>
+            <span class="moon-dt"><i class='bx bx-moon'></i></span>
+          </div>
+          <!-- <button class="signup-btn" id="signup-btn">Sign Up</button> -->
+        </div>
+    </div>
+    <div class="header-btm"></div>
+
+    <!-- display saved projects -->
+     <div class="members_info" id="members_info">
+        <div id="memberstable" class="memberstable">
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Saved Memebers
+                </div>
+            </div>
+            <div class="member_table_div">
+                <table>
+                    <thead style="border-radius:12px;">
+                      <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Department</th>
+                        <th>cost Rate $/hr</th>
+                      </tr>
+                    </thead>
+                    <tbody id="memberlistbody">
+                      
+                    </tbody>
+                </table>
+            </div>
+         </div>
+     </div>
+
+     <script src="mymembers.js"></script>
+
+</body>
+</html>
