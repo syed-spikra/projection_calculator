@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createTeamMemberRow(rcount) {
       const newRow = document.createElement('tr');
       newRow.id = "memb"+rcount;
-      newRow.innerHTML = '<td> <div class="membername"> <input type="text" placeholder="john Deo"> </div> </td> <td> <div class="role"> <input type="text" placeholder="Team Leader"> </div> </td> <td> <div class="departments"> <select id="departments" name="department"> <option value="Engineer">Engineer</option> <option value="Design">Design</option> <option value="Product">Product</option> <option value="Marketing">Marketing</option> <option value="Others">Others</option> </select> </div> </td> <!-- hrs/day --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="4.00" step="0.5" min="2" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- $cost/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable rate $/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable ratio % --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="100.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td>'
+      newRow.innerHTML = '<td> <div class="membername"> <input type="text" placeholder="John Deo"> </div> </td> <td> <div class="role"> <input type="text" placeholder="CTO"> </div> </td> <td> <div class="departments"> <select id="departments" name="department"> <option value="Engineer">Engineer</option> <option value="Design">Design</option> <option value="Product">Product</option> <option value="Marketing">Marketing</option> <option value="Others">Others</option> </select> </div> </td> <!-- hrs/day --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="4.00" step="0.5" min="2" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- $cost/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable rate $/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable ratio % --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="100.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td>'
         // console.log(newRow, rcount);
       return newRow;
     }
@@ -496,9 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
           };
           localStorage.setItem(userDetailKey, JSON.stringify(userDetail));
           // console.log("inside localstorage");
-          checkNstoreAllDetails(userDetail.username, userDetail.email, userDetail.password);
-          modal.style.display = "none";
-          signupForm.reset();
+          checkNstoreAllDetails(userDetail.username, userDetail.email, userDetail.password, "from_signup_btn");
         }
     });
 });
@@ -643,11 +641,18 @@ function userDetailPopupModal(){
     signupmodal.style.display = 'block';
   }
   else{
-    checkNstoreAllDetails(values.username, values.email, values.password);
+    checkNstoreAllDetails(values.username, values.email, values.password, "from_save_btn");
   }
 }
 
-function checkNstoreAllDetails(usernameVal, emailVal, passwordVal){
+function checkNstoreAllDetails(usernameVal, emailVal, passwordVal, ticketfrom){
+
+  if(ticketfrom == "from_signup_btn"){
+    document.getElementById('saveProjectModal').style.display = "none";
+    document.getElementById('signupForm').reset();
+    window.location.reload();
+    return;
+  }
   // alert("inside project store function");
     // Get the project title and the output data (assuming it's stored in a variable called 'outputData')
     const projectTitle = document.getElementById('projectName').value || "project Unknown";
@@ -741,4 +746,9 @@ function retomyprojects(){
 }
 function retomymembers(){
   window.location.href = "mymembers.html";
+}
+
+function curruserlogout(){
+  localStorage.removeItem(userDetailKey);
+  window.location.reload();
 }

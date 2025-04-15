@@ -85,10 +85,20 @@ body{
     background: #EF8700;
     border: none;
     color: white;
-    padding: 8px 16px;
+    /* padding: 8px 16px; */
     border-radius: 20px;
     font-weight: 400;
     cursor: pointer;
+    width: 92px;
+    height: 40px;
+    border-radius: 52px;
+    /* padding: 16px; */
+    text-align: center;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 16px;
+    align-items: center;
+    box-shadow: 0px -2px 4px 0px #A96000 inset;
   }
 /*  */
 .input_container,.output_container,.save_btn{
@@ -266,7 +276,7 @@ width: 100%;
   height: 52px;
 }
  #departments{
-    width: 170.2857208251953px;
+    width: 100%;
     padding: 10px;
     border-radius: 8px;
     background-color: #f4f9ff00;
@@ -279,6 +289,7 @@ width: 100%;
     border-width: 1px;
     padding-right: 16px;
     padding-left: 16px;
+    font-size: 16px;
 }
 
 .inp-sub{
@@ -353,7 +364,7 @@ select::-ms-expand {
 
 
 .profit_target, .resource_information{
-  width: 768px;
+  width: 45%;
 }
 .expectedprofit, .teammember_count{
   width: 100%;
@@ -463,7 +474,7 @@ select::-ms-expand {
     padding-top: 17px;
     font-family: Inter;
     font-weight: 400;
-    font-size: 17px;
+    /* font-size: 17px; */
     height: 52px;
   }
   .teammember_infos .temmember_table_div table tbody tr td{
@@ -478,6 +489,7 @@ select::-ms-expand {
   .teammember_infos .temmember_table_div table tbody tr td div input[type="number"]
   { 
     width: 90%;
+    font-size: 16px;
   }
   .teammember_infos .temmember_table_div table tbody tr td .departments{
     width: 90%;
@@ -485,6 +497,7 @@ select::-ms-expand {
     border-radius: 12px;
     border-width: 1px;
     background-color: #F4F9FF;
+    font-size: 16px;
   }
 
   .teammember_infos th {
@@ -881,7 +894,7 @@ select::-ms-expand {
 }
 
 .signup-button {
-    background-color: #4CAF50;
+    background-color: #EF8700;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -889,10 +902,12 @@ select::-ms-expand {
     cursor: pointer;
     width: 100%;
     font-size: 1em;
+    box-shadow: 0px -2px 4px 0px #A96000 inset;
+    border-radius: 12px;
 }
 
 .signup-button:hover {
-    background-color: #45a049;
+    background-color: #E68200;
 }
 
 
@@ -1118,10 +1133,12 @@ select::-ms-expand {
   border-radius: 50%;
   font-family: Inter;
   font-weight: 400;
-  font-size: 22px;
+  font-size: 24px;
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  justify-items: center;
   cursor: pointer;
   border: none;
   padding: 0;
