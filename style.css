@@ -110,6 +110,7 @@ body{
 .profit-container{
     display: flex;
     justify-content: space-between;
+    width: 100%;
 }
 /* subtitle tags */
 .subtitle_container{
@@ -144,7 +145,7 @@ input{
     height: 52px;
     border-radius: 8px;
     border-width: 1px;
-    padding-right: 16px;
+    /* padding-right: 16px; */
     padding-left: 16px;
     border: 1px solid #EAEBFB
 }
@@ -161,14 +162,70 @@ input{
     /* justify-content: center; */
     align-items: center;
 }
-.work_weekends{
-  display: flow-root;
+
+
+/* project-timeline rowcontainer */
+.project_timeline{
+  font-family: Inter;
+}
+.project_timeline .start_date,
+.project_timeline .totalprojecthrs,
+.project_timeline .workhrsperday,
+.project_timeline .work_weekends{
+  width: 290.5px;
+}
+
+/* date field */
+.project_timeline .start_date #myDate {
+  border: 1px solid #EAEBFB;
+  background: #F4F9FF;
+  border-radius: 4px;
+  font-size: 16px;
+  border-radius: 8px;
+  width: 100%;
+  padding-left: 12px;
+  border-width: 1px;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 18px;
+}
+/* start_date */
+.project_timeline .start_date p{
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: -0.6%;
+    vertical-align: middle;
+    text-transform: capitalize;
+    color: #333333;
+    text-align: left;
+    padding: 16px 0px;
+}
+
+.totalprojecthrs .number-input-group,
+.workhrsperday .number-input-group
+{
+  width: 100%;
+  background: #F4F9FF;
+  border: 1px solid #EAEBFB;
+  padding: 0;
+}
+.totalprojecthrs .number-input-group input[type="number"],
+.workhrsperday .number-input-group input[type="number"]
+{
+  padding: 0px;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 18px;
+  padding-left: 12px;
 }
 /* subtitle containers */
 .inner_subtitle_container{
     border-right: 2px dashed rgba(255, 255, 255, 0.338);
-    padding: 20px;
+    padding: 15px 20px 20px 20px;
     width: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    font-family: Inter;
 }
 .inner_subtitle_name1{
   color: #2C70DD;
@@ -184,10 +241,10 @@ input{
 width: 100%;
 }
 .outer_subtitle_container{
-    padding: 20px;
-    font-size: 22px;
-    font-style: bold;
-    font-weight: 700;
+  padding: 8px 20px 20px 25px;
+    font-size: 28px;
+    font-weight: 600;
+    font-family: Inter;
 }
 .outer_subtitle_name{
   color: #3D1F00;
@@ -198,8 +255,8 @@ width: 100%;
 }
 /* dropdown fields */
 #workWeekDays{
-  width: 332.5px;
-  padding: 10px;
+  width: 290.5px;
+  /* padding: 10px; */
   border-radius: 8px;
   background-color: #F4F9FF;
   border-radius: 8px;
@@ -207,68 +264,104 @@ width: 100%;
   border-width: 1px;
   border: 1px solid #EAEBFB;
   height: 52px;
-  border-radius: 8px;
-  border-width: 1px;
-  padding-right: 16px;
-  padding-left: 16px;
 }
  #departments{
     width: 170.2857208251953px;
     padding: 10px;
     border-radius: 8px;
-    background-color: #F4F9FF;
+    background-color: #f4f9ff00;
     border-radius: 8px;
     padding-left: 12px;
     border-width: 1px;
-    border: 1px solid #EAEBFB;
+    border:none;
     height: 52px;
     border-radius: 8px;
     border-width: 1px;
     padding-right: 16px;
     padding-left: 16px;
 }
+
 .inp-sub{
     display: flex;
-    border: 1px solid #EAEBFB;
-    background:#F4F9FF;
+    /* border: 1px solid #EAEBFB; */
+    background:#ffffff00;
     width: 290.5px;
     height: 52px;
     border-radius: 8px;
-    padding-left: 12px;
+    /* padding-left: 12px; */
     border-width: 1px;
 }
+
+/* profit-container input nested divs names inp-subs */
 .inp-subs {
     display: flex;
     border: 1px solid #EAEBFB;
     background: #F4F9FF;
     border-radius:8px;
-    padding-left: 12px;
+    /* padding-left: 12px; */
     border-width: 1px;
+    width: 100%;
+}
+.inp-subs .number-input-group{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.inp-subs .number-input-group input[type="number"]{
+  padding-left: 12px;
+  font-family: Inter;
+  font-weight: 400;
+  font-size: 18px;
 }
 select {
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 16px;
+    font-size: 18px;
     background-color: #fff; /* Match your input background */
     color: #333; /* Match your input text color */
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
 }
-/* date field */
-#myDate {
-    border: 1px solid #EAEBFB;
-    background: #F4F9FF;
-    border-radius: 4px;
-    font-size: 16px;
-    width: 332.5px;
-    border-radius: 8px;
-    padding-left: 12px;
-    border-width: 1px;
-  }
+select::-ms-expand {
+  display: none;
+}
+
+.work_weekends,.departments {
+  position: relative;
+  display: inline-block; 
+}
+
+.work_weekends::after ,.departments::after{
+  content: URL('./images/downarrow1px.png');
+  position: absolute;
+  bottom: 10%;
+  right: 12px; 
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: #333; 
+  font-size: 12px; 
+}
+.departments::after{
+  bottom: 20%;
+}
+
+
+
+
+.profit_target, .resource_information{
+  width: 768px;
+}
+.expectedprofit, .teammember_count{
+  width: 100%;
+}
+
   /* input numbers fields */
 
-  .teammember_infos .temmember_table_div tbody .number-input-group{
-    background: #F4F9FF;
-  }
+
   .number-input-group {
     display: flex;
     /* background: #F4F9FF; */
@@ -304,6 +397,7 @@ select {
   .input-controls{
     display: flex;
     justify-content:flex-end;
+    height: 100%;
   }
   
   .input-controls button {
@@ -312,89 +406,98 @@ select {
     justify-content: center;
     padding: 8px 12px;
     border: none;
-    background-color: #1d1a1a;
-    color: #555;
+    color: #324562;
     cursor: pointer;
     font-size: 1em;
     outline: none;
-  }
-  
-  .input-controls button.minus-button {
-    /* border-right: 1px solid #ccc; */
-    background-color: transparent;
-    color: #324562; /* Blue color for the plus */
-    width: 35px;
-  }
-  .input-controls button.minus-button:hover{
-    background-color: transparent;
-    color:#171717
-  }
-  
-  .input-controls button.plus-button {
-    background-color: transparent; /* Light blueish background */
-    color: #324562; /* Blue color for the plus */
-    border-radius: 2px;
-    
-  }
-  
-  .input-controls button:hover {
-    background-color: #eee;
-  }
-  
-  .input-controls button.plus-button:hover {
-    background-color: transparent;
-    color: #065377;
-  }
-  
-  .input-controls button:active {
-    background-color: #ddd;
-  }
-  
-  .input-controls button.plus-button:active {
-    background-color: #9cdff1;
-  }
+    background: #ffffff00;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 24px;
 
-
+  }
+  
+  /* .input-controls button.minus-button {background-color: transparent;color: #324562;width: 35px;}
+  .input-controls button.minus-button:hover{background-color: transparent;color:#171717}
+  .input-controls button.plus-button {background-color: transparent;color: #324562;border-radius: 2px;}
+  .input-controls button:hover {background-color: #eee;}
+  .input-controls button.plus-button:hover {background-color: transparent;color: #065377;}
+  .input-controls button:active {background-color: #ddd;}
+  .input-controls button.plus-button:active {background-color: #9cdff1;} */
 
   /* team member table info input side */
 
   .teammember_infos {
-    width: 100%; /* Adjust as needed */
-    overflow-x: hidden; /* Enable horizontal scrolling if the table is too wide */
+    width: 100%;
+    overflow-x: hidden; 
     overflow-y: hidden;
-    margin-bottom: 20px; /* Add some space below the table container */
+    margin-bottom: 20px; 
   }
-  
+  .teammember_infos .temmember_table_div tbody td .number-input-group{
+    background: #F4F9FF;
+    width: 90%;
+    border: 1px solid #eaebfb;
+  }
+  .teammember_infos .temmember_table_div tbody td:last-child .number-input-group{
+    width: 100%;
+  }
+
   .teammember_infos table {
     width: 100%;
     border-collapse: collapse;
     font-family: sans-serif;
-    /* border: 1px solid #ddd; */
   }
   td{
-    /* width: 171px !important; */
+    /* padding-left: 12px; */
+    width: 171px !important;
   }
-  .teammember_infos th,
+  .teammember_infos .temmember_table_div tatble thead tr th,
+  .teammember_infos .temmember_table_div tatble tbody tr td{
+    width: 170.29px;
+  }
+
   .teammember_infos td {
     /* border: 1px solid #ddd; */
     text-align: left;
     white-space: nowrap; /* Prevent text wrapping in cells */
     padding-top: 17px;
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 17px;
+    height: 52px;
   }
-  
+  .teammember_infos .temmember_table_div table tbody tr td{
+    margin-right: 24px;
+    width: 170.29px;
+  }
+  .teammember_infos .temmember_table_div table tbody tr td:last-child{
+    margin-right: 0;
+  }
+
+  .teammember_infos .temmember_table_div table tbody tr td div input[type="text"],
+  .teammember_infos .temmember_table_div table tbody tr td div input[type="number"]
+  { 
+    width: 90%;
+  }
+  .teammember_infos .temmember_table_div table tbody tr td .departments{
+    width: 90%;
+    border: 1px solid #EAEBFB;
+    border-radius: 12px;
+    border-width: 1px;
+    background-color: #F4F9FF;
+  }
+
   .teammember_infos th {
     /* background-color: #000; */
     color: #FFFFFF;
-    font-size: 14px;
-    font-weight: bold;
-    width: 166.8571319580078;
-    height: 44px;
-    gap: 24px;
-    padding-top: 10px;
-    padding-right: 8px;
-    padding-bottom: 10px;
-    padding-left: 8px;
+    text-align: left;
+    width: 170.29px;
+    height: 52px;
+    padding: 10px 8px 10px 24px;
     background: #27374D;    
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 16px;
   }
 .Team_Daily_Capacity{
   width: 576.667px;   
@@ -423,22 +526,17 @@ select {
   margin-left: 25px;
 }
   
-  .teammember_infos tbody tr:nth-child(even) {
-    padding-bottom: 20px;
+  .teammember_infos .temmember_table_div table tbody tr td{
+    padding-bottom: 17px;
   }
-  .teammember_infos thead tr th:nth-child(1) {
+  .teammember_infos .temmember_table_div table thead tr th:nth-child(1) {
     border-radius: 12px 0px 0px 12px;
 }
 
-.teammember_infos thead tr th:nth-last-child(1) {
+.teammember_infos  .temmember_table_div table thead tr th:nth-last-child(1) {
     border-radius: 0px 12px 12px 0px;
 }
-  .row-bg{
-  }
-  /* Optional styling to match the image's background (adjust as needed) */
-  /* .teammember_infos table {
-    background-color: #f5f5dc; /* Beige background 
-    } */
+
   
   /* Styling for the numeric input-like columns */
   .teammember_infos td:nth-child(4), /* Hours / Day */
@@ -446,9 +544,6 @@ select {
   .teammember_infos td:nth-child(6), /* Billable Rate */
   .teammember_infos td:nth-child(7)  /* Billable Ratio */
   {
-    /* This is a basic attempt to mimic the input look */
-    /* For actual interactive inputs, use <input type="number"> */
-    /* For just visual representation, you can style a span or div */
     text-align: center; /* Center the numbers */
   }
   
@@ -537,6 +632,7 @@ select {
     padding: 12px 15px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    height: 52px;
 }
 
 .breakdown-table th {
@@ -710,20 +806,6 @@ select {
   line-height: 2.1;
   letter-spacing: -0.6%;
   vertical-align: middle;
-}
-/* start_date */
-.start_date{
-  width: 332.5px;
-}
-.start_date p{
-    font-size: 16px;
-    line-height: 100%;
-    letter-spacing: -0.6%;
-    vertical-align: middle;
-    text-transform: capitalize;
-    color: #333333;
-    text-align: left;
-    padding: 16px 0px;
 }
 
 /* The Modal (hidden by default) */
@@ -930,7 +1012,7 @@ select {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     font-family: Inter;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 20px;
     color: #6D6A6A;
   
@@ -943,7 +1025,7 @@ select {
     padding-bottom: 24px;
     font-family: Inter;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
   }
   .projectDetailInfo .projinfoboxes2{
     width: 100%;
@@ -957,13 +1039,13 @@ select {
     padding: 10px 0;
     font-family: Inter;
     font-weight: 500;
-    font-size: 20px; 
+    font-size: 18px; 
     color: #232428;
   }
   .projectDetailInfo .projinfoboxes2 label span{
     font-family: Inter;
     font-weight: 500;
-    font-size: 20px;
+    font-size: 18px;
     color: #7D7D7D;
   }
   .projectDetailInfo .projinfoboxes2 textarea{
@@ -976,7 +1058,7 @@ select {
     background: #FFFFFF;
     border: 1px solid #E2E8F0;
     font-family: Inter;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 20px;
     color: #6D6A6A;
   }

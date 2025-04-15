@@ -1,9 +1,13 @@
 var outputDatares,dataToSend;
 var userDetailKey = 'userDetail';
-const dateInput = document.getElementById('myDate');
-dateInput.addEventListener('change', function() {
-  const selectedDate = dateInput.value; // Returns date in YYYY-MM-DD format
-  // console.log('Selected date:', selectedDate);
+
+document.addEventListener('DOMContentLoaded', () => {
+  const dateInput = document.getElementById('myDate');
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+  dateInput.value = `${year}-${month}-${day}`;
 });
 
 // dateinput = document.getElementById('myDate');
