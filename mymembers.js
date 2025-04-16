@@ -150,7 +150,14 @@ function populateMembersdash(membersData){
             memberEditButton.innerHTML = '<span class="member-edit-icon"><img src="./images/editicon.png" width="20" height="20"></span> Edit';
             memberEditButton.addEventListener('click', () => {
                 // console.log(mrow.id);
-                showcancelcheckbuttons(mrow.id,"for-edit","","");
+                let editpassobj = {
+                    memberId: member._id,
+                    memberName: member.memberName,
+                    memberRole: member.memberRole,
+                    memberDepartment: member.memberDepartment,
+                    memberCostperhrs: member.memberCostperhrs,
+                  };
+                showcancelcheckbuttons(mrow.id,"for-edit",emailidfromresponse,editpassobj);
             //   handlememberEdit(`member-${index}`);
             });
             const memberDeleteButton = document.createElement('button');
@@ -199,21 +206,94 @@ document.getElementById('logo-area').addEventListener('click', function(){
 function showcancelcheckbuttons(rowID,forwhichaction,emailval,memjson){
     const membertbody = document.getElementById('memberlistbody');
     const tbodyrow = membertbody.querySelector(`#${rowID}`);
-    console.log(tbodyrow);
+    // console.log(tbodyrow);
     const lastCellIndex = tbodyrow.cells.length - 1;
     if (lastCellIndex >= 0) {
         if(forwhichaction == "for-delete"){
             tbodyrow.cells[lastCellIndex].innerHTML = `<td><button type="button" class="cancel-button" onclick="thispagereload()">x</button><button type="button" class="check-button" onclick="handlememberDelete('${emailval}','${memjson.memberName}','${memjson.memberRole}','${memjson.memberDepartment}','${memjson.memberCostperhrs}')">Yes delete</button></td>`;
         }
         if(forwhichaction == "for-edit"){
-            tbodyrow.cells[lastCellIndex].innerHTML = `<td><button type="button" class="cancel-button" onclick="thispagereload()">x</button><button type="button" class="check-button" >✓</button></td>`;
+            tbodyrow.innerHTML = `
+            <td>
+                <div class="membername">
+                    <input type="text" class="memberNameInput" value="${memjson.memberName}">
+                </div>
+            </td>
+            <td>
+                <div class="role">
+                    <input type="text" class="memberRoleInput" value="${memjson.memberRole}">
+                </div>
+            </td>
+            <td>
+                <div class="departments">
+                    <select class="memberDepartmentSelect" name="department">
+                        <option value="Engineer" ${memjson.memberDepartment === 'Engineer' ? 'selected' : ''}>Engineer</option>
+                        <option value="Design" ${memjson.memberDepartment === 'Design' ? 'selected' : ''}>Design</option>
+                        <option value="Product" ${memjson.memberDepartment === 'Product' ? 'selected' : ''}>Product</option>
+                        <option value="Marketing" ${memjson.memberDepartment === 'Marketing' ? 'selected' : ''}>Marketing</option>
+                        <option value="Others" ${memjson.memberDepartment === 'Others' ? 'selected' : ''}>Others</option>
+                    </select>
+                </div>
+            </td>
+            <td>
+                <div class="number-input-group">
+                    <input type="number" class="number-input memberCostInput" id="input1" name="input1" value="${memjson.memberCostperhrs}" step="0.5" min="0" max="100">
+                    <div class="input-controls">
+                        <button type="button" class="minus-button">-</button>
+                        <button type="button" class="plus-button">+</button>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <button type="button" class="cancel-button" onclick="thispagereload()">x</button>
+                <button type="button" class="check-button" onclick="handlememberEdit('${emailval}','${memjson.memberId}')">✓</button>
+            </td>`;
         }
     } else {
       console.warn(`Row with ID "${rowID}" in tbody has no cells.`);
     }
 }
 
+function handlememberEdit(emailVal,moid){
+    let memberNumber = "m"+moid;
+    let newmembRow = document.getElementById(memberNumber);
+    // console.log(newmembRow);
+    const nameInput = newmembRow.querySelector('td div .memberNameInput');
+    const roleInput = newmembRow.querySelector('td div .memberRoleInput');
+    const departmentSelect = newmembRow.querySelector('td div .memberDepartmentSelect');
+    const costInput = newmembRow.querySelector('td div .memberCostInput');
 
+    const nameValue = nameInput.value;
+    const roleValue = roleInput.value;
+    const departmentValue = departmentSelect.value;
+    const costValue = costInput.value;
+    // console.log(memberNumber, nameValue, roleValue, departmentValue, costValue);
+
+    let memberToEdit = {
+        memberoid: moid,
+        memberName: nameValue,
+        memberRole: roleValue,
+        memberDepartment: departmentValue,
+        memberCostperhrs: parseFloat(costValue) 
+    };
+    // console.log("||==||==||==||",memberToEdit);
+    fetch(`https://projection-calc-function.onrender.com/api/edit-memberfrom/${emailVal}`, {
+    // fetch(`http://localhost:3002/api/edit-memberfrom/${emailVal}`, {
+    method: 'PUT',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(memberToEdit),
+    })
+    .then(response => response.json())
+    .then(data => {
+    //   console.log(data);
+        thispagereload();
+    })
+    .catch(error => {
+        console.error('Error deleting member:', error);
+    });
+}
 function handlememberDelete(emailVal,mname,mrole,mdept,mcost){
     // console.log(emailVal);
     let memberToDelete = {
@@ -224,21 +304,21 @@ function handlememberDelete(emailVal,mname,mrole,mdept,mcost){
     };
     // console.log(memberToDelete);
     fetch(`https://projection-calc-function.onrender.com/api/delete-memberfrom/${emailVal}`, {
-        // fetch(`http://localhost:3002/api/delete-memberfrom/${emailVal}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(memberToDelete),
-      })
-        .then(response => response.json())
-        .then(data => {
-        //   console.log(data);
-          thispagereload();
-        })
-        .catch(error => {
-          console.error('Error deleting member:', error);
-        });
+    // fetch(`http://localhost:3002/api/delete-memberfrom/${emailVal}`, {
+    method: 'DELETE',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(memberToDelete),
+    })
+    .then(response => response.json())
+    .then(data => {
+    //   console.log(data);
+        thispagereload();
+    })
+    .catch(error => {
+        console.error('Error deleting member:', error);
+    });
 }
 function handleAddNewMemberRow(memberNumber) {
     memberNumber = "memb"+memberNumber;
