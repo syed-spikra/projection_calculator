@@ -114,7 +114,7 @@ function populateMembersdash(membersData){
         memberslist = membersData[0].memberslist;
         memberslist.forEach((member, index) => {
             const mrow = membersListBody.insertRow();
-            mrow.id = `${_id}`;
+            mrow.id = member._id;
             // const rowmemclsname = `member-row ${member.memberid}`;
             mrow.classList.add("member-row");
 
