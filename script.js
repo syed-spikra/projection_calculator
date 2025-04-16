@@ -14,6 +14,29 @@ document.addEventListener('DOMContentLoaded', () => {
 // dateInput.value = '2025-05-20';
 
 // -------------------------------------------------------------
+// password handling hide show 
+document.addEventListener('DOMContentLoaded', function() {
+  const togglePasswordButtons = document.querySelectorAll('.toggle-password');
+
+  togglePasswordButtons.forEach(button => {
+      button.addEventListener('click', function() {
+          const targetId = this.dataset.target;
+          const passwordInput = document.getElementById(targetId);
+          const buttonText = this.textContent;
+          if (passwordInput) {
+              if (passwordInput.classList.contains('password-masked')) {
+                  passwordInput.classList.remove('password-masked');
+                  this.innerHTML = `<i class='bx bx-hide'></i>`;
+              } else {
+                  passwordInput.classList.add('password-masked');
+                  this.innerHTML = `<i class='bx bxs-hide'></i>`;
+              }
+          }
+      });
+  });
+});
+
+// -------------------------------------------------------------
 // function for all plus minus click event handling
 document.addEventListener('DOMContentLoaded', () => {
     // Attach a single event listener to the document
@@ -368,7 +391,7 @@ function populateDashboard(data) {
 function disenCalculate(){
   let calculateButton = document.getElementById('calcbtn');
   if (!calculateButton) {
-    console.error("Calculate button ID might have been changed, please check");
+    // console.error("Calculate button ID might have been changed, please check");
     return;
   }
 
@@ -400,9 +423,12 @@ document.getElementById('calcbtn').addEventListener('click', (e)=>{
 // modal functions down
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('saveProjectModal');
+    const signinmodal = document.getElementById('signInModal');
     const btn = document.getElementById('signup-btn');
-    const span = document.querySelector('.close-button');
+    const span = document.querySelector('.signup-close-button');
+    const signinclose = document.querySelector('.signin-close-button');
     const signupForm = document.getElementById('signupForm');
+    const signInForm = document.getElementById('signInForm');
     const fullnameInput = document.getElementById('fullname');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
@@ -411,20 +437,33 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailError = document.getElementById('emailError');
     const passwordError = document.getElementById('passwordError');
     const confirmPasswordError = document.getElementById('confirmPasswordError');
+    const signInEmailInput = document.getElementById('signInEmail');
+    const signInPasswordInput = document.getElementById('signInPassword');
+    const signInEmailError = document.getElementById('signInEmailError');
+    const signInPasswordError = document.getElementById('signInPasswordError');
+    const switchToSignUp = document.getElementById('switchToSignUp');
 
     // Function to open the modal
     btn.onclick = function() {
         // if(outputDatares != undefined)
         if(btn.className != "signup-profile")
-          modal.style.display = "block";
+          signinmodal.style.display = "block";
     }
 
-
+    switchToSignUp.onclick = function(){
+      signinmodal.style.display = "none";
+      modal.style.display = "block";
+    }
     // Function to close the modal
     span.onclick = function() {
         modal.style.display = "none";
         resetValidationErrors();
         signupForm.reset();
+    }
+    signinclose.onclick = function(){
+      signinmodal.style.display = "none";
+      resetsigninValidations();
+      signInForm.reset();
     }
 
     // Close modal if user clicks outside of it
@@ -433,6 +472,11 @@ document.addEventListener('DOMContentLoaded', () => {
             modal.style.display = "none";
             resetValidationErrors();
             signupForm.reset();
+        }
+        if(event.target == signinmodal){
+          signinmodal.style.display = "none";
+          resetsigninValidations();
+          signInForm.reset();
         }
     }
 
@@ -443,7 +487,10 @@ document.addEventListener('DOMContentLoaded', () => {
         passwordError.textContent = "";
         confirmPasswordError.textContent = "";
     }
-
+    function resetsigninValidations(){
+      signInEmailError.textContent = "";
+      signInPasswordError.textContent = "";
+    }
     // Function to validate email using regex
     function isValidEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -473,21 +520,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Validate Password
         if (passwordInput.value.trim() === "") {
-            passwordError.textContent = "Password is required.";
-            isValid = false;
+          passwordError.textContent = "Password is required.";
+          isValid = false;
         } else if (passwordInput.value.trim().length < 8) {
-            passwordError.textContent = "Password must be at least 8 characters.";
-            isValid = false;
+          passwordError.textContent = "Password must be at least 8 characters.";
+          isValid = false;
+        } else {
+          // Regex to check for at least one lowercase, one uppercase, one number, and one symbol
+          const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+          if (!passwordRegex.test(passwordInput.value.trim())) {
+              passwordError.textContent = "Password must contain at least 8 characters, 1 lowercase, 1 uppercase, 1 number, and 1 symbol.";
+              isValid = false;
+          }
         }
 
         // Validate Confirm Password
         if (confirmPasswordInput.value.trim() === "") {
-            confirmPasswordError.textContent = "Confirm Password is required.";
-            isValid = false;
+          confirmPasswordError.textContent = "Confirm Password is required.";
+          isValid = false;
         } else if (confirmPasswordInput.value.trim() !== passwordInput.value.trim()) {
             confirmPasswordError.textContent = "Passwords do not match.";
             isValid = false;
         }
+
         if(isValid){
           let userDetail = {
             username: fullnameInput.value.trim(),
@@ -498,6 +553,74 @@ document.addEventListener('DOMContentLoaded', () => {
           // console.log("inside localstorage");
           checkNstoreAllDetails(userDetail.username, userDetail.email, userDetail.password, "from_signup_btn");
         }
+    });
+
+    signInForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Prevent default form submission
+      resetsigninValidations();
+      let isValid = true;
+
+      // Validate Email
+      if (signInEmailInput.value.trim() === "") {
+          signInEmailError.textContent = "Email is required.";
+          isValid = false;
+      } else if (!isValidEmail(signInEmailInput.value.trim())) {
+          signInEmailError.textContent = "Invalid email format.";
+          isValid = false;
+      }
+
+      // Validate Password
+      if (signInPasswordInput.value.trim() === "") {
+          signInPasswordError.textContent = "Password is required.";
+          isValid = false;
+      } else if (signInPasswordInput.value.trim().length < 8) {
+          signInPasswordError.textContent = "Password must be at least 8 characters.";
+          isValid = false;
+      } else {
+          // You might choose to apply the same strong password regex here if desired for sign-in as well
+          // const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{8,}$/;
+          // if (!passwordRegex.test(signInPasswordInput.value.trim())) {
+          //     signInPasswordError.textContent = "Password must contain at least 8 characters, 1 lowercase, 1 uppercase, 1 number, and 1 symbol.";
+          //     isValid = false;
+          // }
+      }
+
+      if (isValid) {
+          const loginUserDetail = {
+              email: signInEmailInput.value.trim(),
+              password: signInPasswordInput.value.trim()
+          };
+          // console.log("Signing in with:", loginUserDetail);
+
+          fetch(`https://projection-calc-function.onrender.com/api/get-loginuser/${signInEmailInput.value.trim()}`, {
+            // fetch(`http://localhost:3002/api/get-loginuser/${signInEmailInput.value.trim()}`, {
+              method: 'GET',
+            })
+            .then(response => response.json())
+            .then(data => {
+              if (data.message=="Exists") {
+                // console.log("||+++||+++||",data);
+                let userDetail = {
+                  username: data.userDetails.fullname,
+                  email: data.userDetails.email,
+                  password: data.userDetails.password
+                };
+                if (userDetail.email === loginUserDetail.email && userDetail.password === loginUserDetail.password) {
+                    // console.log("Sign In Successful!");
+                    localStorage.setItem(userDetailKey,JSON.stringify(userDetail));
+                    signinmodal.style.display="none";
+                    window.location.reload();
+                } else {
+                    signInPasswordError.textContent = "Invalid email or password.";
+                }
+              } else {
+                  signInEmailError.textContent = "User not found. Please sign up.";
+              }
+            })
+            .catch(error => {
+                // console.error('Error deleting member:', error);
+            });
+      }
     });
 });
 
@@ -574,7 +697,7 @@ async function initiatePayment(quantity, currency) {
     const rzp1 = new Razorpay(options);
     rzp1.open();
   } catch (error) {
-    console.error('Payment Error:', error);
+    // console.error('Payment Error:', error);
     // console.log(error.message);
   }
 }
@@ -645,9 +768,32 @@ function userDetailPopupModal(){
   }
 }
 
-function checkNstoreAllDetails(usernameVal, emailVal, passwordVal, ticketfrom){
+async function checkNstoreAllDetails(usernameVal, emailVal, passwordVal, ticketfrom){
 
   if(ticketfrom == "from_signup_btn"){
+    let usercreateData = {
+      name: usernameVal,
+      email: emailVal,
+      password: passwordVal
+    }
+    try {
+      const response = await fetch('https://projection-calc-function.onrender.com/api/createuser', {
+        // const response = await fetch('http://localhost:3002/api/createuser', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(usercreateData)
+      });
+
+      if (response.ok) {
+          const result = await response.json();
+      } else {
+          const error = await response.json();
+      }
+    } catch (error) {
+        // console.error('Fetch error:', error);
+    }
     document.getElementById('saveProjectModal').style.display = "none";
     document.getElementById('signupForm').reset();
     window.location.reload();
@@ -704,11 +850,11 @@ async function sendUserDataToBackend(userData) {
             // Handle success (e.g., show a success message)
         } else {
             const error = await response.json();
-            alert("failed");
+            // alert("failed");
             // console.error('Error sending data:', error);
         }
     } catch (error) {
-        console.error('Fetch error:', error);
+        // console.error('Fetch error:', error);
     }
 }
 

@@ -12,6 +12,39 @@ body{
     box-sizing: border-box;
     font-family: "Inter", sans-serif;
 }
+/* password mask */
+input[type="text"].password-masked {
+  font-family: "password", monospace; 
+  -webkit-text-security: disc; 
+  -moz-text-security: disc; 
+  text-security: disc; 
+}
+
+.password-input-container {
+  position: relative; /* For positioning the button */
+}
+
+.password-input-container input[type="text"].password-masked {
+  padding-right: 70px; /* Make space for the button */
+}
+
+.password-input-container .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  outline: none;
+}
+
+@font-face {
+  font-family: "password";
+  src: local("Arial"); 
+  unicode-range: U+2022; 
+}
 /* navbar */
 .header {
     display: flex;
@@ -82,7 +115,7 @@ body{
   }
 
   .signup-btn {
-    background: #EF8700;
+    background: #E68200;
     border: none;
     color: white;
     /* padding: 8px 16px; */
@@ -99,6 +132,9 @@ body{
     font-size: 16px;
     align-items: center;
     box-shadow: 0px -2px 4px 0px #A96000 inset;
+  }
+  .signup-btn:hover{
+    background: #EF8700;
   }
 /*  */
 .input_container,.output_container,.save_btn{
@@ -849,15 +885,18 @@ select::-ms-expand {
 }
 
 /* modal Close Button */
-.close-button {
+.signup-close-button,
+.signin-close-button {
     color: #aaa;
     float: right;
     font-size: 28px;
     font-weight: bold;
 }
 
-.close-button:hover,
-.close-button:focus {
+.signup-close-button:hover,
+.signin-close-button:hover,
+.signup-close-button:focus,
+signin-close-button:focus {
     color: black;
     text-decoration: none;
     cursor: pointer;
@@ -893,8 +932,8 @@ select::-ms-expand {
     margin-top: 5px;
 }
 
-.signup-button {
-    background-color: #EF8700;
+.signup-button,.signin-button {
+    background-color: #E68200;
     color: white;
     padding: 12px 20px;
     border: none;
@@ -904,12 +943,19 @@ select::-ms-expand {
     font-size: 1em;
     box-shadow: 0px -2px 4px 0px #A96000 inset;
     border-radius: 12px;
+    margin-top: 20px;
 }
 
-.signup-button:hover {
-    background-color: #E68200;
+.signup-button:hover,
+.signin-button:hover{
+    background-color: #EF8700;
 }
-
+.switch-auth{
+  margin-top:20px;
+  font-family: Inter;
+  font-size: 14px;
+  color: #282828;
+}
 
 .toggle-theme{
     display: flex;

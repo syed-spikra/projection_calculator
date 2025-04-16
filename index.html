@@ -527,10 +527,37 @@
         </div>
      </div>
 
+
+     <!-- signin modal -->
+
+     <div id="signInModal" class="modal">
+        <div class="modal-content">
+            <span class="signin-close-button">&times;</span>
+            <h2>Sign In</h2>
+            <form id="signInForm">
+                <div class="form-group">
+                    <label for="signInEmail">Email:</label>
+                    <input type="email" id="signInEmail" name="signInEmail" required>
+                    <div class="error-message" id="signInEmailError"></div>
+                </div>
+                <div class="form-group">
+                    <label for="signInPassword">Password:</label>
+                    <div class="password-input-container">
+                        <input type="text" id="signInPassword" name="signInPassword" class="password-masked" required>
+                        <button type="button" class="toggle-password" data-target="signInPassword"><i class='bx bxs-hide'></i></button>
+                    </div>
+                    <div class="error-message" id="signInPasswordError"></div>
+                </div>
+                <button type="submit" class="signin-button">Sign In</button>
+            </form>
+            <p class="switch-auth">Don't have an account? <a href="#" id="switchToSignUp">Sign Up</a></p>
+        </div>
+    </div>
+
     <!-- save project modal -->
     <div id="saveProjectModal" class="modal">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
+            <span class="signup-close-button">&times;</span>
             <h2>Sign Up</h2>
             <form id="signupForm">
                 <div class="form-group">
@@ -545,12 +572,18 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password:</label>
-                    <input type="text" id="password" name="password" required>
+                    <div class="password-input-container">
+                        <input type="text" id="password" name="password" class="password-masked" required>
+                        <button type="button" class="toggle-password" data-target="password"><i class='bx bxs-hide'></i></button>
+                    </div>
                     <div class="error-message" id="passwordError"></div>
                 </div>
                 <div class="form-group">
                     <label for="confirmPassword">Confirm Password:</label>
-                    <input type="text" id="confirmPassword" name="confirmPassword" required>
+                    <div class="password-input-container">
+                        <input type="text" id="confirmPassword" name="confirmPassword" class="password-masked" required>
+                        <button type="button" class="toggle-password" data-target="confirmPassword"><i class='bx bxs-hide'></i></button>
+                    </div>
                     <div class="error-message" id="confirmPasswordError"></div>
                 </div>
                 <!-- <div class="form-group">
@@ -558,7 +591,7 @@
                     <input type="text" id="projectTitle" name="projectTitle">
                     <div class="error-message" id="projectTitleError"></div>
                 </div> -->
-                <button type="submit" class="signup-button">Sign Up & Save Project</button>
+                <button type="submit" class="signup-button">Sign Up</button>
             </form>
         </div>
     </div>
