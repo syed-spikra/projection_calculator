@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-.projectstable,.memberstable{
+.projectstable{
     padding: 32px;
     width: 100%;
 }
-.memberstable .subtitle_container .subtitle_name,.projectstable .subtitle_container .subtitle_name{
+.projectstable .subtitle_container .subtitle_name{
     font-family: Inter;
     font-weight: 600;
     font-size: 24px;
@@ -11,33 +11,35 @@
 
 
 
-.memberstable .project_table_div tbody .number-input-group,.projects_info .project_table_div tbody .number-input-group{
+.projects_info .project_table_div tbody .number-input-group{
     background: #F4F9FF;
   }
   /* team member table info input side */
-  .projects_info,.members_info {
-    width: 100%; /* Adjust as needed */
+  .projects_info{
+    width: 100%; 
     overflow-x: hidden; /* Enable horizontal scrolling if the table is too wide */
     overflow-y: hidden;
     margin-bottom: 20px; /* Add some space below the table container */
   }
   
-  .projects_info table, .members_info table {
+  .projects_info table {
     width: 100%;
     border-collapse: collapse;
     font-family: sans-serif;
      border: 1px solid #b75858;
     /* border-radius: 12px; */
   }
-  .projects_info table thead, .members_info table thead{
+  .projects_info table thead{
     width: 100%;
+    height: 52px;
+  }
+  .projects_info table thead  {
+
   }
 
 
   .projects_info th,
-  .projects_info td,
-  .members_info th,
-  .members_info td
+  .projects_info td
   {
     /* border: 1px solid #ddd; */
     text-align: left;
@@ -45,140 +47,97 @@
     padding-top: 17px;
   }
   
-  .projects_info th,
-  .members_info th {
+  .projects_info th{
     /* background-color: #000; */
     color: #FFFFFF;
     font-size: 16px;
     font-weight: 400;
     width: 166.8571319580078;
-    height: 44px;
+    /* height: 44px; */
     gap: 24px;
-    padding-top: 10px;
-    padding-right: 8px;
-    padding-bottom: 10px;
-    padding-left: 8px;
+    padding-top: 10px 8px;
     background: #27374D;    
   }
   
-  .projects_info tbody tr:nth-child(even),
-  .members_info tbody tr:nth-child(even)
+  .projects_info tbody tr:nth-child(even)
    {
     padding-bottom: 20px;
   }
-  .projects_info thead tr th:nth-child(1),
-  .members_info thead tr th:nth-child(1)
+  .projects_info thead tr th:nth-child(1)
    {
     width: 30%;
     border-radius: 12px 0px 0px 0px;
 }
 
-.projects_info thead tr th:nth-last-child(1),
-.members_info thead tr th:nth-last-child(1)
+.projects_info thead tr th:nth-last-child(1)
  {
     border-radius: 0px 12px 0px 0px;
 }
 
-  /* Optional styling to match the image's background (adjust as needed) */
-  /* .projects_info table {
-    background-color: #f5f5dc; /* Beige background 
-    } */
-  
+
   /* Styling for the numeric input-like columns */
-  .projects_info td:nth-child(4), /* Hours / Day */
-  .projects_info td:nth-child(5), /* Cost Rate ($ / hr) */
-  .projects_info td:nth-child(6), /* Billable Rate */
-  .projects_info td:nth-child(7),  /* Billable Ratio */
-  .members_info td:nth-child(4), 
-  .members_info td:nth-child(5), 
-  .members_info td:nth-child(6), 
-  .members_info td:nth-child(7)  
+  .projects_info td:nth-child(4),
+  .projects_info td:nth-child(5),
+  .projects_info td:nth-child(6),
+  .projects_info td:nth-child(7)
   {
-    /* This is a basic attempt to mimic the input look */
-    /* For actual interactive inputs, use <input type="number"> */
-    /* For just visual representation, you can style a span or div */
-    text-align: center; /* Center the numbers */
+    text-align: center; 
   }
 
 
-
-
-
   /* Style for the entire table */
-.project_table_div table,
-.member_table_div table {
+.project_table_div table{
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0;
-    border-radius: 12px; /* For rounded corners of the table */
-    overflow: hidden; /* To contain the rounded corners */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    border-radius: 12px; 
+    overflow: hidden; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
 }
 
 /* Style for the table header */
-.project_table_div thead,
-.member_table_div thead {
+.project_table_div thead{
     background-color: #2c3e50; /* Dark background color */
     color: white;
     font-weight: bold;
+    height: 52px;
 }
 
-.project_table_div th,
-.member_table_div th {
+.project_table_div th {
     padding: 12px 15px;
     text-align: left;
 }
 
 
 /* Style for the table body rows */
-.project_table_div tbody tr,
-.member_table_div tbody tr {
-    background-color: #ffffff; /* Light background color for rows */
-    transition: background-color 0.3s ease; /* Hover effect */
-    /* border-bottom: 1px solid #E2E8F0 */
+.project_table_div tbody tr{
+    background-color: #ffffff; 
+    transition: background-color 0.3s ease;
 }
 
-
-/*.project_table_div tbody tr:nth-child(even) {
-    background-color: #ecf0f1; /* Slightly different background for even rows } */
-
-.project_table_div tbody tr:hover,
-.member_table_div tbody tr:hover  {
+.project_table_div tbody tr:hover {
     background-color: #F4F9FF;
 }
 
 /* Style for the table data cells */
-.project_table_div td,
-.member_table_div td  {
+.project_table_div td {
     padding: 10px 15px;
     border-bottom: 1px solid #E2E8F0;
 }
 
-.project_table_div tbody tr:last-child td,
-.member_table_div tbody tr:last-child td  {
+.project_table_div tbody tr:first-child td{
+    width: 700px;
+}
+.project_table_div tbody tr:nth-last-child(1) td{
     border-bottom: none; /* Remove border from the last row */
 }
-
-/* Style for the "Open" button */
-/* .open-button {
-    width: 79px;
-    height: 30px;
-    border-radius: 6px;
-    padding: 4px;
-    background: #FFFFFF;
-    box-shadow: 0px 0px 1px 0px #27374DA6;
-    cursor: pointer;
-}
-
-.open-button:hover {
-    background: #ebebeb;
-} */
 
 /* Style for the Project Name cell */
 .project-name-cell{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    /* border: 2px solid black; */
 }
 
 /* Style for the span containing the project title */
@@ -211,9 +170,6 @@
     position: relative;
     /* margin-right: 5px; */
 }
-
-
-
 
 /* Style for the "No saved projects" message */
 .no-projects-cell, .no-members-cell {
@@ -269,4 +225,212 @@
     margin-top: 20px;
     width: 100%;
     padding: 0;
+}
+
+/* members tables */
+.memberstable{
+    padding: 32px;
+    width: 100%;
+}
+.memberstable .subtitle_container .subtitle_name{
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 24px;
+}
+.memberstable .project_table_div tbody .number-input-group{
+    background: #F4F9FF;
+
+}
+.members_info {
+    width: 100%; 
+    overflow-x: hidden; /* Enable horizontal scrolling if the table is too wide */
+    overflow-y: hidden;
+    margin-bottom: 20px; /* Add some space below the table container */
+}
+
+.members_info table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: sans-serif;
+     border: 1px solid #b75858;
+    /* border-radius: 12px; */
+  }
+  .members_info table thead{
+    width: 100%;
+    height: 52px;
+  }
+  .members_info table tbody tr{
+    /* width: 100%; */
+    /* border: 2px solid black; */
+    height: 52px;
+  }
+
+  .members_info table thead tr th{
+    width: 275px;
+  }
+  .members_info table thead tr th:last-child{
+    width: 220px;
+  }
+  .members_info th,
+  .members_info td
+  {
+    /* border: 1px solid #ddd; */
+    text-align: left;
+    white-space: nowrap; /* Prevent text wrapping in cells */
+    padding-top: 17px;
+  }
+  .members_info th {
+    /* background-color: #000; */
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 400;
+    /* width: 166.8571319580078; */
+    height: 44px;
+    gap: 24px;
+    padding-top: 10px;
+    padding-right: 8px;
+    padding-bottom: 10px;
+    padding-left: 8px;
+    background: #27374D;    
+}
+.members_info tbody tr:nth-child(even)
+   {
+    padding-bottom: 20px;
+  }
+  /* .members_info thead tr th:nth-child(1)
+   {
+    width: 30%;
+    border-radius: 12px 0px 0px 0px;
+} */
+.members_info thead tr th:nth-last-child(1)
+{
+    border-radius: 0px 12px 0px 0px;
+}
+.members_info .member_table_div table tbody tr td{
+    width: 275px;
+    /* border: 2px dashed green; */
+}
+.members_info .member_table_div table tbody tr td.member-edel_cell{
+    width: 200px;
+    /* border: 2px dashed rgb(129, 42, 42); */
+}
+/* .members_info .member_table_div table tbody tr td:nth-child(4), 
+.members_info .member_table_div table tbody tr td:nth-child(5), 
+.members_info .member_table_div table tbody tr td:nth-child(6), 
+.members_info .member_table_div table tbody tr td:nth-child(7)  
+{
+text-align: center; 
+} */
+
+.member_table_div table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.member_table_div thead {
+    background-color: #2c3e50;
+    color: white;
+    font-weight: bold;
+}
+
+.member_table_div th {
+    padding: 12px 15px;
+    text-align: left;
+}
+.member_table_div tbody tr {
+    background-color: #ffffff;
+    transition: background-color 0.3s ease;
+}
+.member_table_div tbody tr:hover  {
+    background-color: #F4F9FF;
+}
+.member_table_div tbody td  {
+    padding: 10px 15px;
+    border-bottom: 1px solid #E2E8F0;
+}
+.member_table_div tbody tr:nth-last-child(1) td  {
+    border-bottom: none;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 16px;
+    background-color: #F4F7F9;
+}
+
+.edit-member-button{
+    width: 69px;
+    height: 32px;
+    border-radius: 6px;
+    padding: 6px 8px 6px 7px;
+    box-shadow: 0px 0px 1px 0px #27374DA6;
+    background: #FFFFFF;
+    border: none;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 16px;
+float: left;
+margin-right: 20px;
+    cursor: pointer;
+}
+.edit-member-button span{
+    padding: 0;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 5px;
+}
+.delete-member-button{
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    padding: 4px;
+    box-shadow: 0px 0px 1px 0px #27374DA6;
+    background: #FFFFFF;
+    border: none;
+    cursor: pointer;
+}
+.member-edel_cell{
+    /* border: 2px dashed green; */
+    padding: 210px 0px;
+    float: left;
+}
+.addmemberbuttonrow{
+    cursor: pointer;
+}
+
+
+.cancel-button{
+    width: 97px;
+height: 52px;
+border-radius: 12px;
+gap: 10px;
+padding-top: 17px;
+padding-right: 12px;
+padding-bottom: 17px;
+padding-left: 12px;
+background: #DFE3ED;
+color:black;
+border: none;
+cursor: pointer;
+}
+.check-button{
+    width: 97px;
+height: 52px;
+border-radius: 12px;
+gap: 10px;
+padding-top: 17px;
+padding-right: 12px;
+padding-bottom: 17px;
+padding-left: 12px;
+background: #DD2C46;
+color:white;
+border: none;
+cursor: pointer;
+}
+
+.memberDepartmentSelect{
+    width: 275px;
 }

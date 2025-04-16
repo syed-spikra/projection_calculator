@@ -361,7 +361,7 @@ function populateProjectDashboard(data,projinputhrs) {
     // Project Timeline Projection
     teamDailyCapacityDisplay.textContent = `${processData.teamDailyCapacity} hours/day`;
     projectedDurationDisplay.textContent = `${(processData.projectedDuration).toFixed(1)} days`;
-    projectedEndDateDisplay.textContent = processData.projectedEndDate;
+    projectedEndDateDisplay.textContent = (processData.projectedEndDate.split("T"))[0];
 
     // Project Dashboard
     totalHoursDisplay.textContent = totalProjectHoursInput;

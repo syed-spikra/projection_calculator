@@ -275,7 +275,7 @@ width: 100%;
   border: 1px solid #EAEBFB;
   height: 52px;
 }
- #departments{
+ #departments,.memberDepartmentSelect{
     width: 100%;
     padding: 10px;
     border-radius: 8px;
@@ -341,12 +341,12 @@ select::-ms-expand {
   display: none;
 }
 
-.work_weekends,.departments {
+.work_weekends,.departments,.memberDepartmentSelect {
   position: relative;
   display: inline-block; 
 }
 
-.work_weekends::after ,.departments::after{
+.work_weekends::after ,.departments::after,.memberDepartmentSelect::after{
   content: URL('./images/downarrow1px.png');
   position: absolute;
   bottom: 10%;
@@ -356,7 +356,7 @@ select::-ms-expand {
   color: #333; 
   font-size: 12px; 
 }
-.departments::after{
+.departments::after,.memberDepartmentSelect::after{
   bottom: 20%;
 }
 
@@ -458,10 +458,9 @@ select::-ms-expand {
     border-collapse: collapse;
     font-family: sans-serif;
   }
-  td{
+  /* td{
     /* padding-left: 12px; */
-    width: 171px !important;
-  }
+    /* width: 171px !important; }*/
   .teammember_infos .temmember_table_div tatble thead tr th,
   .teammember_infos .temmember_table_div tatble tbody tr td{
     width: 170.29px;
@@ -491,7 +490,8 @@ select::-ms-expand {
     width: 90%;
     font-size: 16px;
   }
-  .teammember_infos .temmember_table_div table tbody tr td .departments{
+  .teammember_infos .temmember_table_div table tbody tr td .departments,
+  .memberDepartmentSelect{
     width: 90%;
     border: 1px solid #EAEBFB;
     border-radius: 12px;
