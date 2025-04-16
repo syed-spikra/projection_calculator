@@ -149,7 +149,7 @@ function populateMembersdash(membersData){
             memberEditButton.classList.add('edit-member-button');
             memberEditButton.innerHTML = '<span class="member-edit-icon"><img src="./images/editicon.png" width="20" height="20"></span> Edit';
             memberEditButton.addEventListener('click', () => {
-                console.log(mrow.id);
+                // console.log(mrow.id);
                 showcancelcheckbuttons(mrow.id,"for-edit","","");
             //   handlememberEdit(`member-${index}`);
             });
@@ -158,7 +158,7 @@ function populateMembersdash(membersData){
             memberDeleteButton.classList.add('delete-member-button');
             memberDeleteButton.innerHTML = '<span class="member-delete-icon"><img src="./images/deleteicon.png" width="20" height="20"></span>';
             memberDeleteButton.addEventListener('click', () => {
-                console.log(mrow.id);
+                // console.log(mrow.id);
                 let deletepassobj = {
                     memberName: member.memberName,
                     memberRole: member.memberRole,
@@ -178,7 +178,7 @@ function populateMembersdash(membersData){
         addmemberfromtable.colSpan = 5; 
         addmemberfromtable.textContent = '+ Add members';
         addmemberfromtable.addEventListener('click', ()=>{
-            console.log("member added", memberslist.length);
+            // console.log("member added", memberslist.length);
             addnewMember(memberslist.length);
         })
         addmemberfromtable.classList.add('add-newmember-cell');
@@ -215,14 +215,14 @@ function showcancelcheckbuttons(rowID,forwhichaction,emailval,memjson){
 
 
 function handlememberDelete(emailVal,mname,mrole,mdept,mcost){
-    console.log(emailVal);
+    // console.log(emailVal);
     let memberToDelete = {
         memberName: mname,
         memberRole: mrole,
         memberDepartment: mdept,
         memberCostperhrs: mcost,
     };
-    console.log(memberToDelete);
+    // console.log(memberToDelete);
     fetch(`https://projection-calc-function.onrender.com/api/delete-memberfrom/${emailVal}`, {
         // fetch(`http://localhost:3002/api/delete-memberfrom/${emailVal}`, {
         method: 'DELETE',
@@ -233,7 +233,7 @@ function handlememberDelete(emailVal,mname,mrole,mdept,mcost){
       })
         .then(response => response.json())
         .then(data => {
-          console.log(data);
+        //   console.log(data);
           thispagereload();
         })
         .catch(error => {
@@ -243,7 +243,7 @@ function handlememberDelete(emailVal,mname,mrole,mdept,mcost){
 function handleAddNewMemberRow(memberNumber) {
     memberNumber = "memb"+memberNumber;
     let newmembRow = document.getElementById(memberNumber);
-    console.log(newmembRow);
+    // console.log(newmembRow);
     const nameInput = newmembRow.querySelector('td div .memberNameInput');
     const roleInput = newmembRow.querySelector('td div .memberRoleInput');
     const departmentSelect = newmembRow.querySelector('td div .memberDepartmentSelect');
@@ -269,7 +269,7 @@ function handleAddNewMemberRow(memberNumber) {
             cost_rate: parseFloat(costValue),
         }
     }
-    console.log("==========",sendingadddata);
+    // console.log("==========",sendingadddata);
 
     fetch(`https://projection-calc-function.onrender.com/api/add-member-foruser`, {
     // fetch(`http://localhost:3002/api/add-member-foruser`, {
@@ -281,7 +281,7 @@ function handleAddNewMemberRow(memberNumber) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         thispagereload();
     })
     .catch(error => {
@@ -343,7 +343,7 @@ function cancelnewmemberrow(){
     addmemberfromtable.textContent = '+ Add members';
     addmemberfromtable.addEventListener('click', ()=>{
         let memberslist = allmembersData[0].memberslist;
-        console.log("member added", memberslist.length);
+        // console.log("member added", memberslist.length);
         addnewMember(memberslist.length, );
     })
     addmemberfromtable.classList.add('add-newmember-cell');
