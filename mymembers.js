@@ -114,7 +114,7 @@ function populateMembersdash(membersData){
         memberslist = membersData[0].memberslist;
         memberslist.forEach((member, index) => {
             const mrow = membersListBody.insertRow();
-            mrow.id = member._id;
+            mrow.id = "m"+member._id;
             // const rowmemclsname = `member-row ${member.memberid}`;
             mrow.classList.add("member-row");
 
@@ -199,7 +199,7 @@ document.getElementById('logo-area').addEventListener('click', function(){
 function showcancelcheckbuttons(rowID,forwhichaction,emailval,memjson){
     const membertbody = document.getElementById('memberlistbody');
     const tbodyrow = membertbody.querySelector(`#${rowID}`);
-    
+    console.log(tbodyrow);
     const lastCellIndex = tbodyrow.cells.length - 1;
     if (lastCellIndex >= 0) {
         if(forwhichaction == "for-delete"){
