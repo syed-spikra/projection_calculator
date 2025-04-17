@@ -898,3 +898,9 @@ function curruserlogout(){
   localStorage.removeItem(userDetailKey);
   window.location.reload();
 }
+
+
+document.getElementById('pay-btn').addEventListener('click',()=>{
+  window.location.href = "https://pages.razorpay.com/entask";
+  
+})
