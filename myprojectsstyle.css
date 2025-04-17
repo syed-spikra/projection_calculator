@@ -10,7 +10,27 @@
 }
 
 
-
+#redirectionbutton .newestimate-btn .redirect-home {
+    width: 171px;
+    height: 44px;
+    /* margin-top: 440px; */
+    margin-left: 58px;
+    border-radius: 12px;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #DD2C46;
+    color : #fff;
+    box-shadow: -1px -1px 2px 0px #73202C inset;
+    border: none;
+    font-family: Inter;
+    font-weight: 500;
+    font-size: 18px;
+    align-items: center;
+    cursor: pointer;
+}
+#redirectionbutton .newestimate-btn .redirect-home:hover{
+    background:#ED1837;
+}
 .projects_info .project_table_div tbody .number-input-group{
     background: #F4F9FF;
   }

@@ -314,14 +314,15 @@ function displayProjectDetails(projectID){
     let totprojhrs = passingData.projectDetails.projectinput.totalProjectHours;
     let projOutput= passingData.projectDetails.projectoutput;
     populateProjectDashboard(projOutput,totprojhrs);
-
-
 }
 
 document.getElementById('logo-area').addEventListener('click', function(){
     window.location.href = "index.html";
 })
 
+document.getElementById('redirect-home').addEventListener('click', function(){
+    window.location.href = "index.html";
+})
 document.getElementById('backToProjects').addEventListener('click', function() {
     document.getElementById('projectDetailsContainer').style.display = 'none';
     document.getElementById('projects_info').style.display = 'block';
