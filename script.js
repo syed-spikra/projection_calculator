@@ -1,6 +1,6 @@
 var outputDatares,dataToSend;
 var userDetailKey = 'userDetail';
-
+var totalcredit;
 document.addEventListener('DOMContentLoaded', () => {
   const dateInput = document.getElementById('myDate');
   const today = new Date();
@@ -440,9 +440,11 @@ document.getElementById('calcbtn').addEventListener('click', (e)=>{
 document.addEventListener('DOMContentLoaded', () => {
     const modal = document.getElementById('saveProjectModal');
     const signinmodal = document.getElementById('signInModal');
+    const paymentmodal = document.getElementById('paymentModal');
     const btn = document.getElementById('signup-btn');
     const span = document.querySelector('.signup-close-button');
     const signinclose = document.querySelector('.signin-close-button');
+    const paymentclose = document.querySelector('.payment-close-button');
     const signupForm = document.getElementById('signupForm');
     const signInForm = document.getElementById('signInForm');
     const fullnameInput = document.getElementById('fullname');
@@ -470,6 +472,7 @@ document.addEventListener('DOMContentLoaded', () => {
       signinmodal.style.display = "none";
       modal.style.display = "block";
     }
+
     // Function to close the modal
     span.onclick = function() {
         modal.style.display = "none";
@@ -481,7 +484,9 @@ document.addEventListener('DOMContentLoaded', () => {
       resetsigninValidations();
       signInForm.reset();
     }
-
+    paymentclose.onclick = function() {
+      paymentmodal.style.display = "none";
+    }
     // Close modal if user clicks outside of it
     window.onclick = function(event) {
         if (event.target == modal) {
@@ -644,89 +649,88 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ---------------------------------------------------------------
 // functions for payments orders confirmation
-async function initiatePayment(quantity, currency) {
-  const tokensToBuy = quantity * 5;
-  let amount;
+// async function initiatePayment(quantity, currency) {
+//   const tokensToBuy = quantity * 5;
+//   let amount;
 
-  // if (currency === 'INR') {
-  //   amount = Math.round((quantity * 431.85) * 100);
-  // } else if (currency === 'USD') {
-  //   amount = quantity * 5 * 100;
-  // } else {
-  //   console.log('Unsupported currency');
-  //   return;
-  // }
+//   // if (currency === 'INR') {
+//   //   amount = Math.round((quantity * 431.85) * 100);
+//   // } else if (currency === 'USD') {
+//   //   amount = quantity * 5 * 100;
+//   // } else {
+//   //   console.log('Unsupported currency');
+//   //   return;
+//   // }
 
-  try {
-    const response = await fetch('/api/payment/create-order', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ quantity: quantity, currency: currency }),
-    });
+//   try {
+//     const response = await fetch('/api/payment/create-order', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//       },
+//       body: JSON.stringify({ quantity: quantity, currency: currency }),
+//     });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.error || 'Failed to create order');
-    }
+//     if (!response.ok) {
+//       const errorData = await response.json();
+//       throw new Error(errorData.error || 'Failed to create order');
+//     }
 
-    const order = await response.json();
-    // console.log('Razorpay Order:', order);
+//     const order = await response.json();
+//     // console.log('Razorpay Order:', order);
 
-    const options = {
-      key: 'YOUR_RAZORPAY_KEY_ID', // Replace with your actual Key ID (public)
-      amount: order.amount,
-      currency: order.currency,
-      name: 'Project Profitablity Estimation',
-      description: `Purchase of ${tokensToBuy} Tokens`,
-      order_id: order.id,
-      handler: async function (response) {
-        // console.log('Payment Response:', response);
-        const verificationResponse = await fetch('/api/payment/verify-payment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ ...response, quantity: quantity }), // Send quantity for verification
-        });
+//     const options = {
+//       key: 'YOUR_RAZORPAY_KEY_ID', // Replace with your actual Key ID (public)
+//       amount: order.amount,
+//       currency: order.currency,
+//       name: 'Project Profitablity Estimation',
+//       description: `Purchase of ${tokensToBuy} Tokens`,
+//       order_id: order.id,
+//       handler: async function (response) {
+//         // console.log('Payment Response:', response);
+//         const verificationResponse = await fetch('/api/payment/verify-payment', {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify({ ...response, quantity: quantity }), // Send quantity for verification
+//         });
 
-        if (verificationResponse.ok) {
-          const verificationData = await verificationResponse.json();
-          // console.log(verificationData.message || `Payment successful! ${tokensToBuy} tokens credited.`);
-          // TODO: Update your frontend UI (e.g., show updated token balance)
-        } else {
-          const errorData = await verificationResponse.json();
-          // console.log(errorData.error || 'Payment verification failed');
-        }
-      },
-      prefill: {
-        name: 'Project Profitability Estimator', 
-        email: '', 
-        contact: '', 
-      },
-      theme: {
-        color: '#3399cc', 
-      },
-    };
+//         if (verificationResponse.ok) {
+//           const verificationData = await verificationResponse.json();
+//           // console.log(verificationData.message || `Payment successful! ${tokensToBuy} tokens credited.`);
+//           // TODO: Update your frontend UI (e.g., show updated token balance)
+//         } else {
+//           const errorData = await verificationResponse.json();
+//           // console.log(errorData.error || 'Payment verification failed');
+//         }
+//       },
+//       prefill: {
+//         name: 'Project Profitability Estimator', 
+//         email: '', 
+//         contact: '', 
+//       },
+//       theme: {
+//         color: '#3399cc', 
+//       },
+//     };
 
-    const rzp1 = new Razorpay(options);
-    rzp1.open();
-  } catch (error) {
-    // console.error('Payment Error:', error);
-    // console.log(error.message);
-  }
-}
-
-document.getElementById('buy-tokens').addEventListener('click', () => {
-  const quantity = parseInt(document.getElementById('token-quantity').value);
-  if (!isNaN(quantity) && quantity > 0) {
-    const currency = 'INR'; // Or 'USD' based on your logic
-    initiatePayment(quantity, currency);
-  } else {
-    // console.log('Please enter a valid quantity.');
-  }
-});
+//     const rzp1 = new Razorpay(options);
+//     rzp1.open();
+//   } catch (error) {
+//     // console.error('Payment Error:', error);
+//     // console.log(error.message);
+//   }
+// }
+// document.getElementById('buy-tokens').addEventListener('click', () => {
+//   const quantity = parseInt(document.getElementById('token-quantity').value);
+//   if (!isNaN(quantity) && quantity > 0) {
+//     const currency = 'INR'; // Or 'USD' based on your logic
+//     initiatePayment(quantity, currency);
+//   } else {
+//     // console.log('Please enter a valid quantity.');
+//   }
+// });
 
 
 // onchange for the projectdetailinfo container
@@ -761,7 +765,7 @@ function checkProjectDetailInfo(){
     saveprojbtn.classList.add('saveprojbtn');
   } else {
     saveprojbtn.classList.remove('saveprojbtn');
-    saveprojbtn.innerHTML = "Save Project";
+    saveprojbtn.innerHTML = "Save Projedaccct";
     saveprojbtn.classList.add('disable-saveprojbtn');
   }
 }
@@ -779,8 +783,10 @@ function userDetailPopupModal(){
     // console.log("not stored");
     let signupmodal = document.getElementById('saveProjectModal');
     signupmodal.style.display = 'block';
-  }
-  else{
+  }else if(totalcredit <= 0){
+    let paymentmodal = document.getElementById('paymentModal');
+    paymentmodal.style.display = "block";
+  }else{
     checkNstoreAllDetails(values.username, values.email, values.password, "from_save_btn");
   }
 }
@@ -902,6 +908,30 @@ function checkcurrUser(){
     dropdown.addEventListener('mouseout',()=>{
       dropdown.style.display = 'none';
     })
+    let fetchUrl = 'https://projection-calc-function.onrender.com/api/get-tokens-count/'+values.email;
+    // let fetchUrl = 'http://localhost:3002/api/get-tokens-count/'+values.email;
+    fetch(fetchUrl,{
+      method: 'GET',
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`); 
+      }
+      return response.json();
+    })
+    .then(data => {
+      if(data.message == "Success"){
+        document.getElementsByClassName('tokens-remian')[0].style.display = "block";
+        document.getElementById('token-count').innerHTML = data.creditcount+ " Left";
+        totalcredit = data.creditcount || 0;
+      }
+      else{
+        document.getElementsByClassName('tokens-remian')[0].style.display = "none";
+      }
+    })
+    .catch(error => {
+      console.error('API call failed:', error);
+    });
   }
 }
 
@@ -920,5 +950,4 @@ function curruserlogout(){
 
 document.getElementById('pay-btn').addEventListener('click',()=>{
   window.location.href = "https://pages.razorpay.com/entask";
-  
 })

@@ -18,15 +18,15 @@
           </div>
         </div>
         <div class="actions">
-          <div class="tokens-remian" style="display: none;">
+          <div class="tokens-remian" id="tokens-remian">
             <span class="coins-icon"><img src="./images/Vector.png" height="22px" width="22px" alt=""></span>
-            <span class="token-count">5 Left</span>
+            <span class="token-count" id="token-count"></span>
           </div>
           <div class="toggle-theme" style="display: none;">
             <span class="sun-dt"><i class='bx bxs-sun'></i></span>
             <span class="moon-dt"><i class='bx bx-moon'></i></span>
           </div>
-          <button class="pay-btn" id="pay-btn">Pay now</button>
+          <!-- <button class="pay-btn" id="pay-btn">Pay now</button> -->
           <button class="signup-btn" id="signup-btn">Sign In</button>
           <div id="dropdownList" class="dropdown-content" style="display: none;">
             <a onclick="retomyprojects()">My Projects</a>
@@ -600,15 +600,14 @@
 
     <!-- payment modal -->
     <div id="paymentModal" class="modal">
-        <h1>Purchase Tokens</h1>
-        <div>
-            <label for="token-quantity">Enter Quantity (increments of 1):</label>
-            <input type="number" id="token-quantity" value="1" min="1">
-        </div>
-
-        <div>
-            <p>Price per 5 tokens: $5 (₹431.85)</p>
-            <button id="buy-tokens">Buy Tokens</button>
+        <div class="modal-content">
+            <span class="payment-close-button">&times;</span>
+            <h2>Payment</h2>
+            <div class="payment-text-content" >
+                You have 0 credits,
+                Must purchase before saving project
+            </div>
+          <button class="pay-btn" id="pay-btn">Pay now</button>
         </div>
     </div>
 

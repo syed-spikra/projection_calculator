@@ -8,24 +8,69 @@ function fetchcurrentuserprojects(){
     // let fetchUrl ='http://localhost:3002/api/get-user-projects/'+usermail.email;
     // Make the API call to your Node.js backend
     // fetch('https://projection-calc-function.onrender.com/.......', { 
-        fetch(fetchUrl,{
-            method: 'GET',
-        })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`); 
-            }
-            return response.json(); 
-          })
-          .then(data => {
-            // console.log('API Response:', data);
-            userprojectsData = data;
-            populateProjsdash(data);
-          })
-          .catch(error => {
-            console.error('API call failed:', error);
-            populateProjsdash([]);
-          });
+    fetch(fetchUrl,{
+        method: 'GET',
+    })
+    .then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`); 
+    }
+    return response.json(); 
+    })
+    .then(data => {
+    // console.log('API Response:', data);
+    userprojectsData = data;
+    populateProjsdash(data);
+    })
+    .catch(error => {
+    console.error('API call failed:', error);
+    populateProjsdash([]);
+    });
+
+    let fetchUrl2 = 'https://projection-calc-function.onrender.com/api/get-tokens-count/'+usermail.email;
+    // let fetchUrl = 'http://localhost:3002/api/get-tokens-count/'+values.email;
+    fetch(fetchUrl2,{
+    method: 'GET',
+    })
+    .then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`); 
+    }
+    return response.json();
+    })
+    .then(data => {
+    if(data.message == "Success"){
+        document.getElementsByClassName('tokens-remian')[0].style.display = "block";
+        document.getElementById('token-count').innerHTML = data.creditcount+ " Left";
+    }
+    else{
+        document.getElementsByClassName('tokens-remian')[0].style.display = "none";
+    }
+    })
+    .catch(error => {
+    console.error('API call failed:', error);
+    });
+    let storedUserDetail = localStorage.getItem('userDetail');
+  let values =  storedUserDetail ? JSON.parse(storedUserDetail) : null;
+  if(values != null){
+    // console.log("no user available");
+    let signupbtnele = document.getElementById('signup-btn');
+    let dropdown = document.getElementById('dropdownList');
+    signupbtnele.classList.remove('signup-btn');
+    signupbtnele.classList.add('signup-profile');
+    signupbtnele.innerHTML = values.username.at(0);
+    signupbtnele.addEventListener('mouseover',()=>{
+      dropdown.style.display = 'block';
+    })
+    signupbtnele.addEventListener('mouseout',()=>{
+      dropdown.style.display = 'none';
+    })
+    dropdown.addEventListener('mouseover',()=>{
+      dropdown.style.display = 'block';
+    })
+    dropdown.addEventListener('mouseout',()=>{
+      dropdown.style.display = 'none';
+    })}
 }
 
 function populateProjsdash(projectData) {
@@ -413,3 +458,16 @@ function populateProjectDashboard(data,projinputhrs) {
     revenueBreakdownTableBody.innerHTML = revenueBreakdownHTML;
     totalRevenueBreakdownDisplay.textContent = `$ ${(processData.revenueBreakdown.totalRevenue).toFixed(2)}`;
 }
+
+function retomyhome(){
+    window.location.href = "index.html";
+  }
+  function retomymembers(){
+    window.location.href = "mymembers.html";
+  }
+  
+  function curruserlogout(){
+    localStorage.removeItem(userDetailKey);
+    window.location.href = "index.html";
+  }
+  
