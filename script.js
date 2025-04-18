@@ -255,12 +255,8 @@ function handleInputChangeAndApiCall() {
         // console.log("Stopping API call due to missing data in team member rows.");
         return; // Stop the function
       }
-
-    // show output container
-    const outputContainer = document.querySelector('.output_container');
-    outputContainer.style.display = "block";
-    const saveprojBox = document.getElementById('projectDetailBottomBox');
-    saveprojBox.style.display = "block";
+      
+    document.getElementById('calcbtn').innerHTML = "<i class='bx bxs-calculator bx-flashing' style='color:#ffffff;font-family:sans-serif'></i><i class='bx-flashing'>Calculating..</i>";
     // Prepare the data to send to the backend
     dataToSend = {
       startDate: startDate,
@@ -286,17 +282,25 @@ function handleInputChangeAndApiCall() {
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`); 
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json(); 
     })
     .then(data => {
-      // console.log('API Response:', data);
-      outputDatares = data;
-      populateDashboard(data);
+      if(data.status == 200){
+        // console.log('API Response:', data);
+        outputDatares = data;
+        populateDashboard(data);
+      }
+
     })
     .catch(error => {
       // console.error('API call failed:', error);
+      document.getElementById('calcbtn').innerHTML = "Calculate";
+      const outputContainer = document.querySelector('.output_container');
+      outputContainer.style.display = "hidden";
+      const saveprojBox = document.getElementById('projectDetailBottomBox');
+      saveprojBox.style.display = "hidden";
     });
   }
 
@@ -386,6 +390,13 @@ function populateDashboard(data) {
     revenueBreakdownTableBody.innerHTML = revenueBreakdownHTML;
     totalRevenueBreakdownDisplay.textContent = `$ ${(processData.revenueBreakdown.totalRevenue).toFixed(2)}`;
 
+    // show output container
+    const outputContainer = document.querySelector('.output_container');
+    outputContainer.style.display = "block";
+    const saveprojBox = document.getElementById('projectDetailBottomBox');
+    saveprojBox.style.display = "block";
+    document.getElementById('calcbtn').innerHTML = "Calculate";
+    document.getElementById('output_container').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function disenCalculate(){
@@ -410,6 +421,11 @@ function disenCalculate(){
     calculateButton.classList.add('calcbtn');
   } else {
     calculateButton.classList.remove('calcbtn');
+    const outputContainer = document.querySelector('.output_container');
+    outputContainer.style.display = "none";
+    const saveprojBox = document.getElementById('projectDetailBottomBox');
+    saveprojBox.style.display = "none";
+    document.getElementById('calcbtn').innerHTML = "Calculate";
     calculateButton.classList.add('disable-calcbtn');
   }
 }
@@ -745,6 +761,7 @@ function checkProjectDetailInfo(){
     saveprojbtn.classList.add('saveprojbtn');
   } else {
     saveprojbtn.classList.remove('saveprojbtn');
+    saveprojbtn.innerHTML = "Save Project";
     saveprojbtn.classList.add('disable-saveprojbtn');
   }
 }
@@ -769,7 +786,6 @@ function userDetailPopupModal(){
 }
 
 async function checkNstoreAllDetails(usernameVal, emailVal, passwordVal, ticketfrom){
-
   if(ticketfrom == "from_signup_btn"){
     let usercreateData = {
       name: usernameVal,
@@ -799,6 +815,7 @@ async function checkNstoreAllDetails(usernameVal, emailVal, passwordVal, ticketf
     window.location.reload();
     return;
   }
+  document.getElementById('save-project-button').innerHTML = "<i class='bx bx-upload bx-flashing' style='color:#ffffff' ></i><i class='bx-flashing'> Saving..</i>";
   // alert("inside project store function");
     // Get the project title and the output data (assuming it's stored in a variable called 'outputData')
     const projectTitle = document.getElementById('projectName').value || "project Unknown";
@@ -845,6 +862,7 @@ async function sendUserDataToBackend(userData) {
             const result = await response.json();
             // console.log('Success:', result.result_response);
             // window.location.href = "myprojects.html";
+            document.getElementById('save-project-button').innerHTML = "Save Project";
             retomyprojects();
             // alert("success");
             // Handle success (e.g., show a success message)

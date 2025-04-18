@@ -1022,11 +1022,15 @@ signin-close-button:focus {
     height: 60px;
     border-radius: 12px;
     gap: 10px;
-    padding: 10px 40px;
+    /* padding: 10px 40px; */
     background: #DD2C46;
     font-size: 20px;
     font-weight: 500;
     color: #fDf7f7;
+    font-family: Inter;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .calcbtn:hover{
     background-color: #ED1837;
