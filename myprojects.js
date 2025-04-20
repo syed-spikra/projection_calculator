@@ -28,7 +28,7 @@ function fetchcurrentuserprojects(){
     });
 
     let fetchUrl2 = 'https://projection-calc-function.onrender.com/api/get-tokens-count/'+usermail.email;
-    // let fetchUrl = 'http://localhost:3002/api/get-tokens-count/'+values.email;
+    // let fetchUrl2 = 'http://localhost:3002/api/get-tokens-count/'+usermail.email;
     fetch(fetchUrl2,{
     method: 'GET',
     })
@@ -40,7 +40,7 @@ function fetchcurrentuserprojects(){
     })
     .then(data => {
     if(data.message == "Success"){
-        document.getElementsByClassName('tokens-remian')[0].style.display = "block";
+        document.getElementsByClassName('tokens-remian')[0].style.display = "block flex";
         document.getElementById('token-count').innerHTML = data.creditcount+ " Left";
     }
     else{
@@ -467,7 +467,7 @@ function retomyhome(){
   }
   
   function curruserlogout(){
-    localStorage.removeItem(userDetailKey);
+    localStorage.removeItem('userDetail');
     window.location.href = "index.html";
   }
   

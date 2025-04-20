@@ -424,7 +424,7 @@ function cancelnewmemberrow(){
     addmemberfromtable.addEventListener('click', ()=>{
         let memberslist = allmembersData[0].memberslist;
         // console.log("member added", memberslist.length);
-        addnewMember(memberslist.length, );
+        addnewMember(memberslist.length);
     })
     addmemberfromtable.classList.add('add-newmember-cell');
 }

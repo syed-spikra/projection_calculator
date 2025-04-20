@@ -1,6 +1,6 @@
 var outputDatares,dataToSend;
 var userDetailKey = 'userDetail';
-var totalcredit;
+var totalcredit,mymemberslist;
 document.addEventListener('DOMContentLoaded', () => {
   const dateInput = document.getElementById('myDate');
   const today = new Date();
@@ -97,7 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createTeamMemberRow(rcount) {
       const newRow = document.createElement('tr');
       newRow.id = "memb"+rcount;
-      newRow.innerHTML = '<td> <div class="membername"> <input type="text" placeholder="John Deo"> </div> </td> <td> <div class="role"> <input type="text" placeholder="CTO"> </div> </td> <td> <div class="departments"> <select id="departments" name="department"> <option value="Engineer">Engineer</option> <option value="Design">Design</option> <option value="Product">Product</option> <option value="Marketing">Marketing</option> <option value="Others">Others</option> </select> </div> </td> <!-- hrs/day --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="4.00" step="0.5" min="2" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- $cost/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable rate $/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable ratio % --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="100.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td>'
+      newRow.innerHTML = '<td> <div class="membername"> <input type="text" placeholder="John Deo"> <div class="names-options-container"><div class="names-options"></div></div></div> </td> <td> <div class="role"> <input type="text" placeholder="CTO"> </div> </td> <td> <div class="departments"> <select id="departments" name="department"> <option value="Engineer">Engineer</option> <option value="Design">Design</option> <option value="Product">Product</option> <option value="Marketing">Marketing</option> <option value="Others">Others</option> </select> </div> </td> <!-- hrs/day --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="4.00" step="0.5" min="2" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- $cost/hr --> <td> <div class="number-input-group costrate"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable rate $/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable ratio % --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="100.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td>'
         // console.log(newRow, rcount);
       return newRow;
     }
@@ -303,8 +303,7 @@ function handleInputChangeAndApiCall() {
       saveprojBox.style.display = "hidden";
     });
   }
-
-
+  
 // set calculated date values
 // Function to populate the HTML with the received data
 function populateDashboard(data) {
@@ -577,7 +576,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     signInForm.addEventListener('submit', function(event) {
-      event.preventDefault(); // Prevent default form submission
+      event.preventDefault();
       resetsigninValidations();
       let isValid = true;
 
@@ -648,90 +647,79 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 // ---------------------------------------------------------------
-// functions for payments orders confirmation
-// async function initiatePayment(quantity, currency) {
-//   const tokensToBuy = quantity * 5;
-//   let amount;
+// functions for memberslist dropdown
+async function fetchnsetUserMembers() {
+  try {
+    const currentUserDetails = localStorage.getItem('userDetail');
+    const parsedUserDetails = JSON.parse(currentUserDetails);
+    if (!parsedUserDetails || !parsedUserDetails.email) {
+      console.error('Error: Could not retrieve user email from localStorage.');
+      return;
+    }
+    const usermail = parsedUserDetails.email;
+    const fetchUrl = `https://projection-calc-function.onrender.com/api/get-user-members/${usermail}`;
+    // const fetchUrl ='http://localhost:3002/api/get-user-members/'+usermail;
 
-//   // if (currency === 'INR') {
-//   //   amount = Math.round((quantity * 431.85) * 100);
-//   // } else if (currency === 'USD') {
-//   //   amount = quantity * 5 * 100;
-//   // } else {
-//   //   console.log('Unsupported currency');
-//   //   return;
-//   // }
+    const response = await fetch(fetchUrl, {
+      method: 'GET',
+    });
 
-//   try {
-//     const response = await fetch('/api/payment/create-order', {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//       },
-//       body: JSON.stringify({ quantity: quantity, currency: currency }),
-//     });
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const data = await response.json();
+    mymemberslist = await data[0].memberslist;
+  } catch (error) {
+    console.error('API call failed:', error);
+  }
+}
 
-//     if (!response.ok) {
-//       const errorData = await response.json();
-//       throw new Error(errorData.error || 'Failed to create order');
-//     }
+document.querySelector('.temmember_table_div table tbody').addEventListener('click', function(event){
+    let nameInput = event.target.closest('.membername input[type="text"]');
+    if (nameInput) {
+        let tabrow = nameInput.closest('tr');
+        const optionsContainer = tabrow.querySelector('.names-options-container');
+        const optionsDiv = tabrow.querySelector('.names-options');
+        // Clear previous options
+        optionsDiv.innerHTML = '';
 
-//     const order = await response.json();
-//     // console.log('Razorpay Order:', order);
+        // Populate names options
+        mymemberslist.forEach(member => {
+            const li = document.createElement('li');
+            li.textContent = `${member.memberName} (${member.memberRole})`;
+            li.addEventListener('click', function() {
+                // Set values in the current tabrow
+                tabrow.querySelector('.membername input').value = member.memberName;
+                tabrow.querySelector('.role input').value = member.memberRole;
+                tabrow.querySelector('.departments select').value = member.memberDepartment;
+                tabrow.querySelector('.costrate input').value = member.memberCostperhrs;
 
-//     const options = {
-//       key: 'YOUR_RAZORPAY_KEY_ID', // Replace with your actual Key ID (public)
-//       amount: order.amount,
-//       currency: order.currency,
-//       name: 'Project Profitablity Estimation',
-//       description: `Purchase of ${tokensToBuy} Tokens`,
-//       order_id: order.id,
-//       handler: async function (response) {
-//         // console.log('Payment Response:', response);
-//         const verificationResponse = await fetch('/api/payment/verify-payment', {
-//           method: 'POST',
-//           headers: {
-//             'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify({ ...response, quantity: quantity }), // Send quantity for verification
-//         });
+                // Hide the options
+                optionsContainer.classList.remove('show');
+            });
+            optionsDiv.appendChild(li);
+        });
 
-//         if (verificationResponse.ok) {
-//           const verificationData = await verificationResponse.json();
-//           // console.log(verificationData.message || `Payment successful! ${tokensToBuy} tokens credited.`);
-//           // TODO: Update your frontend UI (e.g., show updated token balance)
-//         } else {
-//           const errorData = await verificationResponse.json();
-//           // console.log(errorData.error || 'Payment verification failed');
-//         }
-//       },
-//       prefill: {
-//         name: 'Project Profitability Estimator', 
-//         email: '', 
-//         contact: '', 
-//       },
-//       theme: {
-//         color: '#3399cc', 
-//       },
-//     };
+        // Show the options container
+        optionsContainer.classList.add('show');
 
-//     const rzp1 = new Razorpay(options);
-//     rzp1.open();
-//   } catch (error) {
-//     // console.error('Payment Error:', error);
-//     // console.log(error.message);
-//   }
-// }
-// document.getElementById('buy-tokens').addEventListener('click', () => {
-//   const quantity = parseInt(document.getElementById('token-quantity').value);
-//   if (!isNaN(quantity) && quantity > 0) {
-//     const currency = 'INR'; // Or 'USD' based on your logic
-//     initiatePayment(quantity, currency);
-//   } else {
-//     // console.log('Please enter a valid quantity.');
-//   }
-// });
+        // Position the options container correctly
+        const inputRect = nameInput.getBoundingClientRect();
+        optionsContainer.style.position = 'absolute';
+        // optionsContainer.style.top = `${inputRect.bottom + window.scrollY}px`;
+        // optionsContainer.style.left = `${inputRect.left + window.scrollX}px`;
+        // optionsContainer.style.width = `${inputRect.width}px`;
 
+        // Handle clicks outside to close the options
+        function handleClickOutside(event) {
+            if (!event.target.closest('.membername')) {
+                optionsContainer.classList.remove('show');
+                document.removeEventListener('click', handleClickOutside);
+            }
+        }
+        document.addEventListener('click', handleClickOutside);
+    }
+});
 
 // onchange for the projectdetailinfo container
 document.addEventListener('DOMContentLoaded', () => {
@@ -915,13 +903,13 @@ function checkcurrUser(){
     })
     .then(response => {
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`); 
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
       return response.json();
     })
     .then(data => {
       if(data.message == "Success"){
-        document.getElementsByClassName('tokens-remian')[0].style.display = "block";
+        document.getElementsByClassName('tokens-remian')[0].style.display = "block flex";
         document.getElementById('token-count').innerHTML = data.creditcount+ " Left";
         totalcredit = data.creditcount || 0;
       }
@@ -932,6 +920,7 @@ function checkcurrUser(){
     .catch(error => {
       console.error('API call failed:', error);
     });
+    fetchnsetUserMembers();
   }
 }
 

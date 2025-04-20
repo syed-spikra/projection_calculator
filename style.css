@@ -485,9 +485,8 @@ select::-ms-expand {
 
   .teammember_infos {
     width: 100%;
-    overflow-x: hidden; 
-    overflow-y: hidden;
     margin-bottom: 20px; 
+    overflow: visible !important;
   }
   .teammember_infos .temmember_table_div tbody td .number-input-group{
     background: #F4F9FF;
@@ -975,19 +974,19 @@ signin-close-button:focus {
     gap: 13px;
     width: 71px;  
    }
-   .tokens-remian{
-    width: 102px;
-    /* height: 40px; */
-    border-radius: 42.69px;
-    gap: 8px;
-    padding:4px 12px;
-    border-width: 1px;
-    background: linear-gradient(89.97deg, rgba(255, 170, 0, 0.1) 1.08%, rgba(221, 152, 13, 0.1) 30.71%, rgba(255, 170, 0, 0.1) 99.98%);
-    border: 1px solid #FFD49D;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-   }
+.tokens-remian{
+  width: 102px;
+  height: 40px;
+  border-radius: 42.69px;
+  gap: 8px;
+  padding:4px 12px;
+  border-width: 1px;
+  background: linear-gradient(89.97deg, rgba(255, 170, 0, 0.1) 1.08%, rgba(221, 152, 13, 0.1) 30.71%, rgba(255, 170, 0, 0.1) 99.98%);
+  border: 1px solid #FFD49D;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  }
 .toggle-theme span {
     display: flex;
     align-items: center;
@@ -995,14 +994,16 @@ signin-close-button:focus {
     width: 20px;
     height: 20px;
   }
-
-  .tokens-remian span{
-    height: 22px;
-    font-family: Inter;
-    font-weight: 400;
-    font-size: 17px;
+  .coins-icon{
+    margin: auto 0;
   }
-
+  .token-count{
+    font-family: Inter;
+    font-weight: 600;
+    font-size: 18px;
+    color: #392600;
+    text-wrap: nowrap;
+  }
   /* calculate btn */
 .calculate_btn{
     width: 100%;
@@ -1233,4 +1234,43 @@ signin-close-button:focus {
 .dropdown-content a:hover {
   background-color: #eeeeee;
   cursor: pointer;
+}
+
+/* names options  */
+.names-options-container {
+  position: absolute;
+  z-index: 10;
+  background-color: #fff;
+  display: none;
+  max-height: 184px;
+  overflow-y: auto;
+  width: 100%;
+  margin-top: 16px;
+  height: 184px;
+  border-radius: 12px;
+  padding-bottom: 4px;
+  box-shadow: 0px 9px 32px 10px #00000025;
+}
+
+.names-options-container.show {
+  display: block;
+}
+
+.names-options-container .names-options {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.names-options-container .names-options li {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.names-options-container .names-options li:hover {
+  background-color: #f0f0f0;
+}
+
+.membername {
+  position: relative;
 }
