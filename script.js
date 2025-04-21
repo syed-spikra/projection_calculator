@@ -741,6 +741,14 @@ function hideAllOpenContainers() {
 
 function populateNameOptions(inputElement, optionsContainer, optionsDiv, searchTerm = '') {
   optionsDiv.innerHTML = '';
+  if (!Array.isArray(mymemberslist)) {
+    console.error('Error: mymemberslist is not an array or is undefined.');
+    // const li = document.createElement('li');
+    // li.textContent = 'Error loading members';
+    // li.classList.add('disabled');
+    // optionsDiv.appendChild(li);
+    return; // Exit the function to prevent further errors
+  }
   const filteredMembers = mymemberslist.filter(member =>
       member.memberName.toLowerCase().includes(searchTerm.toLowerCase())
   );
