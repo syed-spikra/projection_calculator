@@ -40,8 +40,8 @@ function fetchcurrentuserprojects(){
     })
     .then(data => {
     if(data.message == "Success"){
+        document.getElementById('token-count').innerHTML = (data.creditcount || 0) + " Left";
         document.getElementsByClassName('tokens-remian')[0].style.display = "block flex";
-        document.getElementById('token-count').innerHTML = data.creditcount+ " Left";
     }
     else{
         document.getElementsByClassName('tokens-remian')[0].style.display = "none";
@@ -59,20 +59,53 @@ function fetchcurrentuserprojects(){
     signupbtnele.classList.remove('signup-btn');
     signupbtnele.classList.add('signup-profile');
     signupbtnele.innerHTML = values.username.at(0);
-    signupbtnele.addEventListener('mouseover',()=>{
-      dropdown.style.display = 'block';
-    })
-    signupbtnele.addEventListener('mouseout',()=>{
-      dropdown.style.display = 'none';
-    })
-    dropdown.addEventListener('mouseover',()=>{
-      dropdown.style.display = 'block';
-    })
-    dropdown.addEventListener('mouseout',()=>{
-      dropdown.style.display = 'none';
-    })}
-}
+    // signupbtnele.addEventListener('mouseover',()=>{
+    //   dropdown.style.display = 'block';
+    // })
+    // signupbtnele.addEventListener('mouseout',()=>{
+    //   dropdown.style.display = 'none';
+    // })
+    // dropdown.addEventListener('mouseover',()=>{
+    //   dropdown.style.display = 'block';
+    // })
+    // dropdown.addEventListener('mouseout',()=>{
+    //   dropdown.style.display = 'none';
+    // })}
+    let mouseOverButton = false;
+    let mouseOverDropdown = false;
+    let hideTimeout;
 
+    signupbtnele.addEventListener('mouseover', () => {
+      mouseOverButton = true;
+      clearTimeout(hideTimeout);
+      dropdown.style.display = 'block';
+    });
+
+    signupbtnele.addEventListener('mouseout', () => {
+      mouseOverButton = false;
+      hideTimeout = setTimeout(() => {
+        if (!mouseOverButton && !mouseOverDropdown) {
+          dropdown.style.display = 'none';
+        }
+      }, 200);
+    });
+
+    dropdown.addEventListener('mouseover', () => {
+      mouseOverDropdown = true;
+      clearTimeout(hideTimeout);
+      dropdown.style.display = 'block';
+    });
+
+    dropdown.addEventListener('mouseout', () => {
+      mouseOverDropdown = false;
+      hideTimeout = setTimeout(() => {
+        if (!mouseOverButton && !mouseOverDropdown) {
+          dropdown.style.display = 'none';
+        }
+      }, 200);
+    });
+    }
+}
 function populateProjsdash(projectData) {
     const projectListBody = document.getElementById('projectlistbody');
     projectListBody.innerHTML = ''; // Clear any existing rows

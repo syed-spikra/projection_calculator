@@ -55,25 +55,103 @@ function fetchcurrentusermembers(){
     // let fetchUrl ='http://localhost:3002/api/get-user-members/'+usermail.email;
     // Make the API call to your Node.js backend
     // fetch('https://projection-calc-function.onrender.com/.......', { 
-        fetch(fetchUrl,{
-            method: 'GET',
-        })
-          .then(response => {
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`); 
-            }
-            return response.json(); 
-          })
-          .then(data => {
-            // console.log('API Response:', data);
-            allmembersData = data;
-            // console.log('====',allmembersData);
-            populateMembersdash(data);
-          })
-          .catch(error => {
-            console.error('API call failed:', error);
-            populateMembersdash([]);
-          });
+    fetch(fetchUrl,{
+        method: 'GET',
+    })
+    .then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`); 
+    }
+    return response.json(); 
+    })
+    .then(data => {
+    // console.log('API Response:', data);
+    allmembersData = data;
+    // console.log('====',allmembersData);
+    populateMembersdash(data);
+    })
+    .catch(error => {
+    console.error('API call failed:', error);
+    populateMembersdash([]);
+    });
+    let fetchUrl2 = 'https://projection-calc-function.onrender.com/api/get-tokens-count/'+usermail.email;
+    // let fetchUrl2 = 'http://localhost:3002/api/get-tokens-count/'+usermail.email;
+    fetch(fetchUrl2,{
+    method: 'GET',
+    })
+    .then(response => {
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`); 
+    }
+    return response.json();
+    })
+    .then(data => {
+    if(data.message == "Success"){
+        document.getElementById('token-count').innerHTML = (data.creditcount || 0) + " Left";
+        document.getElementsByClassName('tokens-remian')[0].style.display = "block flex";
+    }
+    else{
+        document.getElementsByClassName('tokens-remian')[0].style.display = "none";
+    }
+    })
+    .catch(error => {
+    console.error('API call failed:', error);
+    });
+    let storedUserDetail = localStorage.getItem('userDetail');
+  let values =  storedUserDetail ? JSON.parse(storedUserDetail) : null;
+  if(values != null){
+    // console.log("no user available");
+    let signupbtnele = document.getElementById('signup-btn');
+    let dropdown = document.getElementById('dropdownList');
+    signupbtnele.classList.remove('signup-btn');
+    signupbtnele.classList.add('signup-profile');
+    signupbtnele.innerHTML = values.username.at(0);
+    // signupbtnele.addEventListener('mouseover',()=>{
+    //   dropdown.style.display = 'block';
+    // })
+    // signupbtnele.addEventListener('mouseout',()=>{
+    //   dropdown.style.display = 'none';
+    // })
+    // dropdown.addEventListener('mouseover',()=>{
+    //   dropdown.style.display = 'block';
+    // })
+    // dropdown.addEventListener('mouseout',()=>{
+    //   dropdown.style.display = 'none';
+    // })}
+    let mouseOverButton = false;
+    let mouseOverDropdown = false;
+    let hideTimeout;
+
+    signupbtnele.addEventListener('mouseover', () => {
+      mouseOverButton = true;
+      clearTimeout(hideTimeout);
+      dropdown.style.display = 'block';
+    });
+
+    signupbtnele.addEventListener('mouseout', () => {
+      mouseOverButton = false;
+      hideTimeout = setTimeout(() => {
+        if (!mouseOverButton && !mouseOverDropdown) {
+          dropdown.style.display = 'none';
+        }
+      }, 200);
+    });
+
+    dropdown.addEventListener('mouseover', () => {
+      mouseOverDropdown = true;
+      clearTimeout(hideTimeout);
+      dropdown.style.display = 'block';
+    });
+
+    dropdown.addEventListener('mouseout', () => {
+      mouseOverDropdown = false;
+      hideTimeout = setTimeout(() => {
+        if (!mouseOverButton && !mouseOverDropdown) {
+          dropdown.style.display = 'none';
+        }
+      }, 200);
+    });
+    }
 }
 
 

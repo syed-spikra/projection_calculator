@@ -149,7 +149,6 @@ input[type="text"].password-masked {
 .input_container,.output_container,.save_btn{
     padding: 35px;
 }
-
 /* title tags */
 .maintitle{
     font-weight: 600;
@@ -1214,7 +1213,7 @@ signin-close-button:focus {
   right: 0;
   border-radius: 5px;
   overflow: hidden;
-  margin-top: 84px;
+  margin-top: 190px;
   margin-right: 30px;
   cursor: pointer;
   border-radius: 12px;
@@ -1271,6 +1270,10 @@ signin-close-button:focus {
   background-color: #f0f0f0;
 }
 
+.names-options-container .names-options li.focused {
+  background-color: #e0e0e0;
+  color: black;
+}
 .membername {
   position: relative;
 }

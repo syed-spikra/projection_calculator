@@ -674,34 +674,119 @@ async function fetchnsetUserMembers() {
   }
 }
 
-document.querySelector('.temmember_table_div table tbody').addEventListener('click', function(event){
-    let nameInput = event.target.closest('.membername input[type="text"]');
+
+// old table row name input eventlistener
+// document.querySelector('.temmember_table_div table tbody').addEventListener('click', function(event){
+//     let nameInput = event.target.closest('.membername input[type="text"]');
+//     if (nameInput) {
+//         let tabrow = nameInput.closest('tr');
+//         const optionsContainer = tabrow.querySelector('.names-options-container');
+//         const optionsDiv = tabrow.querySelector('.names-options');
+//         // Clear previous options
+//         optionsDiv.innerHTML = '';
+
+//         // Populate names options
+//         mymemberslist.forEach(member => {
+//             const li = document.createElement('li');
+//             li.textContent = `${member.memberName} (${member.memberRole})`;
+//             li.addEventListener('click', function() {
+//                 // Set values in the current tabrow
+//                 tabrow.querySelector('.membername input').value = member.memberName;
+//                 tabrow.querySelector('.role input').value = member.memberRole;
+//                 tabrow.querySelector('.departments select').value = member.memberDepartment;
+//                 tabrow.querySelector('.costrate input').value = member.memberCostperhrs;
+
+//                 // Hide the options
+//                 optionsContainer.classList.remove('show');
+//             });
+//             optionsDiv.appendChild(li);
+//         });
+
+//         // Show the options container
+//         optionsContainer.classList.add('show');
+
+//         // Position the options container correctly
+//         const inputRect = nameInput.getBoundingClientRect();
+//         optionsContainer.style.position = 'absolute';
+//         // optionsContainer.style.top = `${inputRect.bottom + window.scrollY}px`;
+//         // optionsContainer.style.left = `${inputRect.left + window.scrollX}px`;
+//         // optionsContainer.style.width = `${inputRect.width}px`;
+
+//         // Handle clicks outside to close the options
+//         function handleClickOutside(event) {
+//             if (!event.target.closest('.membername')) {
+//                 optionsContainer.classList.remove('show');
+//                 document.removeEventListener('click', handleClickOutside);
+//             }
+//         }
+//         document.addEventListener('click', handleClickOutside);
+//     }
+// });
+
+// new table row nampe input eventlistener
+const tableBody = document.querySelector('.temmember_table_div table tbody');
+let activeOptionsContainer = null;
+let focusedListItemIndex = -1;
+let currentInput;
+let currentTableRow;
+
+function hideAllOpenContainers() {
+    const openContainers = document.querySelectorAll('.names-options-container.show');
+    openContainers.forEach(container => {
+        if (container !== activeOptionsContainer) {
+            container.classList.remove('show');
+        }
+    });
+}
+
+function populateNameOptions(inputElement, optionsContainer, optionsDiv, searchTerm = '') {
+  optionsDiv.innerHTML = '';
+  const filteredMembers = mymemberslist.filter(member =>
+      member.memberName.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (filteredMembers.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'No member found';
+      li.classList.add('disabled'); // Add a class for styling if needed
+      optionsDiv.appendChild(li);
+  } else {
+      filteredMembers.forEach((member, index) => {
+          const li = document.createElement('li');
+          li.textContent = `${member.memberName} (${member.memberRole})`;
+          li.dataset.index = index; // Store index for arrow navigation
+          li.addEventListener('click', function() {
+              populateTableRow(currentTableRow, member);
+              optionsContainer.classList.remove('show');
+              activeOptionsContainer = null;
+              currentInput.focus(); // Keep focus on the input after selection
+          });
+          optionsDiv.appendChild(li);
+      });
+  }
+
+  focusedListItemIndex = -1; // Reset focus index when options change
+}
+
+function populateTableRow(row, member) {
+    row.querySelector('.membername input').value = member.memberName;
+    row.querySelector('.role input').value = member.memberRole;
+    row.querySelector('.departments select').value = member.memberDepartment;
+    row.querySelector('.costrate input').value = member.memberCostperhrs;
+}
+
+tableBody.addEventListener('click', function(event) {
+    const nameInput = event.target.closest('.membername input[type="text"]');
     if (nameInput) {
-        let tabrow = nameInput.closest('tr');
-        const optionsContainer = tabrow.querySelector('.names-options-container');
-        const optionsDiv = tabrow.querySelector('.names-options');
-        // Clear previous options
-        optionsDiv.innerHTML = '';
+        currentInput = nameInput;
+        currentTableRow = nameInput.closest('tr');
+        const optionsContainer = currentTableRow.querySelector('.names-options-container');
+        const optionsDiv = currentTableRow.querySelector('.names-options');
 
-        // Populate names options
-        mymemberslist.forEach(member => {
-            const li = document.createElement('li');
-            li.textContent = `${member.memberName} (${member.memberRole})`;
-            li.addEventListener('click', function() {
-                // Set values in the current tabrow
-                tabrow.querySelector('.membername input').value = member.memberName;
-                tabrow.querySelector('.role input').value = member.memberRole;
-                tabrow.querySelector('.departments select').value = member.memberDepartment;
-                tabrow.querySelector('.costrate input').value = member.memberCostperhrs;
+        hideAllOpenContainers(); // Hide other open containers
+        activeOptionsContainer = optionsContainer;
 
-                // Hide the options
-                optionsContainer.classList.remove('show');
-            });
-            optionsDiv.appendChild(li);
-        });
-
-        // Show the options container
-        optionsContainer.classList.add('show');
+        populateNameOptions(nameInput, optionsContainer, optionsDiv, nameInput.value);
 
         // Position the options container correctly
         const inputRect = nameInput.getBoundingClientRect();
@@ -709,15 +794,57 @@ document.querySelector('.temmember_table_div table tbody').addEventListener('cli
         // optionsContainer.style.top = `${inputRect.bottom + window.scrollY}px`;
         // optionsContainer.style.left = `${inputRect.left + window.scrollX}px`;
         // optionsContainer.style.width = `${inputRect.width}px`;
+        optionsContainer.classList.add('show');
 
-        // Handle clicks outside to close the options
-        function handleClickOutside(event) {
-            if (!event.target.closest('.membername')) {
-                optionsContainer.classList.remove('show');
-                document.removeEventListener('click', handleClickOutside);
+        // No need for a global click listener to hide, as focusout on input handles this
+
+        nameInput.addEventListener('focusout', function(e) {
+            // Prevent immediate hide if focus goes to the options container
+            if (!e.relatedTarget || !e.relatedTarget.closest('.names-options-container')) {
+                setTimeout(() => {
+                    optionsContainer.classList.remove('show');
+                    activeOptionsContainer = null;
+                }, 100); // Small delay to allow click on options
             }
-        }
-        document.addEventListener('click', handleClickOutside);
+        });
+
+        nameInput.addEventListener('input', function() {
+            populateNameOptions(nameInput, optionsContainer, optionsDiv, this.value);
+            optionsContainer.classList.add('show'); // Ensure it's visible on input
+        });
+
+        nameInput.addEventListener('keydown', function(e) {
+          const listItems = optionsDiv.querySelectorAll('li');
+          if (listItems.length > 0) {
+              if (e.key === 'ArrowDown') {
+                  e.preventDefault();
+                  focusedListItemIndex++;
+                  if (focusedListItemIndex >= listItems.length) {
+                      focusedListItemIndex = 0; // Cycle back to the top
+                  }
+                  listItems.forEach(item => item.classList.remove('focused'));
+                  listItems[focusedListItemIndex].classList.add('focused');
+                  optionsDiv.scrollTop = listItems[focusedListItemIndex].offsetTop - optionsDiv.offsetTop;
+              } else if (e.key === 'ArrowUp') {
+                  e.preventDefault();
+                  focusedListItemIndex--;
+                  if (focusedListItemIndex < 0) {
+                      focusedListItemIndex = listItems.length - 1; // Cycle to the bottom
+                  }
+                  listItems.forEach(item => item.classList.remove('focused'));
+                  listItems[focusedListItemIndex].classList.add('focused');
+                  optionsDiv.scrollTop = listItems[focusedListItemIndex].offsetTop - optionsDiv.offsetTop;
+              } else if (e.key === 'Enter' && focusedListItemIndex !== -1) {
+                  e.preventDefault();
+                  const selectedListItem = listItems[focusedListItemIndex];
+                  const memberIndex = parseInt(selectedListItem.dataset.index);
+                  populateTableRow(currentTableRow, mymemberslist[memberIndex]);
+                  optionsContainer.classList.remove('show');
+                  activeOptionsContainer = null;
+                  this.blur(); // Remove focus from input
+              }
+          }
+      });
     }
 });
 
@@ -884,18 +1011,53 @@ function checkcurrUser(){
     signupbtnele.classList.remove('signup-btn');
     signupbtnele.classList.add('signup-profile');
     signupbtnele.innerHTML = values.username.at(0);
-    signupbtnele.addEventListener('mouseover',()=>{
+    // signupbtnele.addEventListener('mouseover',()=>{
+    //   dropdown.style.display = 'block';
+    // })
+    // signupbtnele.addEventListener('mouseout', () => {
+    //   setTimeout(() => {
+    //     dropdown.style.display = 'none';
+    //   }, 1200);
+    // });    
+    // dropdown.addEventListener('mousemove',()=>{
+    //   dropdown.style.display = 'block';
+    // })
+    // dropdown.addEventListener('mouseout',()=>{
+    //   dropdown.style.display = 'none';
+    // })
+    let mouseOverButton = false;
+    let mouseOverDropdown = false;
+    let hideTimeout;
+
+    signupbtnele.addEventListener('mouseover', () => {
+      mouseOverButton = true;
+      clearTimeout(hideTimeout);
       dropdown.style.display = 'block';
-    })
-    signupbtnele.addEventListener('mouseout',()=>{
-      dropdown.style.display = 'none';
-    })
-    dropdown.addEventListener('mouseover',()=>{
+    });
+
+    signupbtnele.addEventListener('mouseout', () => {
+      mouseOverButton = false;
+      hideTimeout = setTimeout(() => {
+        if (!mouseOverButton && !mouseOverDropdown) {
+          dropdown.style.display = 'none';
+        }
+      }, 200);
+    });
+
+    dropdown.addEventListener('mouseover', () => {
+      mouseOverDropdown = true;
+      clearTimeout(hideTimeout);
       dropdown.style.display = 'block';
-    })
-    dropdown.addEventListener('mouseout',()=>{
-      dropdown.style.display = 'none';
-    })
+    });
+
+    dropdown.addEventListener('mouseout', () => {
+      mouseOverDropdown = false;
+      hideTimeout = setTimeout(() => {
+        if (!mouseOverButton && !mouseOverDropdown) {
+          dropdown.style.display = 'none';
+        }
+      }, 200);
+    });
     let fetchUrl = 'https://projection-calc-function.onrender.com/api/get-tokens-count/'+values.email;
     // let fetchUrl = 'http://localhost:3002/api/get-tokens-count/'+values.email;
     fetch(fetchUrl,{
@@ -909,8 +1071,8 @@ function checkcurrUser(){
     })
     .then(data => {
       if(data.message == "Success"){
+        document.getElementById('token-count').innerHTML = (data.creditcount || 0)+ " Left";
         document.getElementsByClassName('tokens-remian')[0].style.display = "block flex";
-        document.getElementById('token-count').innerHTML = data.creditcount+ " Left";
         totalcredit = data.creditcount || 0;
       }
       else{

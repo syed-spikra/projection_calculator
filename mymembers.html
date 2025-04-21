@@ -19,15 +19,21 @@
           </div>
         </div>
         <div class="actions">
-          <div class="tokens-remian" style="display: none;">
+          <div class="tokens-remian" id="tokens-remian" style="display: none;">
             <span class="coins-icon"><img src="./images/Vector.png" height="22px" width="22px" alt=""></span>
-            <span class="token-count"></span>
+            <span class="token-count" id="token-count"></span>
           </div>
           <div class="toggle-theme" style="display: none;">
             <span class="sun-dt"><i class='bx bxs-sun'></i></span>
             <span class="moon-dt"><i class='bx bx-moon'></i></span>
           </div>
-          <!-- <button class="signup-btn" id="signup-btn">Sign Up</button> -->
+          <button class="signup-btn" id="signup-btn">Sign Up</button>
+          <!-- <button class="signup-btn" id="signup-btn">Sign In</button> -->
+          <div id="dropdownList" class="dropdown-content" style="display: none;">
+            <a onclick="retomyhome()">Home</a>
+            <a onclick="retomyprojects()">My Projects</a>
+            <a onclick="curruserlogout()">Sign Out</a>
+          </div>
         </div>
     </div>
     <div class="header-btm"></div>
