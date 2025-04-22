@@ -489,14 +489,17 @@ document.addEventListener('DOMContentLoaded', () => {
     // Close modal if user clicks outside of it
     window.onclick = function(event) {
         if (event.target == modal) {
-            modal.style.display = "none";
-            resetValidationErrors();
-            signupForm.reset();
+          modal.style.display = "none";
+          resetValidationErrors();
+          signupForm.reset();
         }
         if(event.target == signinmodal){
           signinmodal.style.display = "none";
           resetsigninValidations();
           signInForm.reset();
+        }
+        if (event.target == paymentmodal){
+          paymentmodal.style.display = "none";
         }
     }
 
