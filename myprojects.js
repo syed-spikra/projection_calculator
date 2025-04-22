@@ -123,6 +123,7 @@ function populateProjsdash(projectData) {
             projectNameSpan.textContent = project.projectDetails.projectTitle;
             const openButton = document.createElement('button');
             openButton.classList.add('open-button');
+            openButton.style.display = "none";
             openButton.innerHTML = '<span class="open-icon"><i class="bx bx-arrow-from-left"></i></span> View';
             // Add event listener for redirection
             openButton.addEventListener('click', function() {
@@ -153,6 +154,14 @@ function populateProjsdash(projectData) {
             const durationCell = row.insertCell();
             durationCell.classList.add('duration-cell');
             durationCell.textContent = `${project.projectDetails.projectoutput.projectedDuration} days`;
+
+            // hover effect to visible/invisible view button
+            row.addEventListener('mouseover', function() {
+                openButton.style.display = "block"; 
+            });
+            row.addEventListener('mouseout', function() {
+                openButton.style.display = "none";
+            });
         });
     } else {
         // Optionally display a message if there are no projects

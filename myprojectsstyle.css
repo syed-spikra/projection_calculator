@@ -14,7 +14,7 @@
     width: 171px;
     height: 44px;
     /* margin-top: 440px; */
-    margin-left: 58px;
+    margin-left: 32px;
     border-radius: 12px;
     gap: 8px;
     padding: 10px 12px;
@@ -129,6 +129,7 @@
 .project_table_div tbody tr{
     background-color: #ffffff; 
     transition: background-color 0.3s ease;
+    height: 60px;
 }
 
 .project_table_div tbody tr:hover {
@@ -141,8 +142,9 @@
     border-bottom: 1px solid #E2E8F0;
 }
 
-.project_table_div tbody tr:first-child td{
+.project_table_div tbody tr td:first-child{
     width: 700px;
+    height: 60px;
 }
 .project_table_div tbody tr:nth-last-child(1) td{
     border-bottom: none; /* Remove border from the last row */
@@ -159,7 +161,7 @@
 /* Style for the span containing the project title */
 .project-name-cell span{
     flex-grow: 1;
-    margin-right: 10px;
+    margin-right: 5px;
 }
 
 /* Style for the "Open" button */
