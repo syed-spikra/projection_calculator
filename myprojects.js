@@ -123,7 +123,7 @@ function populateProjsdash(projectData) {
             projectNameSpan.textContent = project.projectDetails.projectTitle;
             const openButton = document.createElement('button');
             openButton.classList.add('open-button');
-            openButton.innerHTML = '<span class="open-icon"><i class="bx bx-arrow-from-left"></i></span> Open';
+            openButton.innerHTML = '<span class="open-icon"><i class="bx bx-arrow-from-left"></i></span> View';
             // Add event listener for redirection
             openButton.addEventListener('click', function() {
                 displayProjectDetails(row.id);
