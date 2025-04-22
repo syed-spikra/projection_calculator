@@ -1106,6 +1106,10 @@ function curruserlogout(){
   window.location.reload();
 }
 
+document.getElementById('tokens-remian').addEventListener('click',()=>{
+  let paymentmodal = document.getElementById('paymentModal');
+  paymentmodal.style.display = "block";
+})
 
 document.getElementById('pay-btn').addEventListener('click',()=>{
   window.location.href = "https://pages.razorpay.com/entask";

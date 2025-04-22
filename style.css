@@ -133,17 +133,40 @@ input[type="text"].password-masked {
     align-items: center;
     box-shadow: 0px -2px 4px 0px #A96000 inset;
   }
-  .signup-btn:hover{
+  .signup-btn:hover,
+  .pay-btn:hover{
     background: #EF8700;
   }
-  .pay-btn{
-    cursor: pointer;
-    background-color: rgb(46, 46, 186);
-    border: none;
-  }
-  .pay-btn:hover{
-    background-color: rgb(56, 56, 222);
 
+  .pay-btn{
+    height: 50px;
+    width: 100%;  
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    margin-top: 50px;
+  }
+
+  #paymentModal .modal-content .payment-text-content{
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 18px;
+    margin: 50px 0px;
+    color: #222222;
+  }
+
+  #paymentModal .modal-content h2{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 30px 0px;
+
+  }
+  #paymentModal .modal-content h2 span{
+    text-align: right;
+    color: #929292;
+    font-weight: 400;
   }
 /*  */
 .input_container,.output_container,.save_btn{
@@ -985,6 +1008,7 @@ signin-close-button:focus {
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
   }
 .toggle-theme span {
     display: flex;
