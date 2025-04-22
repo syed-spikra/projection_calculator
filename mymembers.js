@@ -184,6 +184,7 @@ sampleData = [
         "__v": 0
     }
 ]
+// populateMembersdash(sampleData);
 function populateMembersdash(membersData){
     const membersListBody = document.getElementById('memberlistbody');
     membersListBody.innerHTML = '';
@@ -209,13 +210,13 @@ function populateMembersdash(membersData){
             memberRolecell.appendChild(memberRoleSpan);
 
             const memberDeptcell = mrow.insertCell();
-            memberDeptcell.classList.add('member-role-cell');
+            memberDeptcell.classList.add('member-dept-cell');
             const memberDeptSpan = document.createElement('span');
             memberDeptSpan.textContent = member.memberDepartment;
             memberDeptcell.appendChild(memberDeptSpan);
 
             const membercostratecell = mrow.insertCell();
-            membercostratecell.classList.add('member-role-cell');
+            membercostratecell.classList.add('member-costrate-cell');
             const membercostrateSpan = document.createElement('span');
             membercostrateSpan.textContent = `$${member.memberCostperhrs}/hr`;
             membercostratecell.appendChild(membercostrateSpan);
@@ -288,7 +289,7 @@ function showcancelcheckbuttons(rowID,forwhichaction,emailval,memjson){
     const lastCellIndex = tbodyrow.cells.length - 1;
     if (lastCellIndex >= 0) {
         if(forwhichaction == "for-delete"){
-            tbodyrow.cells[lastCellIndex].innerHTML = `<td><button type="button" class="cancel-button" onclick="thispagereload()">x</button><button type="button" class="check-button" onclick="handlememberDelete('${emailval}','${memjson.memberName}','${memjson.memberRole}','${memjson.memberDepartment}','${memjson.memberCostperhrs}')">Yes delete</button></td>`;
+            tbodyrow.cells[lastCellIndex].innerHTML = `<td><button type="button" class="cancel-button" onclick="thispagereload()">x</button><button type="button" class="check-button" onclick="handlememberDelete('${emailval}','${memjson.memberName}','${memjson.memberRole}','${memjson.memberDepartment}','${memjson.memberCostperhrs}')"><i class='bx bxs-trash' style='color:#ffffff' ></i></button></td>`;
         }
         if(forwhichaction == "for-edit"){
             tbodyrow.innerHTML = `
@@ -484,7 +485,7 @@ function addnewMember(membernumber){
     </td>
     <td>
         <button type="button" class="cancel-button" onclick="cancelnewmemberrow()">x</button>
-        <button type="button" class="check-button" onclick="handleAddNewMemberRow('${membernumber}')">✓</button>
+        <button type="button" class="check-button" onclick="handleAddNewMemberRow('${membernumber}')">Add</button>
     </td>`;
 membertablebody.appendChild(newmembRow);
 
@@ -510,3 +511,15 @@ function cancelnewmemberrow(){
 function thispagereload(){
     window.location.reload();
 }
+function retomyhome(){
+    window.location.href = "index.html";
+  }
+  function retomyprojects(){
+    window.location.href = "myprojects.html";
+  }
+  
+  function curruserlogout(){
+    localStorage.removeItem('userDetail');
+    window.location.href = "index.html";
+  }
+  
