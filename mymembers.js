@@ -246,6 +246,7 @@ function populateMembersdash(membersData){
             memberDeleteButton.addEventListener('click', () => {
                 // console.log(mrow.id);
                 let deletepassobj = {
+                    memberId: member._id,
                     memberName: member.memberName,
                     memberRole: member.memberRole,
                     memberDepartment: member.memberDepartment,
@@ -289,7 +290,7 @@ function showcancelcheckbuttons(rowID,forwhichaction,emailval,memjson){
     const lastCellIndex = tbodyrow.cells.length - 1;
     if (lastCellIndex >= 0) {
         if(forwhichaction == "for-delete"){
-            tbodyrow.cells[lastCellIndex].innerHTML = `<td><button type="button" class="cancel-button" onclick="thispagereload()">x</button><button type="button" class="check-button" onclick="handlememberDelete('${emailval}','${memjson.memberName}','${memjson.memberRole}','${memjson.memberDepartment}','${memjson.memberCostperhrs}')"><i class='bx bxs-trash' style='color:#ffffff' ></i></button></td>`;
+            tbodyrow.cells[lastCellIndex].innerHTML = `<td><button type="button" class="cancel-button" onclick="thispagereload()">x</button><button type="button" class="check-button" onclick="handlememberDelete('${emailval}','${memjson.memberName}','${memjson.memberRole}','${memjson.memberDepartment}','${memjson.memberCostperhrs}','${memjson.memberId}')"><i class='bx bxs-trash' style='color:#ffffff' ></i></button></td>`;
         }
         if(forwhichaction == "for-edit"){
             tbodyrow.innerHTML = `
@@ -373,9 +374,10 @@ function handlememberEdit(emailVal,moid){
         console.error('Error deleting member:', error);
     });
 }
-function handlememberDelete(emailVal,mname,mrole,mdept,mcost){
+function handlememberDelete(emailVal,mname,mrole,mdept,mcost,moid){
     // console.log(emailVal);
     let memberToDelete = {
+        memberoid: moid,
         memberName: mname,
         memberRole: mrole,
         memberDepartment: mdept,
