@@ -620,7 +620,7 @@ document.addEventListener('DOMContentLoaded', () => {
               password: signInPasswordInput.value.trim()
           };
           // console.log("Signing in with:", loginUserDetail);
-
+          document.getElementById('signin-button').innerHTML = "<i class='bx bx-log-in bx-flashing' style='color:#ffffff' ></i><i class='bx-flashing'> Verifying..</i>";
           fetch(`https://projection-calc-function.onrender.com/api/get-loginuser/${signInEmailInput.value.trim()}`, {
             // fetch(`http://localhost:3002/api/get-loginuser/${signInEmailInput.value.trim()}`, {
               method: 'GET',
@@ -649,6 +649,7 @@ document.addEventListener('DOMContentLoaded', () => {
               } else {
                   signInEmailError.textContent = "Email not found. Please sign up.";
               }
+              document.getElementById('signin-button').innerHTML = "Log in";
             })
             .catch(error => {
                 // console.error('Error deleting member:', error);
@@ -955,6 +956,7 @@ async function checkNstoreAllDetails(usernameVal, emailVal, passwordVal, ticketf
       email: emailVal,
       password: passwordVal
     }
+    document.getElementById('signup-button').innerHTML = "<i class='bx bxs-send bx-flashing' style='color:#ffffff' ></i><i class='bx-flashing'> Creating..</i>";
     try {
       const response = await fetch('https://projection-calc-function.onrender.com/api/createuser', {
         // const response = await fetch('http://localhost:3002/api/createuser', {
@@ -973,6 +975,7 @@ async function checkNstoreAllDetails(usernameVal, emailVal, passwordVal, ticketf
     } catch (error) {
         // console.error('Fetch error:', error);
     }
+    document.getElementById('signup-button').innerHTML = "Sign up";
     document.getElementById('saveProjectModal').style.display = "none";
     document.getElementById('signupForm').reset();
     userDetailPopupModal();
@@ -1152,5 +1155,14 @@ document.getElementById('tokens-remian').addEventListener('click',()=>{
 })
 
 document.getElementById('pay-btn').addEventListener('click',()=>{
-  window.location.href = "https://pages.razorpay.com/entask";
+  // window.location.href = "https://pages.razorpay.com/entask";
+  let currentUserDetails = localStorage.getItem('userDetail');
+  let parsedUserDetails = JSON.parse(currentUserDetails);
+  if (!parsedUserDetails || !parsedUserDetails.email) {
+    console.error('Error: Could not retrieve user email.');
+    return;
+  }
+  let paymentURL = "https://pages.razorpay.com/laabam?email="+parsedUserDetails.email;
+  window.location.href = paymentURL;
+
 })
