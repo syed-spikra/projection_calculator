@@ -755,13 +755,12 @@ function hideAllOpenContainers() {
 
 function populateNameOptions(inputElement, optionsContainer, optionsDiv, searchTerm = '') {
   optionsDiv.innerHTML = '';
-  if (!Array.isArray(mymemberslist)) {
-    console.error('Error: mymemberslist is not an array or is undefined.');
-    // const li = document.createElement('li');
-    // li.textContent = 'Error loading members';
-    // li.classList.add('disabled');
-    // optionsDiv.appendChild(li);
-    return; // Exit the function to prevent further errors
+  if (!Array.isArray(mymemberslist) || mymemberslist.length === 0) {
+      const li = document.createElement('li');
+      li.textContent = 'No members available';
+      li.classList.add('disabled');
+      optionsDiv.appendChild(li);
+      return false; // Indicate that no valid options were populated
   }
   const filteredMembers = mymemberslist.filter(member =>
       member.memberName.toLowerCase().includes(searchTerm.toLowerCase())
@@ -770,23 +769,24 @@ function populateNameOptions(inputElement, optionsContainer, optionsDiv, searchT
   if (filteredMembers.length === 0) {
       const li = document.createElement('li');
       li.textContent = 'No member found';
-      li.classList.add('disabled'); // Add a class for styling if needed
+      li.classList.add('disabled');
       optionsDiv.appendChild(li);
+      return true; // Indicate that options (even "No member found") were populated
   } else {
       filteredMembers.forEach((member, index) => {
           const li = document.createElement('li');
           li.textContent = `${member.memberName} (${member.memberRole})`;
-          li.dataset.index = index; // Store index for arrow navigation
+          li.dataset.index = index;
           li.addEventListener('click', function() {
               populateTableRow(currentTableRow, member);
               optionsContainer.classList.remove('show');
               activeOptionsContainer = null;
-              currentInput.focus(); // Keep focus on the input after selection
+              currentInput.focus();
           });
           optionsDiv.appendChild(li);
       });
+      return true; // Indicate that valid options were populated
   }
-
   focusedListItemIndex = -1; // Reset focus index when options change
 }
 
@@ -794,12 +794,14 @@ function populateTableRow(row, member) {
     row.querySelector('.membername input').value = member.memberName;
     row.querySelector('.role input').value = member.memberRole;
     row.querySelector('.departments select').value = member.memberDepartment;
-    row.querySelector('.costrate input').value = member.memberCostperhrs;
+    row.querySelector('.costrate input').value = parseFloat(member.memberCostperhrs).toFixed(2);
 }
 
 tableBody.addEventListener('click', function(event) {
+  let storedUserDetail = localStorage.getItem(userDetailKey);
+  let values =  storedUserDetail ? JSON.parse(storedUserDetail) : null;
     const nameInput = event.target.closest('.membername input[type="text"]');
-    if (nameInput) {
+    if (nameInput && values != null) {
         currentInput = nameInput;
         currentTableRow = nameInput.closest('tr');
         const optionsContainer = currentTableRow.querySelector('.names-options-container');
@@ -808,17 +810,21 @@ tableBody.addEventListener('click', function(event) {
         hideAllOpenContainers(); // Hide other open containers
         activeOptionsContainer = optionsContainer;
 
-        populateNameOptions(nameInput, optionsContainer, optionsDiv, nameInput.value);
+        // Populate options and only show the container if there are valid options
+        const hasOptions = populateNameOptions(nameInput, optionsContainer, optionsDiv, nameInput.value);
 
-        // Position the options container correctly
-        const inputRect = nameInput.getBoundingClientRect();
-        optionsContainer.style.position = 'absolute';
-        // optionsContainer.style.top = `${inputRect.bottom + window.scrollY}px`;
-        // optionsContainer.style.left = `${inputRect.left + window.scrollX}px`;
-        // optionsContainer.style.width = `${inputRect.width}px`;
-        optionsContainer.classList.add('show');
-
-        // No need for a global click listener to hide, as focusout on input handles this
+        if (hasOptions) {
+            // Position the options container correctly
+            const inputRect = nameInput.getBoundingClientRect();
+            optionsContainer.style.position = 'absolute';
+            // optionsContainer.style.top = `${inputRect.bottom + window.scrollY}px`;
+            // optionsContainer.style.left = `${inputRect.left + window.scrollX}px`;
+            // optionsContainer.style.width = `${inputRect.width}px`;
+            optionsContainer.classList.add('show');
+        } else {
+            optionsContainer.classList.remove('show'); // Ensure it's hidden if no data
+            activeOptionsContainer = null;
+        }
 
         nameInput.addEventListener('focusout', function(e) {
             // Prevent immediate hide if focus goes to the options container
