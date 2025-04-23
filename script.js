@@ -316,11 +316,12 @@ function populateDashboard(data) {
     const totalHoursDisplay = document.querySelector('.metrics-card .metric-item:nth-child(1) .metric-value');
     const costDisplay = document.querySelector('.metrics-card .metric-item:nth-child(2) .metric-value');
     const revenueDisplay = document.querySelector('.metrics-card .metric-item:nth-child(3) .metric-value');
-    const profitDisplay = document.querySelector('.metrics-card .metric-item:nth-child(4) .metric-value');
-    const profitMarginDisplay = document.querySelector('.metrics-card .metric-item:nth-child(5) .metric-value');
-    const avgBillableRatioDisplay = document.querySelector('.metrics-card .metric-item:nth-child(6) .metric-value');
-    const durationDisplay = document.querySelector('.metrics-card .metric-item:nth-child(7) .metric-value');
-    const endDateDashboardDisplay = document.querySelector('.metrics-card .metric-item:nth-child(8) .metric-value');
+    const amttoQuote = document.querySelector('.metrics-card .metric-item:nth-child(4) .metric-value');
+    const profitDisplay = document.querySelector('.metrics-card .metric-item:nth-child(5) .metric-value');
+    const profitMarginDisplay = document.querySelector('.metrics-card .metric-item:nth-child(6) .metric-value');
+    const avgBillableRatioDisplay = document.querySelector('.metrics-card .metric-item:nth-child(7) .metric-value');
+    const durationDisplay = document.querySelector('.metrics-card .metric-item:nth-child(8) .metric-value');
+    const endDateDashboardDisplay = document.querySelector('.metrics-card .metric-item:nth-child(9) .metric-value');
   
     const teamCostsFinancialDisplay = document.querySelector('.Financial_Analysis .Team_Costs .outer_subtitle_name');
     const revenueFinancialDisplay = document.querySelector('.Financial_Analysis .Revenue .outer_subtitle_name');
@@ -345,6 +346,7 @@ function populateDashboard(data) {
     totalHoursDisplay.textContent = totalProjectHoursInput.value;
     costDisplay.textContent = `$ ${(processData.teamCosts).toFixed(2)}`;
     revenueDisplay.textContent = `$ ${(processData.revenueBreakdown.totalRevenue).toFixed(2)}`;
+    amttoQuote.textContent = `$${(processData.mainRevenue).toFixed(2)}`;
     profitDisplay.textContent = `$ ${(processData.profitLoss).toFixed(2)}`;
     profitMarginDisplay.textContent = `${(processData.profitMargin).toFixed(2)} %`;
     avgBillableRatioDisplay.textContent = `${(processData.averageBillableRatio).toFixed(2)} % (all)`;
@@ -1129,6 +1131,7 @@ function checkcurrUser(){
     let localproject = localStorage.getItem(projectsaveKey);
     let localprojValues = localproject ? JSON.parse(localproject) : null;
     if (localprojValues != null){
+      // populateDashboard(JSON.parse(JSON.stringify(localprojValues.projectDetails.projectOutput)));
       userDetailPopupModal();
     }
     else{

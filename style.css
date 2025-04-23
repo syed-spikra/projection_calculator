@@ -652,7 +652,8 @@ select::-ms-expand {
   width: 100%;
   margin: 20px auto;
   color: #000;
-  border-radius: 8px;
+  background-color: #F2F7FF4D;
+  border-radius: 12px;
 }
 
 .metric-card h2 {
@@ -807,15 +808,31 @@ select::-ms-expand {
   background-origin: border-box;
   background-clip: border-box, content-box;
   box-sizing: border-box;
-
-  border: 1px solid;
-  border-image-source: linear-gradient(270deg, rgba(221, 44, 70, 0.3) 0%, rgba(20, 164, 77, 0.3) 100%);
   background: linear-gradient(270deg, rgba(221, 44, 70, 0.04) 0%, rgba(20, 164, 77, 0.04) 100%);
-  border-image-slice: 1; /* This is what makes it work */
+  
 }
-.inner_subtitle_names{
-  /* color: linear-gradient(270deg, #C2142E 40.47%, #14A44D 66.35%); */
+.Profit_Loss {
+  position: relative;
+}
+.Profit_Loss::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 12px; 
+  padding: 1px; 
+  background:linear-gradient(270deg, rgba(221, 44, 70, 0.3) 0%, rgba(20, 164, 77, 0.3) 100%); 
+  mask: 
+    linear-gradient(#000 0 0) content-box, 
+    linear-gradient(#000 0 0);
+  mask-composite: exclude; 
+}
+
+
+.Profit_Loss .inner_subtitle_container .inner_subtitle_names{
+  color: transparent;
+  background: linear-gradient(270deg, #C2142E 40.47%, #14A44D 66.35%);
   -webkit-background-clip: text;
+  background-clip: text;
 }
 .Profit_Margin{
   width: 309.5px;
