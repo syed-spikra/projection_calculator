@@ -1,6 +1,7 @@
 var outputDatares,dataToSend;
 var userDetailKey = 'userDetail';
-var totalcredit,mymemberslist;
+var projectsaveKey = 'userProject';
+var totalcredit = 0,mymemberslist;
 document.addEventListener('DOMContentLoaded', () => {
   const dateInput = document.getElementById('myDate');
   const today = new Date();
@@ -459,6 +460,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signInEmailError = document.getElementById('signInEmailError');
     const signInPasswordError = document.getElementById('signInPasswordError');
     const switchToSignUp = document.getElementById('switchToSignUp');
+    const switchToLogin = document.getElementById('switchToLogin');
 
     // Function to open the modal
     btn.onclick = function() {
@@ -470,6 +472,10 @@ document.addEventListener('DOMContentLoaded', () => {
     switchToSignUp.onclick = function(){
       signinmodal.style.display = "none";
       modal.style.display = "block";
+    }
+    switchToLogin.onclick = function(){
+      modal.style.display = "none";
+      signinmodal.style.display = "block";
     }
 
     // Function to close the modal
@@ -632,12 +638,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     // console.log("Sign In Successful!");
                     localStorage.setItem(userDetailKey,JSON.stringify(userDetail));
                     signinmodal.style.display="none";
-                    window.location.reload();
+                    let projectName = document.getElementById('projectName');
+                    if(projectName.value.trim() === ''){
+                      window.location.reload();}
+                    else{
+                      userDetailPopupModal();}
                 } else {
                     signInPasswordError.textContent = "Invalid email or password.";
                 }
               } else {
-                  signInEmailError.textContent = "User not found. Please sign up.";
+                  signInEmailError.textContent = "Email not found. Please sign up.";
               }
             })
             .catch(error => {
@@ -898,17 +908,38 @@ function checkProjectDetailInfo(){
 
 document.getElementById('save-project-button').addEventListener('click',(e)=>{
   let saveprojbtnClsName = e.target.className;
-  if(saveprojbtnClsName == "saveprojbtn")
+  if(saveprojbtnClsName == "saveprojbtn"){
     userDetailPopupModal();
+  }
 })
 
 function userDetailPopupModal(){
   let storedUserDetail = localStorage.getItem(userDetailKey);
   let values =  storedUserDetail ? JSON.parse(storedUserDetail) : null;
+  let localproject = localStorage.getItem(projectsaveKey);
+  let localprojValues = localproject ? JSON.parse(localproject) : null;
+  if (localprojValues == null){
+    let projectTitle = document.getElementById('projectName').value || "project Unknown";
+    let projectdes = document.getElementById('projectDescription').value || "";
+    let outputData = JSON.parse(JSON.stringify(outputDatares)) || null;
+    let localuserprojData = {
+        projectDetails: {
+            projectTitle: projectTitle,
+            projectDescription: projectdes,
+            projectInput: dataToSend ?? "no data",
+            projectOutput: outputData ?? null
+        }
+    };
+    localStorage.setItem(projectsaveKey,JSON.stringify(localuserprojData));
+    window.location.reload();
+  }
+  
   if(values == null){
     // console.log("not stored");
-    let signupmodal = document.getElementById('saveProjectModal');
-    signupmodal.style.display = 'block';
+    // let signupmodal = document.getElementById('saveProjectModal');
+    // signupmodal.style.display = 'block';
+    let loginmodal = document.getElementById('signInModal');
+    loginmodal.style.display = 'block';
   }else if(totalcredit <= 0){
     let paymentmodal = document.getElementById('paymentModal');
     paymentmodal.style.display = "block";
@@ -944,17 +975,23 @@ async function checkNstoreAllDetails(usernameVal, emailVal, passwordVal, ticketf
     }
     document.getElementById('saveProjectModal').style.display = "none";
     document.getElementById('signupForm').reset();
-    window.location.reload();
+    userDetailPopupModal();
     return;
   }
   document.getElementById('save-project-button').innerHTML = "<i class='bx bx-upload bx-flashing' style='color:#ffffff' ></i><i class='bx-flashing'> Saving..</i>";
-  // alert("inside project store function");
-    // Get the project title and the output data (assuming it's stored in a variable called 'outputData')
-    const projectTitle = document.getElementById('projectName').value || "project Unknown";
-    const projectdes = document.getElementById('projectDescription').value || "";
-    // outputDatares = "some";
-    // Assuming 'outputData' is available in the global scope or you can access it here
-    const outputData = JSON.parse(JSON.stringify(outputDatares)) || null; // Replace yourOutputData
+    let projectTitle,projectdes,outputData,inputData;
+    let localproject = localStorage.getItem(projectsaveKey);
+    let localprojValues = localproject ? JSON.parse(localproject) : null;
+    if(localprojValues != null){
+      projectTitle = localprojValues.projectDetails.projectTitle;
+      projectdes = localprojValues.projectDetails.projectDescription;
+      inputData = localprojValues.projectDetails.projectInput;
+      outputData = JSON.parse(JSON.stringify(localprojValues.projectDetails.projectOutput));
+    }else{
+      projectTitle = document.getElementById('projectName').value || "project Unknown";
+      projectdes = document.getElementById('projectDescription').value || "";
+      outputData = JSON.parse(JSON.stringify(outputDatares)) || null;
+    }
     const userData = {
         fullname: usernameVal,
         email: emailVal,
@@ -962,7 +999,7 @@ async function checkNstoreAllDetails(usernameVal, emailVal, passwordVal, ticketf
         projectDetails: {
             projectTitle: projectTitle,
             projectDescription: projectdes,
-            projectInput: dataToSend ?? "no data",
+            projectInput: inputData || dataToSend || "no data",
             projectOutput: outputData.processData ?? null
         }
     };
@@ -995,6 +1032,7 @@ async function sendUserDataToBackend(userData) {
             // console.log('Success:', result.result_response);
             // window.location.href = "myprojects.html";
             document.getElementById('save-project-button').innerHTML = "Save Project";
+            localStorage.removeItem(projectsaveKey);
             retomyprojects();
             // alert("success");
             // Handle success (e.g., show a success message)
@@ -1022,20 +1060,6 @@ function checkcurrUser(){
     signupbtnele.classList.remove('signup-btn');
     signupbtnele.classList.add('signup-profile');
     signupbtnele.innerHTML = values.username.at(0);
-    // signupbtnele.addEventListener('mouseover',()=>{
-    //   dropdown.style.display = 'block';
-    // })
-    // signupbtnele.addEventListener('mouseout', () => {
-    //   setTimeout(() => {
-    //     dropdown.style.display = 'none';
-    //   }, 1200);
-    // });    
-    // dropdown.addEventListener('mousemove',()=>{
-    //   dropdown.style.display = 'block';
-    // })
-    // dropdown.addEventListener('mouseout',()=>{
-    //   dropdown.style.display = 'none';
-    // })
     let mouseOverButton = false;
     let mouseOverDropdown = false;
     let hideTimeout;
@@ -1093,7 +1117,20 @@ function checkcurrUser(){
     .catch(error => {
       console.error('API call failed:', error);
     });
-    fetchnsetUserMembers();
+    let localproject = localStorage.getItem(projectsaveKey);
+    let localprojValues = localproject ? JSON.parse(localproject) : null;
+    if (localprojValues != null){
+      userDetailPopupModal();
+    }
+    else{
+      fetchnsetUserMembers();
+    }
+  }else{
+    let localproject = localStorage.getItem(projectsaveKey);
+    let localprojValues = localproject ? JSON.parse(localproject) : null;
+    if (localprojValues != null){
+      userDetailPopupModal();
+    }
   }
 }
 
