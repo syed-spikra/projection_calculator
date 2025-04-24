@@ -401,6 +401,149 @@ function populateDashboard(data) {
     document.getElementById('output_container').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+
+// populate local project inputs
+function populateinputData(inputData) {
+  if (inputData && typeof inputData === 'object') {
+    // Project Timeline
+    const startDateInput = document.getElementById('myDate');
+    if (inputData.startDate) {
+      // Format the date to yyyy-mm-dd for the input type="date"
+      const formattedDate = new Date(inputData.startDate).toISOString().slice(0, 10);
+      startDateInput.value = formattedDate;
+    }
+
+    const totalProjectHoursInput = document.querySelector('.totalprojecthrs input[type="number"]');
+    if (inputData.totalProjectHours !== undefined) {
+      totalProjectHoursInput.value = inputData.totalProjectHours;
+    }
+
+    const workHoursPerDayInput = document.querySelector('.workhrsperday input[type="number"]');
+    if (inputData.workHours !== undefined) {
+      workHoursPerDayInput.value = inputData.workHours;
+    }
+
+    const workWeekDaysSelect = document.getElementById('workWeekDays');
+    if (inputData.workWeekDays) {
+      workWeekDaysSelect.value = inputData.workWeekDays;
+    }
+
+    // Profitability Target
+    const profitTargetInput = document.querySelector('.profit-container .expectedprofit input[type="number"]');
+    if (inputData.profitTarget !== undefined) {
+      profitTargetInput.value = inputData.profitTarget;
+    }
+
+    // Resource Information
+    const teamMemberCountInput = document.querySelector('.resource_information .teammember_count input[type="number"]');
+    if (inputData.teamMemberCount !== undefined) {
+      teamMemberCountInput.value = inputData.teamMemberCount;
+    }
+
+    // Team Members Details Table
+    const teamMembersTbody = document.querySelector('.teammember_infos table tbody');
+    teamMembersTbody.innerHTML = ''; // Clear existing rows
+
+    if (inputData.teamMembers && Array.isArray(inputData.teamMembers)) {
+      inputData.teamMembers.forEach(member => {
+        const row = teamMembersTbody.insertRow();
+
+        // Name
+        const nameCell = row.insertCell();
+        const nameInput = document.createElement('div');
+        nameInput.classList.add('membername');
+        nameInput.innerHTML = `<input type="text" placeholder="John Deo" value="${member.name || ''}">
+                                   <div class="names-options-container">
+                                       <div class="names-options">
+                                       </div>
+                                   </div>`;
+        nameCell.appendChild(nameInput);
+
+        // Role
+        const roleCell = row.insertCell();
+        const roleDiv = document.createElement('div');
+        roleDiv.classList.add('role');
+        roleDiv.innerHTML = `<input type="text" placeholder="CTO" value="${member.role || ''}">`;
+        roleCell.appendChild(roleDiv);
+
+        // Department
+        const departmentCell = row.insertCell();
+        const departmentDiv = document.createElement('div');
+        departmentDiv.classList.add('departments');
+        const departmentSelect = document.createElement('select');
+        departmentSelect.id = 'departments';
+        departmentSelect.name = 'department';
+        const departmentsOptions = [
+          { value: 'Engineer', label: 'Engineer' },
+          { value: 'Design', label: 'Design' },
+          { value: 'Product', label: 'Product' },
+          { value: 'Marketing', label: 'Marketing' },
+          { value: 'Others', label: 'Others' },
+        ];
+        departmentsOptions.forEach(optionData => {
+          const option = document.createElement('option');
+          option.value = optionData.value;
+          option.textContent = optionData.label;
+          option.selected = member.department === optionData.value;
+          departmentSelect.appendChild(option);
+        });
+        departmentDiv.appendChild(departmentSelect);
+        departmentCell.appendChild(departmentDiv);
+
+        // Hours/Day
+        const hoursDayCell = row.insertCell();
+        const hoursDayDiv = document.createElement('div');
+        hoursDayDiv.classList.add('number-input-group');
+        hoursDayDiv.innerHTML = `<input type="number" class="number-input" id="input1" name="input1" value="${member.hours_day !== undefined ? parseFloat(member.hours_day).toFixed(2) : '4.00'}" step="1" min="2" max="100">
+                                    <div class="input-controls">
+                                        <button type="button" class="minus-button">-</button>
+                                        <button type="button" class="plus-button">+</button>
+                                    </div>`;
+        hoursDayCell.appendChild(hoursDayDiv);
+
+        // Cost per hour
+        const costRateCell = row.insertCell();
+        const costRateDiv = document.createElement('div');
+        costRateDiv.classList.add('number-input-group', 'costrate');
+        costRateDiv.innerHTML = `<input type="number" class="number-input" id="input1" name="input1" value="${member.cost_rate !== undefined ? parseFloat(member.cost_rate).toFixed(2) : '40.00'}" step="1" min="0" max="10000">
+                                     <div class="input-controls">
+                                         <button type="button" class="minus-button">-</button>
+                                         <button type="button" class="plus-button">+</button>
+                                     </div>`;
+        costRateCell.appendChild(costRateDiv);
+
+        // Billable Rate
+        const billableRateCell = row.insertCell();
+        const billableRateDiv = document.createElement('div');
+        billableRateDiv.classList.add('number-input-group');
+        billableRateDiv.innerHTML = `<input type="number" class="number-input" id="input1" name="input1" value="${member.billable_rate !== undefined ? parseFloat(member.billable_rate).toFixed(2) : '40.00'}" step="1" min="0" max="10000">
+                                         <div class="input-controls">
+                                             <button type="button" class="minus-button">-</button>
+                                             <button type="button" class="plus-button">+</button>
+                                         </div>`;
+        billableRateCell.appendChild(billableRateDiv);
+
+        // Billable Ratio
+        const billableRatioCell = row.insertCell();
+        const billableRatioDiv = document.createElement('div');
+        billableRatioDiv.classList.add('number-input-group');
+        billableRatioDiv.innerHTML = `<input type="number" class="number-input" id="input1" name="input1" value="${member.billable_ratio !== undefined ? (member.billable_ratio).toFixed(2) : '100.00'}" step="1" min="0" max="100">
+                                          <div class="input-controls">
+                                              <button type="button" class="minus-button">-</button>
+                                              <button type="button" class="plus-button">+</button>
+                                          </div>`;
+        billableRatioCell.appendChild(billableRatioDiv);
+      });
+    } else {
+      // If no team members data, you might want to add a default row or a message
+      const row = teamMembersTbody.insertRow();
+      const cell = row.insertCell();
+      cell.colSpan = 7;
+      cell.textContent = 'No team member details available.';
+    }
+  }
+}
+
 function disenCalculate(){
   let calculateButton = document.getElementById('calcbtn');
   if (!calculateButton) {
@@ -482,17 +625,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to close the modal
     span.onclick = function() {
-        modal.style.display = "none";
-        resetValidationErrors();
-        signupForm.reset();
+      modal.style.display = "none";
+      resetValidationErrors();
+      signupForm.reset();
+      localStorage.removeItem(projectsaveKey);
     }
     signinclose.onclick = function(){
       signinmodal.style.display = "none";
       resetsigninValidations();
       signInForm.reset();
+      localStorage.removeItem(projectsaveKey);
     }
     paymentclose.onclick = function() {
       paymentmodal.style.display = "none";
+      localStorage.removeItem(projectsaveKey);
     }
     // Close modal if user clicks outside of it
     window.onclick = function(event) {
@@ -500,14 +646,17 @@ document.addEventListener('DOMContentLoaded', () => {
           modal.style.display = "none";
           resetValidationErrors();
           signupForm.reset();
+          localStorage.removeItem(projectsaveKey);
         }
         if(event.target == signinmodal){
           signinmodal.style.display = "none";
           resetsigninValidations();
           signInForm.reset();
+          localStorage.removeItem(projectsaveKey);
         }
         if (event.target == paymentmodal){
           paymentmodal.style.display = "none";
+          localStorage.removeItem(projectsaveKey);
         }
     }
 
@@ -1131,6 +1280,9 @@ function checkcurrUser(){
     let localproject = localStorage.getItem(projectsaveKey);
     let localprojValues = localproject ? JSON.parse(localproject) : null;
     if (localprojValues != null){
+      // document.getElementById('projectName').value = localprojValues.projectDetails.projectTitle || "";
+      // document.getElementById('projectDescription').value = localprojValues.projectDetails.projectDescription || "";
+      // populateinputData(JSON.parse(JSON.stringify(localprojValues.projectDetails.projectInput)));
       // populateDashboard(JSON.parse(JSON.stringify(localprojValues.projectDetails.projectOutput)));
       userDetailPopupModal();
     }
@@ -1141,6 +1293,10 @@ function checkcurrUser(){
     let localproject = localStorage.getItem(projectsaveKey);
     let localprojValues = localproject ? JSON.parse(localproject) : null;
     if (localprojValues != null){
+      // document.getElementById('projectName').value = localprojValues.projectDetails.projectTitle || "";
+      // document.getElementById('projectDescription').value = localprojValues.projectDetails.projectDescription || "";
+      // populateinputData(JSON.parse(JSON.stringify(localprojValues.projectDetails.projectInput)));
+      // populateDashboard(JSON.parse(JSON.stringify(localprojValues.projectDetails.projectOutput)));
       userDetailPopupModal();
     }
   }

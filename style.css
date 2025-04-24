@@ -441,9 +441,19 @@ select::-ms-expand {
   width: 100%;
 }
 
+
+.temmember_table_div table tbody tr td .membername input::placeholder,
+.temmember_table_div table tbody tr td .role input::placeholder {
+  color: #b8b8b8cc;
+  opacity: 1;
+}
+
+.temmember_table_div table tbody tr td .membername input::-webkit-input-placeholder,
+.temmember_table_div table tbody tr td .role input::-webkit-input-placeholder {
+  color: #b8b8b8cc;
+}
+
   /* input numbers fields */
-
-
   .number-input-group {
     display: flex;
     /* background: #F4F9FF; */
