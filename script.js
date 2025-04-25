@@ -830,12 +830,14 @@ async function fetchnsetUserMembers() {
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      // throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const data = await response.json();
-    mymemberslist = await data[0].memberslist;
+    else{
+      const data = await response.json();
+      mymemberslist = await data[0].memberslist;
+    }
   } catch (error) {
-    console.error('API call failed:', error);
+    // console.error('API call failed:', error);
   }
 }
 
@@ -1094,7 +1096,7 @@ function userDetailPopupModal(){
     localStorage.setItem(projectsaveKey,JSON.stringify(localuserprojData));
     window.location.reload();
   }
-  
+  console.log("insideuserdetailpopupmodal");
   if(values == null){
     // console.log("not stored");
     // let signupmodal = document.getElementById('saveProjectModal');
@@ -1256,6 +1258,9 @@ function checkcurrUser(){
         }
       }, 200);
     });
+
+    let localproject = localStorage.getItem(projectsaveKey);
+    let localprojValues = localproject ? JSON.parse(localproject) : null;
     let fetchUrl = 'https://projection-calc-function.onrender.com/api/get-tokens-count/'+values.email;
     // let fetchUrl = 'http://localhost:3002/api/get-tokens-count/'+values.email;
     fetch(fetchUrl,{
@@ -1272,26 +1277,25 @@ function checkcurrUser(){
         document.getElementById('token-count').innerHTML = (data.creditcount || 0)+ " Left";
         document.getElementsByClassName('tokens-remian')[0].style.display = "block flex";
         totalcredit = data.creditcount || 0;
+        
+        if (localprojValues != null){
+          // document.getElementById('projectName').value = localprojValues.projectDetails.projectTitle || "";
+          // document.getElementById('projectDescription').value = localprojValues.projectDetails.projectDescription || "";
+          // populateinputData(JSON.parse(JSON.stringify(localprojValues.projectDetails.projectInput)));
+          // populateDashboard(JSON.parse(JSON.stringify(localprojValues.projectDetails.projectOutput)));
+          userDetailPopupModal();
+        }
       }
       else{
         document.getElementsByClassName('tokens-remian')[0].style.display = "none";
+      }
+      if (localprojValues == null){
+        fetchnsetUserMembers();
       }
     })
     .catch(error => {
       console.error('API call failed:', error);
     });
-    let localproject = localStorage.getItem(projectsaveKey);
-    let localprojValues = localproject ? JSON.parse(localproject) : null;
-    if (localprojValues != null){
-      // document.getElementById('projectName').value = localprojValues.projectDetails.projectTitle || "";
-      // document.getElementById('projectDescription').value = localprojValues.projectDetails.projectDescription || "";
-      // populateinputData(JSON.parse(JSON.stringify(localprojValues.projectDetails.projectInput)));
-      // populateDashboard(JSON.parse(JSON.stringify(localprojValues.projectDetails.projectOutput)));
-      userDetailPopupModal();
-    }
-    else{
-      fetchnsetUserMembers();
-    }
   }else{
     let localproject = localStorage.getItem(projectsaveKey);
     let localprojValues = localproject ? JSON.parse(localproject) : null;
