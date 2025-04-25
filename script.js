@@ -297,7 +297,7 @@ function handleInputChangeAndApiCall() {
     })
     .catch(error => {
       // console.error('API call failed:', error);
-      document.getElementById('calcbtn').innerHTML = "Calculate";
+      document.getElementById('calcbtn').innerHTML = "Estimate";
       const outputContainer = document.querySelector('.output_container');
       outputContainer.style.display = "hidden";
       const saveprojBox = document.getElementById('projectDetailBottomBox');
@@ -323,7 +323,7 @@ function populateDashboard(data) {
     const durationDisplay = document.querySelector('.metrics-card .metric-item:nth-child(8) .metric-value');
     const endDateDashboardDisplay = document.querySelector('.metrics-card .metric-item:nth-child(9) .metric-value');
   
-    const teamCostsFinancialDisplay = document.querySelector('.Financial_Analysis .Team_Costs .outer_subtitle_name');
+    // const teamCostsFinancialDisplay = document.querySelector('.Financial_Analysis .Team_Costs .outer_subtitle_name');
     const revenueFinancialDisplay = document.querySelector('.Financial_Analysis .Revenue .outer_subtitle_name');
     const profitLossDisplay = document.querySelector('.Financial_Analysis .Profit_Loss .outer_subtitle_name');
     const profitMarginFinancialDisplay = document.querySelector('.Financial_Analysis .Profit_Margin .outer_subtitle_name');
@@ -354,7 +354,7 @@ function populateDashboard(data) {
     endDateDashboardDisplay.textContent = processData.projectedEndDate;
 
     // Financial Analysis
-    teamCostsFinancialDisplay.textContent = `$${(processData.teamCosts).toFixed(2)}`;
+    // teamCostsFinancialDisplay.textContent = `$${(processData.teamCosts).toFixed(2)}`;
     revenueFinancialDisplay.textContent = `$${(processData.mainRevenue).toFixed(2)}`;
     profitLossDisplay.textContent = `$${(processData.profitLoss).toFixed(2)}`;
     profitMarginFinancialDisplay.textContent = `${(processData.profitMargin).toFixed(2)}%`;
@@ -397,7 +397,7 @@ function populateDashboard(data) {
     outputContainer.style.display = "block";
     const saveprojBox = document.getElementById('projectDetailBottomBox');
     saveprojBox.style.display = "block";
-    document.getElementById('calcbtn').innerHTML = "Calculate";
+    document.getElementById('calcbtn').innerHTML = "Estimate";
     document.getElementById('output_container').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
@@ -570,7 +570,7 @@ function disenCalculate(){
     outputContainer.style.display = "none";
     const saveprojBox = document.getElementById('projectDetailBottomBox');
     saveprojBox.style.display = "none";
-    document.getElementById('calcbtn').innerHTML = "Calculate";
+    document.getElementById('calcbtn').innerHTML = "Estimate";
     calculateButton.classList.add('disable-calcbtn');
   }
 }
@@ -983,13 +983,15 @@ tableBody.addEventListener('click', function(event) {
                 setTimeout(() => {
                     optionsContainer.classList.remove('show');
                     activeOptionsContainer = null;
-                }, 100); // Small delay to allow click on options
+                    disenCalculate();
+                }, 100);
             }
         });
 
         nameInput.addEventListener('input', function() {
             populateNameOptions(nameInput, optionsContainer, optionsDiv, this.value);
-            optionsContainer.classList.add('show'); // Ensure it's visible on input
+            optionsContainer.classList.add('show'); 
+            disenCalculate();
         });
 
         nameInput.addEventListener('keydown', function(e) {
@@ -1020,7 +1022,8 @@ tableBody.addEventListener('click', function(event) {
                   populateTableRow(currentTableRow, mymemberslist[memberIndex]);
                   optionsContainer.classList.remove('show');
                   activeOptionsContainer = null;
-                  this.blur(); // Remove focus from input
+                  disenCalculate();
+                  this.blur();
               }
           }
       });
