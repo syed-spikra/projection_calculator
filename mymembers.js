@@ -52,6 +52,7 @@ function fetchcurrentusermembers(){
     let usermail = JSON.parse(currentUserDetails);
     // console.log(usermail.email);
     let fetchUrl = 'https://projection-calc-function.onrender.com/api/get-user-members/'+usermail.email;
+    // console.log(fetchUrl);
     // let fetchUrl ='http://localhost:3002/api/get-user-members/'+usermail.email;
     // Make the API call to your Node.js backend
     // fetch('https://projection-calc-function.onrender.com/.......', { 
@@ -188,9 +189,9 @@ sampleData = [
 function populateMembersdash(membersData){
     const membersListBody = document.getElementById('memberlistbody');
     membersListBody.innerHTML = '';
-    emailidfromresponse = membersData[0].userDetails.email;
     if(membersData && membersData.length > 0){
         memberslist = membersData[0].memberslist;
+        emailidfromresponse = membersData[0].userDetails.email;
         memberslist.forEach((member, index) => {
             const mrow = membersListBody.insertRow();
             mrow.id = "m"+member._id;
@@ -524,4 +525,192 @@ function retomyhome(){
     localStorage.removeItem('userDetail');
     window.location.href = "index.html";
   }
-  
+
+// =================================capacity members=================================
+
+const rangeTypeSelector = document.getElementById('range-type');
+const monthSelector = document.getElementById('month-selector');
+const yearSelector = document.getElementById('year');
+const customDateSelector = document.getElementById('custom-date-selector');
+const startDateInput = document.getElementById('start-date');
+const endDateInput = document.getElementById('end-date');
+// const calculateButton = document.getElementById('calculate-availability');
+const availabilityResultsDiv = document.getElementById('availability-results');
+
+monthSelector.style.display = 'block flex';
+yearSelector.style.display = 'block';
+customDateSelector.style.display = 'none';
+
+rangeTypeSelector.addEventListener('change', function () {
+    if (this.value === 'month') {
+        monthSelector.style.display = 'block flex';
+        yearSelector.style.display = 'block';
+        customDateSelector.style.display = 'none';
+    } else {
+        monthSelector.style.display = 'none';
+        yearSelector.style.display = 'none';
+        customDateSelector.style.display = 'block flex';
+    }
+});
+monthSelector.addEventListener('change', function() {setstartenddate();});
+yearSelector.addEventListener('change', function() {setstartenddate();});
+startDateInput.addEventListener('change', function () {
+    if (endDateInput.value && this.value > endDateInput.value) {
+        // alert("Start date cannot be after the end date.");
+        this.value = endDateInput.value; // Reset start date to end date
+    }
+    else 
+        setstartenddate();
+});
+endDateInput.addEventListener('change', function () {
+    if (startDateInput.value && this.value < startDateInput.value) {
+        // alert("End date cannot be before the start date.");
+        this.value = startDateInput.value;
+    }
+    else
+        setstartenddate();
+});
+
+// calculateButton.addEventListener('click', function () {
+function setstartenddate(){
+    let startDate, endDate;
+    const selectedMonth = parseInt(document.getElementById('month').value);
+    const selectedYear = parseInt(document.getElementById('year').value);
+    const today = new Date();
+    const currentMonth = today.getMonth() + 1;
+    const currentYearNum = today.getFullYear();
+    const currentDate = today.getDate();
+    if (rangeTypeSelector.value === 'month') {
+        if (selectedYear === currentYearNum && selectedMonth === currentMonth) {
+            startDate = `${currentYearNum}-${String(currentMonth).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
+        } else {
+            startDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-01`;
+        }
+        endDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${getLastDayOfMonth(selectedYear, selectedMonth)}`;
+    } else {
+        startDate = startDateInput.value;
+        endDate = endDateInput.value;
+    }
+    fetchAvailabilityData(startDate, endDate);
+};
+
+async function fetchAvailabilityData(startDate, endDate) {
+    try {
+        let currentUserDetails = localStorage.getItem('userDetail');
+        // console.log(currentUserDetails);
+        let usermail = JSON.parse(currentUserDetails);
+        const fetchUrl = 'https://projection-calc-function.onrender.com/api/get-all-member-capacity/'+usermail.email;
+        // const fetchUrl = 'http://localhost:3002/api/get-all-member-capacity/'+usermail.email;
+        const response = await fetch(fetchUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ startTime: startDate, endTime: endDate })
+        });
+
+        if (!response.ok) {
+            // throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        displayAvailability(data); //  Call displayAvailability with the fetched data
+
+    } catch (error) {
+        // console.error("Error fetching availability data:", error);
+        // availabilityResultsDiv.innerHTML = `<p>Error fetching data: ${error.message}</p>`;
+    }
+}
+
+function displayAvailability(data) {
+    availabilityResultsDiv.innerHTML = '';
+
+    // if (!data || !data.member_capacity || data.member_capacity.length === 0) {
+    if(data.status != 200){
+        availabilityResultsDiv.innerHTML = "<p>No member availability data found for the selected range.</p>";
+        return;
+    }
+    data = data.member_capacity;
+    const table = document.createElement('table');
+    table.innerHTML = `
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Hours/day</th>
+                <th>Project Allocations</th>
+                <th>Total Capacity (hours)</th>
+                <th>Allocated Hours</th>
+                <th>Available Hours</th>
+                <th>Allocation (%)</th>
+            </tr>
+        </thead>
+        <tbody id="availability-table-body"></tbody>
+    `;
+    availabilityResultsDiv.appendChild(table);
+    const tableBody = document.getElementById('availability-table-body');
+
+    data.memberslist.forEach(member => {
+        const row = tableBody.insertRow();
+        const nameCell = row.insertCell();
+        const hourperday = row.insertCell();
+        const projectsCell = row.insertCell();
+        const capacityCell = row.insertCell();
+        const allocatedCell = row.insertCell();
+        const availableCell = row.insertCell();
+        const allocationCell = row.insertCell();
+
+        nameCell.textContent = member.membername;
+        hourperday.textContent = data.maxworkperhrs;
+        const projectList = member.projectlist.map(p => `${p.pname} (${p.projectallocationtime} hrs)`).join('<br>');
+        projectsCell.innerHTML = projectList || 'No projects';
+
+        capacityCell.textContent = data.capacityHours;
+        allocatedCell.textContent = member.allocatedHours;
+        availableCell.textContent = member.availableHours;
+
+        const allocationPercentage = member.allocation ? member.allocation.toFixed(2) + '%' : '0.00%';
+        allocationCell.textContent = allocationPercentage;
+
+        // Color-coding for allocation %
+        if (member.allocation < 50) {
+            allocationCell.style.backgroundColor = 'lightgreen';
+        } else if (member.allocation >= 50 && member.allocation <= 80) {
+            allocationCell.style.backgroundColor = 'yellow';
+        } else {
+            allocationCell.style.backgroundColor = 'lightcoral';
+        }
+    });
+
+    const dateRangeInfo = document.createElement('p');
+    const workingDaysInfo = document.createElement('p');
+    // dateRangeInfo.textContent = `Date Range: ${startDate} - ${endDate}`;
+    workingDaysInfo.textContent = `Total Working Days: ${data.totaldaysrange}`;
+    availabilityResultsDiv.prepend(workingDaysInfo);
+    availabilityResultsDiv.prepend(dateRangeInfo);
+}
+
+// Get current date
+const today = new Date();
+const currentYear = today.getFullYear();
+const currentMonth = today.getMonth() + 1;
+const currentDate = today.getDate();
+
+// Set default month and year
+document.getElementById('month').value = currentMonth;
+document.getElementById('year').value = currentYear;
+
+// Function to get the last day of a month
+function getLastDayOfMonth(year, month) {
+    return new Date(year, month, 0).getDate();
+}
+
+// Set default start and end dates for month view
+const defaultStartDate = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
+const defaultEndDate = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${getLastDayOfMonth(currentYear, currentMonth)}`;
+
+// Set initial values for custom date pickers
+document.getElementById('start-date').value = defaultStartDate;
+document.getElementById('end-date').value = defaultEndDate;
+
+//  Initial load with the current month
+fetchAvailabilityData(defaultStartDate, defaultEndDate);
