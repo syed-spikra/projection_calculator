@@ -661,7 +661,7 @@ function displayAvailability(data) {
 
         nameCell.textContent = member.membername;
         hourperday.textContent = data.maxworkperhrs;
-        const projectList = member.projectlist.map(p => `${p.pname} (${p.projectallocationtime} hrs)`).join('<br>');
+        const projectList = member.projectlist.map(p => `${p.pname} (${p.pmemhrsday}hrs * ${p.pdayscount}days = ${p.projectallocationtime} hrs)`).join('<br>');
         projectsCell.innerHTML = projectList || 'No projects';
 
         capacityCell.textContent = data.capacityHours;
