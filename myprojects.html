@@ -93,11 +93,21 @@
      
      <div id="projectDetailsContainer" class="project-details-container" style="display: none;">
         <div class="details-header">
-            <button id="backToProjects" class="back-button">&larr;</button>
-            <h3>Project Details</h3>
+            <button id="backToProjects" class="back-button"><i class='bx bx-chevron-left' ></i></button>
+            <h3>All Estimates</h3>
         </div>
         <div id="projectDetailsContent">
             <div class="output_container">
+
+                <!-- Project Title and description card -->
+                <div class="titleNdescription">
+                    <div class="outer_subtitle_container Etitle">
+                        <div class="outer_subtitle_name">Estimate Name:</div>
+                    </div>
+                    <div class="inner_subtitle_container Edescp">
+                        <div class="inner_subtitle_name">Description:</div>
+                    </div>
+                </div>
                 <!-- Project Timeline Projection -->
                 <div class="projecttimeline_projections">
                    <!-- sub title -->
@@ -153,6 +163,75 @@
                    </div>
                 </div>
        
+                <!-- Financial Analysis -->
+                <div class="Financial_Analysis">
+                   <!-- sub title -->
+                   <div class="subtitle_container">
+                       <div class="subtitle_name">
+                           Financial Analysis
+                       </div>
+                   </div>
+       
+                   <!-- team daily capacity -->
+                   <div class="row_container">
+                       <!-- Revenue -->
+                       <div class="Revenue">
+                       <div class="inner_subtitle_container">
+                           <div class="inner_subtitle_name2">
+                            Amount to be Quoted
+                           </div>
+                       </div>
+                       <div class="outer_subtitle_container">
+                           <div class="outer_subtitle_name">
+                               $9,600.00
+                           </div>
+                       </div>
+                       </div>
+                       
+                       <!-- Profit/Loss -->
+                        <div class="Profit_Loss">
+                           <div class="inner_subtitle_container">
+                               <div class="inner_subtitle_names">
+                                   Profit Amount
+                               </div>
+                           </div>
+                           <div class="outer_subtitle_container">
+                               <div class="outer_subtitle_name">
+                                   $2,400.00
+                               </div>
+                           </div>
+                        </div>
+       
+                        <!-- Profit Margin -->
+                        <div class="Profit_Margin">
+                           <div class="inner_subtitle_container">
+                               <div class="inner_subtitle_name3">
+                                   Profit Margin
+                               </div>
+                           </div>
+                           <div class="outer_subtitle_container">
+                               <div class="outer_subtitle_name">
+                                   25.0%
+                               </div>
+                           </div>
+                        </div>
+       
+                       <!-- Team Costs -->
+                       <!-- <div class="Team_Costs">
+                       <div class="inner_subtitle_container">
+                           <div class="inner_subtitle_name1">
+                               Team Costs
+                           </div>
+                       </div>
+                       <div class="outer_subtitle_container">
+                           <div class="outer_subtitle_name">
+                               $7,200.00
+                           </div>
+                       </div>
+                       </div>       -->
+                   </div>
+                </div>
+
                 <!-- Project Dashboard -->
                 <div class="project_dashhboard">
                    <!-- <div class="maintitle">
@@ -170,15 +249,20 @@
                            <span class="metric-value">160.0</span>
                        </div>
                        <div class="metric-item">
-                           <span class="metric-label">Cost</span>
+                           <span class="metric-label">Calculated Cost</span>
                            <span class="brds"></span>
                            <span class="metric-value">$ 7,200.00</span>
                        </div>
                        <div class="metric-item">
-                           <span class="metric-label">Revenue</span>
+                           <span class="metric-label">Calculated Revenue</span>
                            <span class="brds"></span>
                            <span class="metric-value">$ 9,600.00</span>
                        </div>
+                       <div class="metric-item">
+                        <span class="metric-label">Amount to be Quoted</span>
+                        <span class="brds"></span>
+                        <span class="metric-value">$ 5,333.00</span>
+                      </div>
                        <div class="metric-item">
                            <span class="metric-label">Profit ($)</span>
                            <span class="brds"></span>
@@ -207,76 +291,7 @@
                    </div>
                </div>
        
-               <!-- Financial Analysis -->
-               <div class="Financial_Analysis">
-                   <!-- sub title -->
-                   <div class="subtitle_container">
-                       <div class="subtitle_name">
-                           Financial Analysis
-                       </div>
-                   </div>
-       
-                   <!-- team daily capacity -->
-                   <div class="row_container">
-                       <!-- Revenue -->
-                       <div class="Revenue">
-                       <div class="inner_subtitle_container">
-                           <div class="inner_subtitle_name2">
-                               Revenue
-                           </div>
-                       </div>
-                       <div class="outer_subtitle_container">
-                           <div class="outer_subtitle_name">
-                               $9,600.00
-                           </div>
-                       </div>
-                       </div>
-                       
-                       <!-- Profit/Loss -->
-                        <div class="Profit_Loss">
-                           <div class="inner_subtitle_container">
-                               <div class="inner_subtitle_names">
-                                   Profit/Loss
-                               </div>
-                           </div>
-                           <div class="outer_subtitle_container">
-                               <div class="outer_subtitle_name">
-                                   $2,400.00
-                               </div>
-                           </div>
-                        </div>
-       
-                        <!-- Profit Margin -->
-                        <div class="Profit_Margin">
-                           <div class="inner_subtitle_container">
-                               <div class="inner_subtitle_name3">
-                                   Profit Margin
-                               </div>
-                           </div>
-                           <div class="outer_subtitle_container">
-                               <div class="outer_subtitle_name">
-                                   25.0%
-                               </div>
-                           </div>
-                        </div>
-       
-                       <!-- Team Costs -->
-                       <div class="Team_Costs">
-                       <div class="inner_subtitle_container">
-                           <div class="inner_subtitle_name1">
-                               Team Costs
-                           </div>
-                       </div>
-                       <div class="outer_subtitle_container">
-                           <div class="outer_subtitle_name">
-                               $7,200.00
-                           </div>
-                       </div>
-                       </div>
-                       
-                       
-                   </div>
-                </div>
+               
                 <!-- Team Costs breakdown -->
                 <div class="teamcost_breakdown">
                    <!-- sub title -->

@@ -117,6 +117,8 @@ function populateProjsdash(projectData) {
             row.classList.add('project-row');
 
             // 1. Project Name with "Open" button
+            let ptitle = project.projectDetails.projectTitle;
+            let pdescp = project.projectDetails.projectDescription;
             const projectNameCell = row.insertCell();
             projectNameCell.classList.add('project-name-cell');
             const projectNameSpan = document.createElement('span');
@@ -127,7 +129,7 @@ function populateProjsdash(projectData) {
             openButton.innerHTML = '<span class="open-icon"><i class="bx bx-arrow-from-left"></i></span> View';
             // Add event listener for redirection
             openButton.addEventListener('click', function() {
-                displayProjectDetails(row.id);
+                displayProjectDetails(row.id,ptitle,pdescp);
             });
             projectNameCell.appendChild(projectNameSpan);
             projectNameCell.appendChild(openButton); 
@@ -392,7 +394,7 @@ let Sampledata=[
 // populateProjsdash(Sampledata);
 
 
-function displayProjectDetails(projectID){
+function displayProjectDetails(projectID,ptitle,pdesp){
     document.getElementById('projects_info').style.display = 'none';
     document.getElementById('projectDetailsContainer').style.display = 'block';
     let projiVal = projectID.at(-1);
@@ -400,7 +402,7 @@ function displayProjectDetails(projectID){
     // let passingData = Sampledata[projiVal];
     let totprojhrs = passingData.projectDetails.projectinput.totalProjectHours;
     let projOutput= passingData.projectDetails.projectoutput;
-    populateProjectDashboard(projOutput,totprojhrs);
+    populateProjectDashboard(projOutput,totprojhrs,ptitle,pdesp);
 }
 
 document.getElementById('logo-area').addEventListener('click', function(){
@@ -416,22 +418,26 @@ document.getElementById('backToProjects').addEventListener('click', function() {
 });
 
 
-function populateProjectDashboard(data,projinputhrs) {
+function populateProjectDashboard(data,projinputhrs,ptitle,pdescp) {
     // Get references to the HTML elements where you want to display the data
+    let titletagDisplay = document.querySelector('.titleNdescription .outer_subtitle_name');
+    let descriptiontagDisplay = document.querySelector('.titleNdescription .inner_subtitle_name');
+
     let teamDailyCapacityDisplay = document.querySelector('.Team_Daily_Capacity .outer_subtitle_name');
     let projectedDurationDisplay = document.querySelector('.Projected_Duration .outer_subtitle_name');
     let projectedEndDateDisplay = document.querySelector('.Projected_EndDate .outer_subtitle_name');
   
-    let totalHoursDisplay = document.querySelector('.metrics-card .metric-item:nth-child(1) .metric-value');
-    let costDisplay = document.querySelector('.metrics-card .metric-item:nth-child(2) .metric-value');
-    let revenueDisplay = document.querySelector('.metrics-card .metric-item:nth-child(3) .metric-value');
-    let profitDisplay = document.querySelector('.metrics-card .metric-item:nth-child(4) .metric-value');
-    let profitMarginDisplay = document.querySelector('.metrics-card .metric-item:nth-child(5) .metric-value');
-    let avgBillableRatioDisplay = document.querySelector('.metrics-card .metric-item:nth-child(6) .metric-value');
-    let durationDisplay = document.querySelector('.metrics-card .metric-item:nth-child(7) .metric-value');
-    let endDateDashboardDisplay = document.querySelector('.metrics-card .metric-item:nth-child(8) .metric-value');
+    const totalHoursDisplay = document.querySelector('.metrics-card .metric-item:nth-child(1) .metric-value');
+    const costDisplay = document.querySelector('.metrics-card .metric-item:nth-child(2) .metric-value');
+    const revenueDisplay = document.querySelector('.metrics-card .metric-item:nth-child(3) .metric-value');
+    const amttoQuote = document.querySelector('.metrics-card .metric-item:nth-child(4) .metric-value');
+    const profitDisplay = document.querySelector('.metrics-card .metric-item:nth-child(5) .metric-value');
+    const profitMarginDisplay = document.querySelector('.metrics-card .metric-item:nth-child(6) .metric-value');
+    const avgBillableRatioDisplay = document.querySelector('.metrics-card .metric-item:nth-child(7) .metric-value');
+    const durationDisplay = document.querySelector('.metrics-card .metric-item:nth-child(8) .metric-value');
+    const endDateDashboardDisplay = document.querySelector('.metrics-card .metric-item:nth-child(9) .metric-value');
   
-    let teamCostsFinancialDisplay = document.querySelector('.Financial_Analysis .Team_Costs .outer_subtitle_name');
+    // let teamCostsFinancialDisplay = document.querySelector('.Financial_Analysis .Team_Costs .outer_subtitle_name');
     let revenueFinancialDisplay = document.querySelector('.Financial_Analysis .Revenue .outer_subtitle_name');
     let profitLossDisplay = document.querySelector('.Financial_Analysis .Profit_Loss .outer_subtitle_name');
     let profitMarginFinancialDisplay = document.querySelector('.Financial_Analysis .Profit_Margin .outer_subtitle_name');
@@ -445,6 +451,8 @@ function populateProjectDashboard(data,projinputhrs) {
     // let totalProjectHoursInput = document.querySelector('.totalprojecthrs .number-input');
     let totalProjectHoursInput = projinputhrs
     
+    titletagDisplay.textContent = `Estimate Name: ${ptitle}`;
+    descriptiontagDisplay.textContent = `Description: ${pdescp}`;
 
     // Project Timeline Projection
     teamDailyCapacityDisplay.textContent = `${processData.teamDailyCapacity} hours/day`;
@@ -455,17 +463,19 @@ function populateProjectDashboard(data,projinputhrs) {
     totalHoursDisplay.textContent = totalProjectHoursInput;
     costDisplay.textContent = `$ ${(processData.teamCosts).toFixed(2)}`;
     revenueDisplay.textContent = `$ ${(processData.revenueBreakdown.totalRevenue).toFixed(2)}`;
+    amttoQuote.textContent = `$ ${(processData.mainRevenue).toFixed(2)}`;
     profitDisplay.textContent = `$ ${(processData.profitLoss).toFixed(2)}`;
     profitMarginDisplay.textContent = `${(processData.profitMargin).toFixed(2)} %`;
     avgBillableRatioDisplay.textContent = `${(processData.averageBillableRatio).toFixed(2)} % (all)`;
     durationDisplay.textContent = `${(processData.projectedDuration).toFixed(2)} working days`;
-    endDateDashboardDisplay.textContent = processData.projectedEndDate;
+    let dateString = processData.projectedEndDate;
+    endDateDashboardDisplay.textContent = dateString.split("T")[0];
 
     // Financial Analysis
-    teamCostsFinancialDisplay.textContent = `$${(processData.teamCosts).toFixed(2)}`;
-    revenueFinancialDisplay.textContent = `$${(processData.mainRevenue).toFixed(2)}`;
-    profitLossDisplay.textContent = `$${(processData.profitLoss).toFixed(2)}`;
-    profitMarginFinancialDisplay.textContent = `${(processData.profitMargin).toFixed(2)}%`;
+    // teamCostsFinancialDisplay.textContent = `$${(processData.teamCosts).toFixed(2)}`;
+    revenueFinancialDisplay.textContent = `$ ${(processData.mainRevenue).toFixed(2)}`;
+    profitLossDisplay.textContent = `$ ${(processData.profitLoss).toFixed(2)}`;
+    profitMarginFinancialDisplay.textContent = `${(processData.profitMargin).toFixed(2)} %`;
 
     let costBreakdownHTML = '';
     processData.teamCostBreakdown.memberCostBreakdown.forEach(member => {

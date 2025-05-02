@@ -10,6 +10,7 @@
 }
 
 
+
 #redirectionbutton .newestimate-btn .redirect-home {
     width: 171px;
     height: 44px;
@@ -163,7 +164,26 @@
     flex-grow: 1;
     margin-right: 5px;
 }
-
+.titleNdescription{
+    margin-bottom: 40px;
+}
+.Etitle{
+    padding: 0;
+    margin-bottom: 10px;
+}
+.Etitle .outer_subtitle_name{
+    font-family: Inter;
+    font-size: 36px;
+    font-weight: 600;
+    color:#30171b;
+}
+.Edescp{
+    font-family: Inter;
+    font-size: 22px;
+    font-weight: 300;
+    padding: 0;
+    color:#423420;
+}
 /* Style for the "Open" button */
 .open-button {
     background-color: #fff;
@@ -217,8 +237,13 @@
 .details-header {
     display: flex;
     align-items: center;
-    margin-bottom: 20px;
     width: 100%;
+    color: #454545;
+}
+.details-header h3{
+    font-family: Inter;
+    font-weight: 400;
+    font-size: 16px;
 }
 
 /* Style for the back button */
@@ -229,11 +254,13 @@
     padding: 8px 15px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 1em;
     margin-right: 20px;
     transition: background-color 0.3s ease;
 }
+.back-button i{
+    font-size: 40px;
 
+}
 .back-button:hover {
     background-color: #f0f0f0;
 }
@@ -577,10 +604,37 @@ button#calculate-availability:hover {
     border-collapse: collapse;
     margin-top: 10px;
     border: 1px solid #ddd;
+    background: #ffffff;
     border-radius: 4px;
     overflow: hidden; /* To contain rounded borders */
+    margin-top: 20px;
 }
-
+#availability-results table thead{
+    height: 52px;
+}
+#availability-results table thead tr th:nth-child(1)
+{
+    border-radius: 12px 0px 0px 0px;
+    text-align: left;
+    padding-left: 12px;
+}
+#availability-results table thead tr th{
+    text-align: left;
+    padding-left: 12px;
+}
+#availability-results table thead tr th:nth-last-child(1)
+{
+ border-radius: 0px 12px 0px 0px;
+ /* text-align: right;
+    padding-right: 12px; */
+}
+/* #availability-results tbody tr:nth-last-child(1) td:nth-child(1){
+    border-radius: 0px 0px 0px 12px;
+}
+#availability-results tbody tr:nth-last-child(1) td:nth-last-child(1){
+    border-radius: 0px 0px 12px 0px;
+} */
+#availability-results
 #availability-results th,
 #availability-results td {
     padding: 10px;
@@ -601,6 +655,15 @@ button#calculate-availability:hover {
 #availability-results td {
     vertical-align: top; /* Align project list to the top */
 }
+/* #availability-results tbody tr:nth-last-child(1){
+    border-radius: 0px 0px 12px 12px;
+} */
+#availability-results tbody tr{
+    border-left: 2px solid #cccccc69;
+    border-right: 2px solid #cccccc69;
+    border-bottom: 2px solid #cccccc69;
+}
+
 .date-range-selector select,
 #month-selector #month,
 #month-selector #year{
@@ -627,4 +690,92 @@ button#calculate-availability:hover {
     transform: translateY(-50%);
     pointer-events: none; /* Prevent the icon from interfering with clicks */
     color: #555; /* Adjust icon color */
+ }
+/* 
+#2cdd4ccc green
+#dd2c46cc red
+#e8eb4fcc yellow 
+*/
+.capacitydes{
+    margin-top: 20px;
+    padding: 16px;
+    background-color: #ebebeb;
+    border-radius: 12px;
 }
+.defaulttext{
+    margin-left: 10px;
+    color: #222222;
+}
+.openerdropdown{
+    background-color: #dedede;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.openerdropdown span i{
+    font-size: 20px;
+}
+
+
+#capacitydes .openerdropdown i {
+    transition: transform 0.5s ease-in-out;
+}
+
+#capacitydes .openerdropdown span.open i {
+    transform: rotate(180deg);
+}
+
+#capacitydes .openerdropdown .hiddencapcalc {
+    overflow: hidden; /* Required for the slide effect */
+}
+
+.hiddencapcalc {
+    font-family: Inter;
+    line-height: 1.6;
+    color: #333;
+    margin: 10px 0px 10px 0px;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-top: 2px solid #a4a4a4cc;
+    /* box-shadow: -1px -1px 2px 0px #a2a2a2 inset; */
+    border-radius: 5px;
+  }
+  
+  .hiddencapcalc h2 {
+    color: #252525;
+    margin-top: 0;
+    margin-bottom: 10px;
+  }
+  
+  .hiddencapcalc p {
+    margin-bottom: 10px;
+  }
+  
+  .hiddencapcalc ol {
+    padding-left: 20px;
+    margin-bottom: 15px;
+  }
+  
+  .hiddencapcalc ol li {
+    margin-bottom: 10px;
+  }
+  
+  .hiddencapcalc strong {
+    font-weight: bold;
+  }
+  
+  .hiddencapcalc ul {
+    list-style-type: circle;
+    padding-left: 20px;
+    margin-top: 5px;
+  }
+  
+  .hiddencapcalc ul li {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 3px;
+  }

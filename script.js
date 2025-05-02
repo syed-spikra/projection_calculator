@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function createTeamMemberRow(rcount) {
       const newRow = document.createElement('tr');
       newRow.id = "memb"+rcount;
-      newRow.innerHTML = '<td> <div class="membername"> <input type="text" placeholder="John Deo"> <div class="names-options-container"><div class="names-options"></div></div></div> </td> <td> <div class="role"> <input type="text" placeholder="CTO"> </div> </td> <td> <div class="departments"> <select id="departments" name="department"> <option value="Engineer">Engineer</option> <option value="Design">Design</option> <option value="Product">Product</option> <option value="Marketing">Marketing</option> <option value="Others">Others</option> </select> </div> </td> <!-- hrs/day --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="4.00" step="0.5" min="2" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- $cost/hr --> <td> <div class="number-input-group costrate"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable rate $/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable ratio % --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="100.00" step="0.5" min="0" max="100"> <div class="input-controls"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td>'
+      newRow.innerHTML = '<td> <div class="membername"> <input type="text" placeholder="John Deo"> <div class="names-options-container"><div class="names-options"></div></div></div> </td> <td> <div class="role"> <input type="text" placeholder="CTO"> </div> </td> <td> <div class="departments"> <select id="departments" name="department"> <option value="Engineer">Engineer</option> <option value="Design">Design</option> <option value="Product">Product</option> <option value="Marketing">Marketing</option> <option value="Others">Others</option> </select> </div> </td> <!-- hrs/day --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="4.00" step="0.5" min="2" max="24"> <div class="input-controls" style="display: none;"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- $cost/hr --> <td> <div class="number-input-group costrate"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls" style="display: none;"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable rate $/hr --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="40.00" step="0.5" min="0" max="100"> <div class="input-controls" style="display: none;"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td> <!-- billable ratio % --> <td> <div class="number-input-group"> <input type="number" class="number-input" id="input1" name="input1" value="100.00" step="0.5" min="0" max="100"> <div class="input-controls" style="display: none;"> <button type="button" class="minus-button">-</button> <button type="button" class="plus-button">+</button> </div> </div> </td>'
         // console.log(newRow, rcount);
       return newRow;
     }
@@ -346,7 +346,7 @@ function populateDashboard(data) {
     totalHoursDisplay.textContent = totalProjectHoursInput.value;
     costDisplay.textContent = `$ ${(processData.teamCosts).toFixed(2)}`;
     revenueDisplay.textContent = `$ ${(processData.revenueBreakdown.totalRevenue).toFixed(2)}`;
-    amttoQuote.textContent = `$${(processData.mainRevenue).toFixed(2)}`;
+    amttoQuote.textContent = `$ ${(processData.mainRevenue).toFixed(2)}`;
     profitDisplay.textContent = `$ ${(processData.profitLoss).toFixed(2)}`;
     profitMarginDisplay.textContent = `${(processData.profitMargin).toFixed(2)} %`;
     avgBillableRatioDisplay.textContent = `${(processData.averageBillableRatio).toFixed(2)} % (all)`;
@@ -355,9 +355,9 @@ function populateDashboard(data) {
 
     // Financial Analysis
     // teamCostsFinancialDisplay.textContent = `$${(processData.teamCosts).toFixed(2)}`;
-    revenueFinancialDisplay.textContent = `$${(processData.mainRevenue).toFixed(2)}`;
-    profitLossDisplay.textContent = `$${(processData.profitLoss).toFixed(2)}`;
-    profitMarginFinancialDisplay.textContent = `${(processData.profitMargin).toFixed(2)}%`;
+    revenueFinancialDisplay.textContent = `$ ${(processData.mainRevenue).toFixed(2)}`;
+    profitLossDisplay.textContent = `$ ${(processData.profitLoss).toFixed(2)}`;
+    profitMarginFinancialDisplay.textContent = `${(processData.profitMargin).toFixed(2)} %`;
 
     let costBreakdownHTML = '';
     processData.teamCostBreakdown.memberCostBreakdown.forEach(member => {
@@ -569,6 +569,8 @@ function disenCalculate(){
       } else if (!isNaN(inputValue)) {
         input.value = inputValue.toFixed(2); // Format existing value too
       }
+      let noofmeminput = document.querySelector('.teammember_count .number-input');
+      noofmeminput.value = Math.floor(noofmeminput.value);
     }
   });
 
@@ -598,6 +600,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const signinmodal = document.getElementById('signInModal');
     const paymentmodal = document.getElementById('paymentModal');
     const btn = document.getElementById('signup-btn');
+    const signupbtn2 = document.getElementById('signup-btn2');
     const span = document.querySelector('.signup-close-button');
     const signinclose = document.querySelector('.signin-close-button');
     const paymentclose = document.querySelector('.payment-close-button');
@@ -624,7 +627,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if(btn.className != "signup-profile")
           signinmodal.style.display = "block";
     }
-
+    signupbtn2.onclick = function(){
+      signinmodal.style.display = "none";
+      modal.style.display = "block";
+    }
     switchToSignUp.onclick = function(){
       signinmodal.style.display = "none";
       modal.style.display = "block";
@@ -1093,21 +1099,23 @@ function userDetailPopupModal(){
   let localproject = localStorage.getItem(projectsaveKey);
   let localprojValues = localproject ? JSON.parse(localproject) : null;
   if (localprojValues == null){
-    let projectTitle = document.getElementById('projectName').value || "project Unknown";
-    let projectdes = document.getElementById('projectDescription').value || "";
-    let outputData = JSON.parse(JSON.stringify(outputDatares)) || null;
-    let localuserprojData = {
-        projectDetails: {
-            projectTitle: projectTitle,
-            projectDescription: projectdes,
-            projectInput: dataToSend ?? "no data",
-            projectOutput: outputData ?? null
-        }
-    };
-    localStorage.setItem(projectsaveKey,JSON.stringify(localuserprojData));
+    if(document.getElementById('projectName').value != ""){
+      let projectTitle = document.getElementById('projectName').value || "project Unknown";
+      let projectdes = document.getElementById('projectDescription').value || "";
+      let outputData = JSON.parse(JSON.stringify(outputDatares)) || null;
+      let localuserprojData = {
+          projectDetails: {
+              projectTitle: projectTitle,
+              projectDescription: projectdes,
+              projectInput: dataToSend ?? "no data",
+              projectOutput: outputData ?? null
+          }
+      };
+      localStorage.setItem(projectsaveKey,JSON.stringify(localuserprojData));
+    }
     window.location.reload();
   }
-  console.log("insideuserdetailpopupmodal");
+  // console.log("insideuserdetailpopupmodal");
   if(values == null){
     // console.log("not stored");
     // let signupmodal = document.getElementById('saveProjectModal');
@@ -1232,6 +1240,8 @@ function checkcurrUser(){
   if(values != null){
     // console.log("no user available");
     let signupbtnele = document.getElementById('signup-btn');
+    let signupbtnele2 = document.getElementById('signup-btn2');
+    signupbtnele2.style.display = "none";
     let dropdown = document.getElementById('dropdownList');
     signupbtnele.classList.remove('signup-btn');
     signupbtnele.classList.add('signup-profile');

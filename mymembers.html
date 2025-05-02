@@ -82,7 +82,46 @@
       </div>
 
       <div id="availability-results" style="margin-top: 20px;">
+      </div>
+      <div id="capacitydes" class="capacitydes">
+        <span class="defaulttext">Working hours per day (by default) = 8 hrs</span>
+        <div class="openerdropdown">
+          <span style="display: flex;justify-content: space-between;width: 100%;">How are availability calculations determined?<i class='bx bx-chevron-down'></i></span>
+          <div style="display: none;" class="hiddencapcalc">
+            <h2>Availability Calculation Methodology</h2>
+            <p>The availability calculations are determined as follows:</p>
+          
+            <ol>
+              <li>
+                <strong>Capacity Hours = Working Days x Hours per Day</strong>
+                <ul>
+                  <li>Working days only include weekdays (Monday-Friday)</li>
+                  <li>Hours per day comes from each team member's profile settings</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Allocated Hours = Sum of all project allocations in the date range</strong>
+                <ul>
+                  <li>Each allocation considers the specific date range overlap</li>
+                  <li>Calculations account for allocation percentage on each project</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Available Hours = Capacity Hours - Allocated Hours</strong>
+                <ul>
+                  <li>This shows remaining available capacity</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Allocation % = (Allocated Hours / Capacity Hours) x 100%</strong>
+                <ul>
+                  <li>Color coded: Green (&lt;50%), Yellow (50-80%), Red (&gt;80%)</li>
+                </ul>
+              </li>
+            </ol>
           </div>
+        </div>
+      </div>
   </div>
     <!-- display saved projects -->
      <div class="members_info" id="members_info">

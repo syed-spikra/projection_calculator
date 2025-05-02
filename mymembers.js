@@ -624,10 +624,9 @@ async function fetchAvailabilityData(startDate, endDate) {
 
 function displayAvailability(data) {
     availabilityResultsDiv.innerHTML = '';
-
     // if (!data || !data.member_capacity || data.member_capacity.length === 0) {
-    if(data.status != 200){
-        availabilityResultsDiv.innerHTML = "<p>No member availability data found for the selected range.</p>";
+    if(data.member_capacity.memberslist.length == 0){
+        availabilityResultsDiv.innerHTML = "<p>No member found</p>";
         return;
     }
     data = data.member_capacity;
@@ -636,7 +635,6 @@ function displayAvailability(data) {
         <thead>
             <tr>
                 <th>Name</th>
-                <th>Hours/day</th>
                 <th>Project Allocations</th>
                 <th>Total Capacity (hours)</th>
                 <th>Allocated Hours</th>
@@ -652,7 +650,7 @@ function displayAvailability(data) {
     data.memberslist.forEach(member => {
         const row = tableBody.insertRow();
         const nameCell = row.insertCell();
-        const hourperday = row.insertCell();
+        // const hourperday = row.insertCell();
         const projectsCell = row.insertCell();
         const capacityCell = row.insertCell();
         const allocatedCell = row.insertCell();
@@ -660,7 +658,7 @@ function displayAvailability(data) {
         const allocationCell = row.insertCell();
 
         nameCell.textContent = member.membername;
-        hourperday.textContent = data.maxworkperhrs;
+        // hourperday.textContent = data.maxworkperhrs;
         const projectList = member.projectlist.map(p => `${p.pname} (${p.pmemhrsday}hrs * ${p.pdayscount}days = ${p.projectallocationtime} hrs)`).join('<br>');
         projectsCell.innerHTML = projectList || 'No projects';
 
@@ -673,20 +671,22 @@ function displayAvailability(data) {
 
         // Color-coding for allocation %
         if (member.allocation < 50) {
-            allocationCell.style.backgroundColor = 'lightgreen';
+            allocationCell.style.backgroundColor = '#2cdd4caa'; //green
         } else if (member.allocation >= 50 && member.allocation <= 80) {
-            allocationCell.style.backgroundColor = 'yellow';
+            allocationCell.style.backgroundColor = '#e8eb4faa'; //yellow
         } else {
-            allocationCell.style.backgroundColor = 'lightcoral';
+            allocationCell.style.backgroundColor = '#dd2c46aa'; //red
         }
     });
 
     const dateRangeInfo = document.createElement('p');
     const workingDaysInfo = document.createElement('p');
     // dateRangeInfo.textContent = `Date Range: ${startDate} - ${endDate}`;
+    // console.log(dateRangeInfo);
     workingDaysInfo.textContent = `Total Working Days: ${data.totaldaysrange}`;
+    workingDaysInfo.style.fontWeight = "500";
     availabilityResultsDiv.prepend(workingDaysInfo);
-    availabilityResultsDiv.prepend(dateRangeInfo);
+    // availabilityResultsDiv.prepend(dateRangeInfo);
 }
 
 // Get current date
@@ -714,3 +714,47 @@ document.getElementById('end-date').value = defaultEndDate;
 
 //  Initial load with the current month
 fetchAvailabilityData(defaultStartDate, defaultEndDate);
+
+document.addEventListener('DOMContentLoaded', function() {
+    const opendropdowndiv = document.querySelector('#capacitydes .openerdropdown'); 
+    const openerDropdown = document.querySelector('#capacitydes .openerdropdown span');
+    const hiddenContent = openerDropdown.nextElementSibling;
+    const iconElement = openerDropdown.querySelector('i');
+    if (opendropdowndiv && openerDropdown && hiddenContent) {
+        opendropdowndiv.addEventListener('click', function() {
+        if (hiddenContent.style.display === 'none' || hiddenContent.style.display === '') {
+          slideDown(hiddenContent);
+          iconElement.classList.remove('bx-chevron-down');
+          iconElement.classList.add('bx-chevron-up', 'open');
+        } else {
+          slideUp(hiddenContent);
+          iconElement.classList.remove('bx-chevron-up', 'open');
+          iconElement.classList.add('bx-chevron-down');
+        }
+      });
+    }
+  
+    function slideDown(element) {
+      element.style.display = 'block';
+      element.style.height = '0';
+      element.style.transition = 'height 0.7s ease-out';
+      // Use a timeout to trigger the height transition after display is set
+      setTimeout(() => {
+        element.style.height = element.scrollHeight + 'px';
+      }, 0);
+    }
+  
+    function slideUp(element) {
+      element.style.height = element.scrollHeight + 'px';
+      element.style.transition = 'height 0.5s ease-in';
+      // Use a timeout to trigger the height transition
+      setTimeout(() => {
+        element.style.height = '0';
+        // Hide the element completely after the slide up animation
+        element.addEventListener('transitionend', function() {
+          element.style.display = 'none';
+          element.removeEventListener('transitionend', arguments.callee); // Remove listener
+        });
+      }, 0);
+    }
+  });
