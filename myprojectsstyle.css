@@ -529,7 +529,10 @@ cursor: pointer;
     align-items: center;
     margin-bottom: 15px;
 }
-
+#start-date,#end-date{
+    font-family: Inter;
+    font-size: 18px;
+}
 .date-range-selector,
 #month-selector,
 #custom-date-selector {
@@ -568,7 +571,7 @@ button#calculate-availability:hover {
     background-color: #0056b3;
 }
 
-/* Style for the results table */
+/* Style for the capacity results table */
 #availability-results table {
     width: 100%;
     border-collapse: collapse;
