@@ -559,6 +559,17 @@ function disenCalculate(){
       allRequiredFilled = false;
       // console.log(`Required field empty: ${input.id || input.name || input.className}`);
     }
+    // Check for number inputs with max attribute
+    if (input.type === 'number' && input.hasAttribute('max') && input.value !== '') {
+      const maxValue = parseFloat(input.getAttribute('max')); // Use parseFloat for decimals
+      const inputValue = parseFloat(input.value);
+
+      if (!isNaN(maxValue) && !isNaN(inputValue) && inputValue > maxValue) {
+        input.value = maxValue.toFixed(2); // Format to two decimal places
+      } else if (!isNaN(inputValue)) {
+        input.value = inputValue.toFixed(2); // Format existing value too
+      }
+    }
   });
 
   if (allRequiredFilled) {
