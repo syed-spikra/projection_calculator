@@ -1340,3 +1340,43 @@ signin-close-button:focus {
 .membername {
   position: relative;
 }
+
+/* charts */
+
+.allcharts {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  /* margin-top: 20px; */
+  width: 100%;
+}
+.allcharts .subtitle_container{
+  width: 100%;
+  padding-left: 35px;
+  margin-bottom: 30px;
+}
+.allcharts .subtitle_name,
+.allcharts .sidesubtitle_name{
+  font-family: Inter;
+  font-weight: 700;
+  font-size: 26px;
+  text-align: left;
+}
+.allcharts .sidesubtitle_name{
+  font-weight: 300;
+  font-size: 20px;
+}
+.chart {
+  width: 80%;
+  height: 650px;
+  margin: auto 20px;
+  padding: 20px;
+  /* border-radius: 25px; */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+#myChart {
+  width: 50%;
+  height: 650px;
+  display: block;
+}

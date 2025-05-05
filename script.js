@@ -392,6 +392,75 @@ function populateDashboard(data) {
     revenueBreakdownTableBody.innerHTML = revenueBreakdownHTML;
     totalRevenueBreakdownDisplay.textContent = `$ ${(processData.revenueBreakdown.totalRevenue).toFixed(2)}`;
 
+    // set charts
+    let chart1data = [processData.revenueBreakdown.totalRevenue/1000,processData.teamCosts/1000,processData.profitLoss/1000];
+    Chart.register(ChartDataLabels);
+    const ctx1 = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['Revenue', 'Team Costs', 'Profit Amount'],
+            datasets: [{
+                data: chart1data,
+                backgroundColor: [
+                    '#3498db',
+                    '#2fcc71',
+                    '#f1c40f'
+                ],
+                borderColor: [
+                    '#186ca3',
+                    '#1a994f',
+                    '#b59102'
+                ],
+                borderWidth: 3,
+                borderRadius: 12,
+            }],
+        },
+        options: {
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false },
+                 datalabels: {
+                        anchor: 'center',
+                        align: 'center',
+                        color: '#fff',
+                        font: {size: 20,weight:500},
+                        formatter: function(value) {
+                            let amtVal = value * 1000;
+                            return amtVal.toFixed(0)+'$';
+                        }
+                    }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Amount ($)',
+                        rotation: -90,
+                        font: {size: 20}
+                    },
+                    ticks: {
+                      stepSize: 2,
+                      callback: function(value, index, values) {
+                          return value + 'k';
+                      },
+                      font: {size: 16}
+                  }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: { size: 20 }
+                    }
+                }
+            }
+        }
+    });
+    document.getElementById('allcharts').style.display = "flex";
+
     // show output container
     const outputContainer = document.querySelector('.output_container');
     outputContainer.style.display = "block";
