@@ -1,4 +1,4 @@
-var outputDatares,dataToSend;
+var outputDatares,dataToSend,profitChart;
 var userDetailKey = 'userDetail';
 var projectsaveKey = 'userProject';
 var totalcredit = 0,mymemberslist;
@@ -396,7 +396,10 @@ function populateDashboard(data) {
     let chart1data = [processData.revenueBreakdown.totalRevenue/1000,processData.teamCosts/1000,processData.profitLoss/1000];
     Chart.register(ChartDataLabels);
     const ctx1 = document.getElementById('myChart').getContext('2d');
-    const myChart = new Chart(ctx1, {
+    if(profitChart){
+      profitChart.destroy();
+    }
+    profitChart = new Chart(ctx1, {
         type: 'bar',
         data: {
             labels: ['Revenue', 'Team Costs', 'Profit Amount'],
