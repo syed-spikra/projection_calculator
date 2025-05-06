@@ -1,4 +1,5 @@
 var userprojectsData;
+var EprofitChart,Ebillablechart;
 function fetchcurrentuserprojects(){
     let currentUserDetails = localStorage.getItem('userDetail');
     // console.log(currentUserDetails);
@@ -509,6 +510,131 @@ function populateProjectDashboard(data,projinputhrs,ptitle,pdescp) {
     });
     revenueBreakdownTableBody.innerHTML = revenueBreakdownHTML;
     totalRevenueBreakdownDisplay.textContent = `$ ${(processData.revenueBreakdown.totalRevenue).toFixed(2)}`;
+
+    // set charts
+    let chart1data = [processData.revenueBreakdown.totalRevenue/1000,processData.teamCosts/1000,processData.profitLoss/1000];
+    Chart.register(ChartDataLabels);
+    const ctx1 = document.getElementById('profitChart').getContext('2d');
+    if(EprofitChart){
+        EprofitChart.destroy();
+    }
+    EprofitChart = new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: ['Revenue', 'Team Costs', 'Profit Amount'],
+            datasets: [{
+                data: chart1data,
+                backgroundColor: [
+                    '#3498db',
+                    '#2fcc71',
+                    '#f1c40f'
+                ],
+                borderColor: [
+                    '#186ca3',
+                    '#1a994f',
+                    '#b59102'
+                ],
+                borderWidth: 3,
+                borderRadius: 12,
+            }],
+        },
+        options: {
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false },
+                    datalabels: {
+                        anchor: 'center',
+                        align: 'center',
+                        color: '#fff',
+                        font: {size: 20,weight:500},
+                        formatter: function(value) {
+                            let amtVal = value * 1000;
+                            return amtVal.toFixed(0)+'$';
+                        }
+                    }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Amount ($)',
+                        rotation: -90,
+                        font: {size: 20}
+                    },
+                    ticks: {
+                        stepSize: 2,
+                        callback: function(value, index, values) {
+                            return value + 'k';
+                        },
+                        font: {size: 16}
+                    }
+                },
+                x: {
+                    grid: {
+                        display: false
+                    },
+                    ticks: {
+                        font: { size: 20 }
+                    }
+                }
+            }
+        }
+    });
+    
+    let billable = parseFloat(processData.averageBillableRatio.toFixed(2));
+    let nonBillable = parseFloat((100 - billable).toFixed(2));
+    let rawData = [
+        { label: 'Billable', value: billable, bg: '#2fcc71', border: '#12753b' },
+        { label: 'Non-Billable', value: nonBillable, bg: '#e74b3c', border: '#961e14' }
+    ];
+    // Filter out 0 values
+    let filteredData = rawData.filter(item => item.value > 0);
+    let billchartData = filteredData.map(item => item.value);
+    let billchartLabels = filteredData.map(item => item.label);
+    let backgroundColors = filteredData.map(item => item.bg);
+    let borderColors = filteredData.map(item => item.border);
+    
+    const ctx2 = document.getElementById('billChart').getContext('2d');
+    if (Ebillablechart) {
+        Ebillablechart.destroy();
+    }
+    
+    Ebillablechart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: {
+            labels: billchartLabels,
+            datasets: [{
+                label: 'Data',
+                data: billchartData,
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
+                borderWidth: 0.5,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            layout: {padding: {bottom: 20}},
+            plugins: {
+                legend: { 
+                    position: 'bottom',
+                    labels:{usePointStyle: true,
+                    pointStyle: 'rect',
+                    boxWidth:16,
+                    boxHeight:16,
+                    font: {weight:400,size: 20} }
+                    },
+                datalabels: {
+                    color: '#fff',
+                    font: {weight: 500,size: 16},
+                    formatter: (value) => value + '%'
+                }
+            }
+        },
+        plugins: [ChartDataLabels]
+    });
+    document.getElementById('allcharts').style.display = "flex";
 }
 
 function retomyhome(){

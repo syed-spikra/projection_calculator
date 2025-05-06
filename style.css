@@ -1367,16 +1367,12 @@ signin-close-button:focus {
   font-size: 20px;
 }
 .chart {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 80%;
   height: 650px;
-  margin: auto 20px;
   padding: 20px;
   /* border-radius: 25px; */
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
-}
-
-#myChart {
-  width: 50%;
-  height: 650px;
-  display: block;
 }
