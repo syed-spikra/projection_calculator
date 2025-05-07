@@ -255,74 +255,74 @@
 
     <!-- output container, second top -->,
      <div class="output_container" id="output_container" style="display: none;">
-         <!-- Project Timeline Projection -->
-         <div class="projecttimeline_projections">
-            <!-- sub title -->
-            <div class="subtitle_container">
-                <div class="subtitle_name">
-                    Project Timeline Projection 
+        <!-- Project Timeline Projection -->
+        <div class="projecttimeline_projections">
+        <!-- sub title -->
+        <div class="subtitle_container">
+            <div class="subtitle_name">
+                Project Timeline Projection 
+            </div>
+        </div>
+
+        <!-- team daily capacity -->
+        <div class="row_container">
+            <!-- Team Daily Capacity -->
+                <div class="Team_Daily_Capacity">
+                <div class="inner_subtitle_container">
+                    <div class="inner_subtitle_name inner_subtitle_name1">
+                        Team Daily Capacity 
+                    </div>
                 </div>
-            </div>
+                <div class="outer_subtitle_container">
+                    <div class="outer_subtitle_name">
+                        8.0 hours/day 
+                    </div>
+                </div>
+                </div>
 
-            <!-- team daily capacity -->
-            <div class="row_container">
-                <!-- Team Daily Capacity -->
-                 <div class="Team_Daily_Capacity">
-                    <div class="inner_subtitle_container">
-                        <div class="inner_subtitle_name inner_subtitle_name1">
-                            Team Daily Capacity 
-                        </div>
+                <!-- Projected Duration -->
+                <div class="Projected_Duration">
+                <div class="inner_subtitle_container">
+                    <div class="inner_subtitle_name inner_subtitle_name2">
+                        Projected Duration
                     </div>
-                    <div class="outer_subtitle_container">
-                        <div class="outer_subtitle_name">
-                            8.0 hours/day 
-                        </div>
+                </div>
+                <div class="outer_subtitle_container">
+                    <div class="outer_subtitle_name">
+                        20 days
                     </div>
-                 </div>
+                </div>
+                </div>
 
-                 <!-- Projected Duration -->
-                 <div class="Projected_Duration">
-                    <div class="inner_subtitle_container">
-                        <div class="inner_subtitle_name inner_subtitle_name2">
-                            Projected Duration
-                        </div>
+                <!-- Projected Start Date -->
+                <div class="Projected_StartDate">
+                <div class="inner_subtitle_container">
+                    <div class="inner_subtitle_name inner_subtitle_name4">
+                        Project Start Date
                     </div>
-                    <div class="outer_subtitle_container">
-                        <div class="outer_subtitle_name">
-                            20 days
-                        </div>
+                </div>
+                <div class="outer_subtitle_container">
+                    <div class="outer_subtitle_name expecteddate">
+                        2025-04-13
                     </div>
-                 </div>
+                </div>
+                </div>
 
-                 <!-- Projected Start Date -->
-                 <div class="Projected_StartDate">
-                    <div class="inner_subtitle_container">
-                        <div class="inner_subtitle_name inner_subtitle_name4">
-                            Project Start Date
-                        </div>
+                <!-- Projected End Date -->
+                <div class="Projected_EndDate">
+                <div class="inner_subtitle_container">
+                    <div class="inner_subtitle_name inner_subtitle_name3">
+                        Projected End Date
                     </div>
-                    <div class="outer_subtitle_container">
-                        <div class="outer_subtitle_name expecteddate">
-                            2025-04-13
-                        </div>
+                </div>
+                <div class="outer_subtitle_container">
+                    <div class="outer_subtitle_name expecteddate">
+                        2025-04-13
                     </div>
-                 </div>
-
-                 <!-- Projected End Date -->
-                 <div class="Projected_EndDate">
-                    <div class="inner_subtitle_container">
-                        <div class="inner_subtitle_name inner_subtitle_name3">
-                            Projected End Date
-                        </div>
-                    </div>
-                    <div class="outer_subtitle_container">
-                        <div class="outer_subtitle_name expecteddate">
-                            2025-04-13
-                        </div>
-                    </div>
-                 </div>
-            </div>
-         </div>
+                </div>
+                </div>
+        </div>
+        </div>
         <!-- Financial Analysis -->
         <div class="Financial_Analysis">
             <!-- sub title -->
@@ -349,7 +349,7 @@
                 </div>
                 
                 <!-- Profit/Loss -->
-                 <div class="Profit_Loss">
+                <div class="Profit_Loss">
                     <div class="inner_subtitle_container">
                         <div class="inner_subtitle_names">
                             Profit Amount
@@ -360,10 +360,10 @@
                             $2,400.00
                         </div>
                     </div>
-                 </div>
+                </div>
 
-                 <!-- Profit Margin -->
-                 <div class="Profit_Margin">
+                <!-- Profit Margin -->
+                <div class="Profit_Margin">
                     <div class="inner_subtitle_container">
                         <div class="inner_subtitle_name3">
                             Profit Margin
@@ -374,7 +374,7 @@
                             25.0%
                         </div>
                     </div>
-                 </div>
+                </div>
 
                 <!-- Team Costs -->
                 <!-- <div class="Team_Costs">
@@ -389,10 +389,43 @@
                     </div>
                 </div>
                 </div>
-                 -->
+                -->
                 
             </div>
-         </div>
+        </div>
+        <!-- charts section -->
+        <div class="allcharts" id="allcharts">
+            <div class="subtitle_container">
+                <div class="subtitle_name">
+                    Visualizations
+                </div>
+            </div>
+            <div class="divsec">
+                <div class="card1">
+                    <div class="subtitle_container">
+                        <div class="sidesubtitle_name">
+                            Profitability Analysis
+                        </div>
+                    </div>
+                    <div class="chart1">
+                        <canvas id="profitChart"></canvas>
+                    </div>
+                </div>
+                <div class="card2">
+                    <div class="subtitle_container">
+                        <div class="sidesubtitle_name">
+                            Charges Allocation
+                        </div>
+                        <!-- <div class="sidesubtitle_name">
+                            subtitle
+                        </div> -->
+                    </div>
+                    <div class="chart2">
+                        <canvas id="billChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
          <!-- Project Dashboard -->
          <div class="project_dashhboard">
             <!-- <div class="maintitle">
@@ -451,137 +484,105 @@
                 </div>
             </div>
         </div>
-         <!-- Team Costs breakdown -->
-         <div class="teamcost_breakdown">
-            <!-- sub title -->
-            <div class="subtitle_container">
-                <div class="subtitle_name">
-                    Team Cost Breakdown
-                </div>
-            </div>
-            
-            <div class="teamcost_breakdown_table">
-                <table class="breakdown-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Cost / Hour</th>
-                            <th>Hours</th>
-                            <th>Total Cost</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>name</td>
-                            <td>role</td>
-                            <td>cost</td>
-                            <td>hour</td>
-                            <td>total</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr class="tot-view">
-                            <td>TOTAL</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>value</td>
-                        </tr>
-                    </tfoot>
-                </table>            
-            </div>
-            <!-- sub formulas notes -->
-            <div class="subcalcnotes">
-                <div class="subnotes">
-                    Total cost = Σ (Cost Rate per hour × Total Hours) per team member
-                </div>
-            </div>
-         </div>
-         <!-- Revenue breakdown -->
-          <div class="revenue_breakdown">
-            <!-- sub title -->
-            <div class="subtitle_container">
-                <div class="subtitle_name">
-                    Revenue Breakdown
-                </div>
-            </div>
-            
-            <div class="revenue_breakdown_table">
-                <table class="breakdown-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Billable Rate ($/hr)</th>
-                            <th>Billable ratio %</th>
-                            <th>Billable Hours</th>
-                            <th>Revenue</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>name</td>
-                            <td>role</td>
-                            <td>rate</td>
-                            <td>ratio</td>
-                            <td>hours</td>
-                            <td>total</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr class="tot-view">
-                            <td>TOTAL</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td>value</td>
-                        </tr>
-                    </tfoot>
-                </table>            
-            </div>
-            <!-- sub formulas notes -->
-            <div class="subcalcnotes">
-                <div class="subnotes">
-                    Total Revenue = Σ (Billable Rate × Billable Hours) per team member<br>Billable Hours = Total Hours × (Billable Ratio / 100)
-                </div>
-            </div>
-          </div>
-    </div>
-    <!-- charts section -->
-    <div class="allcharts" id="allcharts">
+        <!-- Team Costs breakdown -->
+        <div class="teamcost_breakdown">
+        <!-- sub title -->
         <div class="subtitle_container">
             <div class="subtitle_name">
-                Visualizations
+                Team Cost Breakdown
             </div>
         </div>
-        <div class="divsec">
-            <div class="card1">
-                <div class="subtitle_container">
-                    <div class="sidesubtitle_name">
-                        Profitability Analysis
-                    </div>
-                </div>
-                <div class="chart1">
-                    <canvas id="profitChart"></canvas>
-                </div>
-             </div>
-             <div class="card2">
-                <div class="subtitle_container">
-                    <div class="sidesubtitle_name">
-                        Charges Allocation
-                    </div>
-                    <!-- <div class="sidesubtitle_name">
-                        subtitle
-                    </div> -->
-                </div>
-                <div class="chart2">
-                    <canvas id="billChart"></canvas>
-                </div>
-             </div>
+        
+        <div class="teamcost_breakdown_table">
+            <table class="breakdown-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Cost / Hour</th>
+                        <th>Hours</th>
+                        <th>Total Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>name</td>
+                        <td>role</td>
+                        <td>cost</td>
+                        <td>hour</td>
+                        <td>total</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="tot-view">
+                        <td>TOTAL</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>value</td>
+                    </tr>
+                </tfoot>
+            </table>            
+        </div>
+        <!-- sub formulas notes -->
+        <div class="subcalcnotes">
+            <div class="subnotes">
+                Total cost = Σ (Cost Rate per hour × Total Hours) per team member
+            </div>
+        </div>
+        </div>
+         <!-- Revenue breakdown -->
+        <div class="revenue_breakdown">
+        <!-- sub title -->
+        <div class="subtitle_container">
+            <div class="subtitle_name">
+                Revenue Breakdown
+            </div>
+        </div>
+        
+        <div class="revenue_breakdown_table">
+            <table class="breakdown-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Billable Rate ($/hr)</th>
+                        <th>Billable ratio %</th>
+                        <th>Billable Hours</th>
+                        <th>Revenue</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>name</td>
+                        <td>role</td>
+                        <td>rate</td>
+                        <td>ratio</td>
+                        <td>hours</td>
+                        <td>total</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr class="tot-view">
+                        <td>TOTAL</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>value</td>
+                    </tr>
+                </tfoot>
+            </table>            
+        </div>
+        <!-- sub formulas notes -->
+        <div class="subcalcnotes">
+            <div class="subnotes">
+                Total Revenue = Σ (Billable Rate × Billable Hours) per team member<br>Billable Hours = Total Hours × (Billable Ratio / 100)
+            </div>
+        </div>
         </div>
     </div>
+
 
     <!-- save project / create account -->
      <div class="save_btn" style="display: none;">

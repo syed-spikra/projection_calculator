@@ -22,10 +22,12 @@ function fetchcurrentuserprojects(){
     // console.log('API Response:', data);
     userprojectsData = data;
     populateProjsdash(data);
+    updateDashboardCards(data);
     })
     .catch(error => {
     console.error('API call failed:', error);
     populateProjsdash([]);
+    updateDashboardCards([]);
     });
 
     let fetchUrl2 = 'https://projection-calc-function.onrender.com/api/get-tokens-count/'+usermail.email;
@@ -107,6 +109,30 @@ function fetchcurrentuserprojects(){
     });
     }
 }
+
+function updateDashboardCards(data) {
+    if(data.length > 0){
+        const totalProjectsElement = document.getElementById('total-projects');
+        const averageDurationElement = document.getElementById('average-duration');
+        const averageRevenueElement = document.getElementById('average-revenue');
+        const totalForecastElement = document.getElementById('total-forecast');
+        const totalHoursElement = document.getElementById('total-hours');
+        const totalProjects = data.length;
+        const totalDuration = data.reduce((sum, project) => sum + project.projectDetails.projectoutput.projectedDuration, 0);
+        const averageDuration = totalDuration / totalProjects || 0;
+        const totalMainRevenue = data.reduce((sum, project) => sum + project.projectDetails.projectoutput.mainRevenue, 0);
+        const averageRevenue = totalMainRevenue / totalProjects || 0;
+        const totalForecast = data.reduce((sum, project) => sum + project.projectDetails.projectoutput.revenueBreakdown.totalRevenue, 0);
+        const totalHours = data.reduce((sum, project) => sum + project.projectDetails.projectinput.totalProjectHours, 0);
+        totalProjectsElement.textContent = totalProjects;
+        averageDurationElement.textContent = averageDuration.toFixed(2);
+        averageRevenueElement.textContent = `$${averageRevenue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+        totalForecastElement.textContent = `$${totalForecast.toLocaleString('en-IN')}`;
+        totalHoursElement.textContent = totalHours;
+        document.getElementById("dashboard-cards").style.display = "flex";
+    }
+}
+
 function populateProjsdash(projectData) {
     const projectListBody = document.getElementById('projectlistbody');
     projectListBody.innerHTML = ''; // Clear any existing rows
@@ -542,10 +568,10 @@ function populateProjectDashboard(data,projinputhrs,projstartDate,ptitle,pdescp)
                         anchor: 'center',
                         align: 'center',
                         color: '#fff',
-                        font: {size: 16,weight:500},
+                        font: {size: 16,weight:400},
                         formatter: function(value) {
                             let amtVal = value * 1000;
-                            return amtVal.toFixed(0)+'$';
+                            return '$ '+amtVal.toFixed(0);
                         }
                     }
             },
@@ -556,7 +582,7 @@ function populateProjectDashboard(data,projinputhrs,projstartDate,ptitle,pdescp)
                         display: true,
                         text: 'Amount ($)',
                         rotation: -90,
-                        font: {size: 20}
+                        font: {size: 16}
                     },
                     ticks: {
                         stepSize: 2,
@@ -571,7 +597,7 @@ function populateProjectDashboard(data,projinputhrs,projstartDate,ptitle,pdescp)
                         display: false
                     },
                     ticks: {
-                        font: { size: 20 }
+                        font: { size: 16 }
                     }
                 }
             }
@@ -638,13 +664,13 @@ function populateProjectDashboard(data,projinputhrs,projstartDate,ptitle,pdescp)
 
 function retomyhome(){
     window.location.href = "index.html";
-  }
-  function retomymembers(){
+}
+function retomymembers(){
     window.location.href = "mymembers.html";
-  }
-  
-  function curruserlogout(){
+}
+
+function curruserlogout(){
     localStorage.removeItem('userDetail');
     window.location.href = "index.html";
-  }
+}
   

@@ -9,7 +9,74 @@
     font-size: 24px;
 }
 
+/* five cards designs */
+.fivecard-title{
+    margin-top: 30px;
+    text-align: center;
+    padding: 0 35px;
+    /* background: linear-gradient(135deg, #dd2c47aa, #ebb14faa); */
+}
+.fivecard-title h1 {
+    letter-spacing: 2px;
+    font-family: Inter;
+    font-size: 36px;
+    font-weight: 700;
+    padding: 10px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #dd2c47aa, #ebb14faa);
+    /* -webkit-background-clip: text; */
+    color: white;
+  }
+.dashboard-cards {
+    display: flex;
+    gap: 20px;
+    padding: 35px;
+    justify-content: space-around;
+}
+.card {
+    /* background-color: #ffd0d0; */
+    background-origin: border-box;
+    background-clip: border-box, content-box;
+    box-sizing: border-box;
+    /* background: linear-gradient(270deg, rgba(221, 44, 70, 0.04) 0%, rgba(20, 164, 77, 0.04) 100%); */
+    background: linear-gradient(135deg, rgba(221, 44, 71, 0.10) 0%, rgba(235, 177, 79, 0.10) 100%);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 8px;
+    padding: 20px;
+    height: 140px;
+    width: 20%;
+    text-align: center;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+}
+.card-title {
+    font-size: 20px;
+    color: #c9823b;
+    text-wrap: nowrap;
+}
+.card-value {
+    font-size: 38px;
+    font-weight: 700;
+    color: #EF8700;
+    margin-bottom: 20px;
+    letter-spacing: 2px;
+    text-shadow: 1px 1px 2.4px #ffa024cc;
+}
+.card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 8px; 
+    padding: 1px; 
+    background: linear-gradient(270deg, rgba(221, 44, 70, 0.3) 0%, rgba(20, 164, 77, 0.3) 100%);
+    mask: linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    mask-composite: exclude; 
+}
 
+/* -=-=-=-=-=-=-=-=-=-=- */
 
 #redirectionbutton .newestimate-btn .redirect-home {
     width: 171px;

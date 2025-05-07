@@ -427,7 +427,7 @@ function populateDashboard(data) {
                         font: {size: 16,weight:500},
                         formatter: function(value) {
                             let amtVal = value * 1000;
-                            return amtVal.toFixed(0)+'$';
+                            return '$ '+amtVal.toFixed(0);
                         }
                     }
             },
@@ -453,7 +453,7 @@ function populateDashboard(data) {
                         display: false
                     },
                     ticks: {
-                        font: { size: 20 }
+                        font: { size: 16 }
                     }
                 }
             }

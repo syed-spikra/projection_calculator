@@ -40,6 +40,33 @@
     </div>
     <div class="header-btm"></div>
 
+    <!-- five cards -->
+    <div class="fivecard-title">
+        <h1>ESTIMATES OVERVIEW</h1>
+    </div>
+    <div class="dashboard-cards" id="dashboard-cards" style="display: none;">
+        <div class="card">
+          <div class="card-value" id="total-projects"></div>
+          <div class="card-title">Total Projects Estimated</div>
+        </div>
+        <div class="card">
+          <div class="card-value" id="average-duration"></div>
+          <div class="card-title">Average Project Duration (days)</div>
+        </div>
+        <div class="card">
+          <div class="card-value" id="average-revenue"></div>
+          <div class="card-title">Average Quoted Amount</div>
+        </div>
+        <div class="card">
+          <div class="card-value" id="total-forecast"></div>
+          <div class="card-title">Total Revenue Forecast</div>
+        </div>
+        <div class="card">
+          <div class="card-value" id="total-hours"></div>
+          <div class="card-title">Total Estimated Hours</div>
+        </div>
+    </div>
+
     <!-- display saved projects -->
      <div class="projects_info" id="projects_info">
         <div id="projectstable" class="projectstable">
@@ -55,7 +82,7 @@
                         <th>Project Name</th>
                         <th>Start Date</th>
                         <th>Predicted End Date</th>
-                        <th>Revenue</th>
+                        <th>Amount Quoted</th>
                         <th>Duration</th>
                       </tr>
                     </thead>
@@ -247,7 +274,39 @@
                        </div>       -->
                    </div>
                 </div>
-
+            <!-- charts section -->
+            <div class="allcharts" id="allcharts">
+                <div class="subtitle_container">
+                    <div class="subtitle_name">
+                        Visualizations
+                    </div>
+                </div>
+                <div class="divsec">
+                    <div class="card1">
+                        <div class="subtitle_container">
+                            <div class="sidesubtitle_name">
+                                Profitability Analysis
+                            </div>
+                        </div>
+                        <div class="chart1">
+                            <canvas id="profitChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="card2">
+                        <div class="subtitle_container">
+                            <div class="sidesubtitle_name">
+                                Charges Allocation
+                            </div>
+                            <!-- <div class="sidesubtitle_name">
+                                subtitle
+                            </div> -->
+                        </div>
+                        <div class="chart2">
+                            <canvas id="billChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <!-- Project Dashboard -->
                 <div class="project_dashhboard">
                    <!-- <div class="maintitle">
@@ -406,39 +465,7 @@
                    </div>
                  </div>
            </div>
-            <!-- charts section -->
-            <div class="allcharts" id="allcharts">
-                <div class="subtitle_container">
-                    <div class="subtitle_name">
-                        Visualizations
-                    </div>
-                </div>
-                <div class="divsec">
-                    <div class="card1">
-                        <div class="subtitle_container">
-                            <div class="sidesubtitle_name">
-                                Profitability Analysis
-                            </div>
-                        </div>
-                        <div class="chart1">
-                            <canvas id="profitChart"></canvas>
-                        </div>
-                    </div>
-                    <div class="card2">
-                        <div class="subtitle_container">
-                            <div class="sidesubtitle_name">
-                                Charges Allocation
-                            </div>
-                            <!-- <div class="sidesubtitle_name">
-                                subtitle
-                            </div> -->
-                        </div>
-                        <div class="chart2">
-                            <canvas id="billChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
 

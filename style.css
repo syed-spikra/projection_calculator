@@ -832,16 +832,13 @@ select::-ms-expand {
   height: 116px;
   border-radius: 12px !important;
   padding: 1px;
-  
   background-origin: border-box;
   background-clip: border-box, content-box;
   box-sizing: border-box;
   background: linear-gradient(270deg, rgba(221, 44, 70, 0.04) 0%, rgba(20, 164, 77, 0.04) 100%);
-  
-}
-.Profit_Loss {
   position: relative;
 }
+
 .Profit_Loss::before {
   content: "";
   position: absolute;
@@ -1360,10 +1357,11 @@ signin-close-button:focus {
 
 .allcharts {
   display: none;
-  padding: 35px;
+  /* padding: 35px; */
   align-items: center;
   /* margin-top: 20px; */
   width: 100%;
+  margin-bottom: 35px;
 }
 .divsec{
   display: flex;
@@ -1390,14 +1388,15 @@ signin-close-button:focus {
 .allcharts .subtitle_name,
 .allcharts .sidesubtitle_name{
   font-family: Inter;
-  font-weight: 700;
-  font-size: 26px;
+  font-weight: 600;
+  font-size: 20px;
   text-align: left;
-  padding: 0;
+  padding: 24px 0px;
 }
 .allcharts .sidesubtitle_name{
   font-weight: 300;
   font-size: 20px;
+  padding: 0;
   margin-top: 10px;
   color: #222222;
 }
