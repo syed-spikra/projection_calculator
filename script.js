@@ -409,18 +409,11 @@ function populateDashboard(data) {
             labels: ['Revenue', 'Team Costs', 'Profit Amount'],
             datasets: [{
                 data: chart1data,
-                backgroundColor: [
-                    '#3498db',
-                    '#2fcc71',
-                    '#f1c40f'
-                ],
-                borderColor: [
-                    '#186ca3',
-                    '#1a994f',
-                    '#b59102'
-                ],
-                borderWidth: 3,
-                borderRadius: 12,
+                backgroundColor: ['#3498db','#2fcc71','#f1c40f'],
+                borderColor: ['#186ca3','#1a994f','#b59102'],
+                borderWidth: 1.3,
+                borderRadius: 8,
+                barThickness: 100
             }],
         },
         options: {
@@ -431,7 +424,7 @@ function populateDashboard(data) {
                         anchor: 'center',
                         align: 'center',
                         color: '#fff',
-                        font: {size: 20,weight:500},
+                        font: {size: 16,weight:500},
                         formatter: function(value) {
                             let amtVal = value * 1000;
                             return amtVal.toFixed(0)+'$';
@@ -445,7 +438,7 @@ function populateDashboard(data) {
                         display: true,
                         text: 'Amount ($)',
                         rotation: -90,
-                        font: {size: 20}
+                        font: {size: 16}
                     },
                     ticks: {
                       stepSize: 2,
@@ -500,15 +493,18 @@ function populateDashboard(data) {
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            layout: {padding: {bottom: 20}},
+            layout: {padding: {bottom: 40}},
             plugins: {
                 legend: { 
                   position: 'bottom',
-                  labels:{usePointStyle: true,
-                  pointStyle: 'rect',
-                  boxWidth:16,
-                  boxHeight:16,
-                  font: {weight:400,size: 20} }
+                  labels:{
+                    usePointStyle: true,
+                    pointStyle: 'rect',
+                    boxWidth:16,
+                    boxHeight:16,
+                    font: {weight:400,size: 20},
+                    padding: 30
+                  }
                  },
                 datalabels: {
                     color: '#fff',
@@ -520,7 +516,7 @@ function populateDashboard(data) {
         plugins: [ChartDataLabels]
     });
     
-    document.getElementById('allcharts').style.display = "flex";
+    document.getElementById('allcharts').style.display = "block";
 
 
     // show output container

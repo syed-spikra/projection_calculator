@@ -1360,14 +1360,31 @@ signin-close-button:focus {
 
 .allcharts {
   display: none;
-  flex-direction: column;
+  padding: 35px;
   align-items: center;
   /* margin-top: 20px; */
   width: 100%;
 }
+.divsec{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 25px;
+  /* margin-top: 20px; */
+  width: 100%;
+}
+.allcharts .card1,
+.allcharts .card2{
+  width: 50%;
+  height: 600px;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+  /* box-shadow: rgba(17, 17, 26, 0.05) 0px 1px 0px, rgba(17, 17, 26, 0.1) 0px 0px 8px; */
+}
 .allcharts .subtitle_container{
   width: 100%;
-  padding-left: 35px;
+  padding-left: 0px;
   margin-bottom: 30px;
 }
 .allcharts .subtitle_name,
@@ -1376,18 +1393,33 @@ signin-close-button:focus {
   font-weight: 700;
   font-size: 26px;
   text-align: left;
+  padding: 0;
 }
 .allcharts .sidesubtitle_name{
   font-weight: 300;
   font-size: 20px;
+  margin-top: 10px;
+  color: #222222;
 }
-.chart {
+.chart1{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 80%;
-  height: 650px;
+  width: 95%;
+  margin: 50px auto 0 auto;
+  height: 450px;
   padding: 20px;
+  /* border-radius: 25px; */
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+.chart2{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 500px;
+  padding: 20px;
+  margin-top: 50px;
   /* border-radius: 25px; */
   /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 }
