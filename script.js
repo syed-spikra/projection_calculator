@@ -312,6 +312,8 @@ function populateDashboard(data) {
     // Get references to the HTML elements where you want to display the data
     const teamDailyCapacityDisplay = document.querySelector('.Team_Daily_Capacity .outer_subtitle_name');
     const projectedDurationDisplay = document.querySelector('.Projected_Duration .outer_subtitle_name');
+    const projectedStartDateDisplay = document.querySelector('.Projected_StartDate .outer_subtitle_name');
+    let startDateInputVal = document.getElementById('myDate');
     const projectedEndDateDisplay = document.querySelector('.Projected_EndDate .outer_subtitle_name');
   
     const totalHoursDisplay = document.querySelector('.metrics-card .metric-item:nth-child(1) .metric-value');
@@ -341,6 +343,7 @@ function populateDashboard(data) {
     // Project Timeline Projection
     teamDailyCapacityDisplay.textContent = `${processData.teamDailyCapacity} hours/day`;
     projectedDurationDisplay.textContent = `${(processData.projectedDuration).toFixed(1)} days`;
+    projectedStartDateDisplay.textContent = startDateInputVal.value;
     projectedEndDateDisplay.textContent = processData.projectedEndDate;
 
     // Project Dashboard

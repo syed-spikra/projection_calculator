@@ -317,6 +317,9 @@ input{
 .inner_subtitle_name3{
   color: #00A634;
 }
+.inner_subtitle_name4{
+  color: #b59209;
+}
 
 .inner_subtitle_container div{
 width: 100%;
@@ -593,7 +596,8 @@ select::-ms-expand {
     font-size: 16px;
   }
 .Team_Daily_Capacity{
-  width: 576.667px;   
+  /* width: 576.667px;    */
+  width: 409.5px;
   height: 116px;
   border-radius: 12px;
   border-width: 1px;
@@ -601,7 +605,8 @@ select::-ms-expand {
   border: 1px solid #2C70DD4D;
 }
 .Projected_Duration{
-  width: 576.667px;
+  /* width: 576.667px; */
+  width: 409.5px;
   height: 116px;
   border-radius: 12px;
   border-width: 1px;
@@ -609,8 +614,18 @@ select::-ms-expand {
   background: #DD5E2C0A;
   margin-left: 25px;
 }
+.Projected_StartDate{
+  width: 409.5px;
+  height: 116px;
+  border-radius: 12px;
+  border-width: 1px;
+  border: 1px solid #dda52c4d;
+  background: #ddc52c16;
+  margin-left: 25px;
+}
 .Projected_EndDate{
-  width: 576.667px;
+  /* width: 576.667px; */
+  width: 409.5px;
   height: 116px;
   border-radius: 12px;
   border-width: 1px;
@@ -803,7 +818,7 @@ select::-ms-expand {
 }
 .Revenue{
   /* width: 309.5px; */
-  width: 576.667px;   
+  width: 576.667px;
   height: 116px;
   border-radius: 12px;
   border-width: 1px;

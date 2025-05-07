@@ -402,8 +402,9 @@ function displayProjectDetails(projectID,ptitle,pdesp){
     let passingData = userprojectsData[projiVal];
     // let passingData = Sampledata[projiVal];
     let totprojhrs = passingData.projectDetails.projectinput.totalProjectHours;
+    let projstartDate = passingData.projectDetails.projectinput.startDate;
     let projOutput= passingData.projectDetails.projectoutput;
-    populateProjectDashboard(projOutput,totprojhrs,ptitle,pdesp);
+    populateProjectDashboard(projOutput,totprojhrs,projstartDate,ptitle,pdesp);
 }
 
 document.getElementById('logo-area').addEventListener('click', function(){
@@ -419,13 +420,14 @@ document.getElementById('backToProjects').addEventListener('click', function() {
 });
 
 
-function populateProjectDashboard(data,projinputhrs,ptitle,pdescp) {
+function populateProjectDashboard(data,projinputhrs,projstartDate,ptitle,pdescp) {
     // Get references to the HTML elements where you want to display the data
     let titletagDisplay = document.querySelector('.titleNdescription .outer_subtitle_name');
     let descriptiontagDisplay = document.querySelector('.titleNdescription .inner_subtitle_name');
 
     let teamDailyCapacityDisplay = document.querySelector('.Team_Daily_Capacity .outer_subtitle_name');
     let projectedDurationDisplay = document.querySelector('.Projected_Duration .outer_subtitle_name');
+    let projectedStartDateDisplay = document.querySelector('.Projected_StartDate .outer_subtitle_name');
     let projectedEndDateDisplay = document.querySelector('.Projected_EndDate .outer_subtitle_name');
   
     const totalHoursDisplay = document.querySelector('.metrics-card .metric-item:nth-child(1) .metric-value');
@@ -450,7 +452,7 @@ function populateProjectDashboard(data,projinputhrs,ptitle,pdescp) {
     let totalRevenueBreakdownDisplay = document.querySelector('.revenue_breakdown_table table tfoot tr td:last-child');
     let processData = data;
     // let totalProjectHoursInput = document.querySelector('.totalprojecthrs .number-input');
-    let totalProjectHoursInput = projinputhrs
+    let totalProjectHoursInput = projinputhrs;
     
     titletagDisplay.textContent = `Estimate Name: ${ptitle}`;
     descriptiontagDisplay.textContent = `Description: ${pdescp}`;
@@ -458,6 +460,7 @@ function populateProjectDashboard(data,projinputhrs,ptitle,pdescp) {
     // Project Timeline Projection
     teamDailyCapacityDisplay.textContent = `${processData.teamDailyCapacity} hours/day`;
     projectedDurationDisplay.textContent = `${(processData.projectedDuration).toFixed(1)} days`;
+    projectedStartDateDisplay.textContent = projstartDate.split("T")[0];
     projectedEndDateDisplay.textContent = (processData.projectedEndDate.split("T"))[0];
 
     // Project Dashboard
