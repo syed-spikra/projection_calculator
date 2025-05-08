@@ -129,6 +129,7 @@ function updateDashboardCards(data) {
         averageRevenueElement.textContent = `$${averageRevenue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
         totalForecastElement.textContent = `$${totalForecast.toLocaleString('en-IN')}`;
         totalHoursElement.textContent = totalHours;
+        document.getElementById('fivecard-title').style.display = "block";
         document.getElementById("dashboard-cards").style.display = "flex";
     }
 }
@@ -136,7 +137,7 @@ function updateDashboardCards(data) {
 function populateProjsdash(projectData) {
     const projectListBody = document.getElementById('projectlistbody');
     projectListBody.innerHTML = ''; // Clear any existing rows
-
+    const statusOptions = ['Scoping', 'Proposed', 'Negotiation', 'Approved', 'Rejected', 'Cancelled'];
     if (projectData && projectData.length > 0) {
         projectData.forEach((project, index) => {
             const row = projectListBody.insertRow();
@@ -161,25 +162,44 @@ function populateProjsdash(projectData) {
             projectNameCell.appendChild(projectNameSpan);
             projectNameCell.appendChild(openButton); 
 
+            // 2. Status Dropdown
+            const statusCell = row.insertCell(); // Insert at the beginning
+            statusCell.classList.add('status-cell');
+            const statusDropdown = document.createElement('select');
+            statusDropdown.classList.add('status-dropdown');
+            statusOptions.forEach(optionValue => {
+                const option = document.createElement('option');
+                option.value = optionValue;
+                option.textContent = optionValue;
+                if (project.projectDetails.projectStatus === optionValue || (!project.projectDetails.projectStatus && optionValue === 'Scoping')) {
+                    option.selected = true;
+                }
+                statusDropdown.appendChild(option);
+            });
+            statusDropdown.addEventListener('change', function() {
+                const newStatus = this.value;
+                updateprojectstaus(project._id,project.userDetails.email,project.projectDetails.projectTitle,newStatus);
+            });
+            statusCell.appendChild(statusDropdown);
 
-            // 2. Start Date
+            // 3. Start Date
             const startDateCell = row.insertCell();
             startDateCell.classList.add('start-date-cell');
             const startDate = new Date(project.projectDetails.projectinput.startDate);
             startDateCell.textContent = startDate.toLocaleDateString('en-GB');
 
-            // 3. Predicted End Date
+            // 4. Predicted End Date
             const predictedEndDateCell = row.insertCell();
             predictedEndDateCell.classList.add('predicted-end-date-cell');
             const predictedEndDate = new Date(project.projectDetails.projectoutput.projectedEndDate);
             predictedEndDateCell.textContent = predictedEndDate.toLocaleDateString('en-GB');
 
-            // 4. Revenue
+            // 5. Revenue
             const revenueCell = row.insertCell();
             revenueCell.classList.add('revenue-cell');
             revenueCell.textContent = `$${project.projectDetails.projectoutput.mainRevenue.toFixed(2)}`;
 
-            // 5. Duration
+            // 6. Duration
             const durationCell = row.insertCell();
             durationCell.classList.add('duration-cell');
             durationCell.textContent = `${project.projectDetails.projectoutput.projectedDuration} days`;
@@ -420,6 +440,36 @@ let Sampledata=[
 
 // populateProjsdash(Sampledata);
 
+function updateprojectstaus(o_id, email, projectTitle, stausVal) {
+    const apiUrl = 'https://projection-calc-function.onrender.com/api/update-project-staus';
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            projectTitle: projectTitle,
+            o_id: o_id,
+            stausVal: stausVal
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            // console.error('Failed to update project status:', response.status);
+        } else {
+            // console.log('Project status updated successfully');
+            // window.location.reload();
+        }
+    })
+    .then(data => {
+        // console.log('Update API Response:', data);
+        window.location.reload();
+    })
+    .catch(error => {
+        // console.error('Error updating project status:', error);
+    });
+}
 
 function displayProjectDetails(projectID,ptitle,pdesp){
     document.getElementById('projects_info').style.display = 'none';

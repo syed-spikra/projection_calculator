@@ -10,6 +10,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body onload="fetchcurrentuserprojects()">
@@ -41,7 +42,7 @@
     <div class="header-btm"></div>
 
     <!-- five cards -->
-    <div class="fivecard-title">
+    <div class="fivecard-title" id="fivecard-title" style="display: none;">
         <h1>ESTIMATES OVERVIEW</h1>
     </div>
     <div class="dashboard-cards" id="dashboard-cards" style="display: none;">
@@ -51,7 +52,7 @@
         </div>
         <div class="card">
           <div class="card-value" id="average-duration"></div>
-          <div class="card-title">Average Project Duration (days)</div>
+          <div class="card-title">Average Project Duration (d)</div>
         </div>
         <div class="card">
           <div class="card-value" id="average-revenue"></div>
@@ -80,6 +81,7 @@
                     <thead style="border-radius:12px;">
                       <tr>
                         <th>Project Name</th>
+                        <th>Status</th>
                         <th>Start Date</th>
                         <th>Predicted End Date</th>
                         <th>Amount Quoted</th>
@@ -93,15 +95,18 @@
                             <td><div class="skeleton"></div></td>
                             <td><div class="skeleton"></div></td>
                             <td><div class="skeleton"></div></td>
-                          </tr>
-                          <tr>
-                            <td><div class="skeleton"></div></td>
-                            <td><div class="skeleton"></div></td>
-                            <td><div class="skeleton"></div></td>
-                            <td><div class="skeleton"></div></td>
                             <td><div class="skeleton"></div></td>
                           </tr>
                           <tr>
+                            <td><div class="skeleton"></div></td>
+                            <td><div class="skeleton"></div></td>
+                            <td><div class="skeleton"></div></td>
+                            <td><div class="skeleton"></div></td>
+                            <td><div class="skeleton"></div></td>
+                            <td><div class="skeleton"></div></td>
+                          </tr>
+                          <tr>
+                            <td><div class="skeleton"></div></td>
                             <td><div class="skeleton"></div></td>
                             <td><div class="skeleton"></div></td>
                             <td><div class="skeleton"></div></td>
