@@ -69,6 +69,14 @@ function fetchcurrentusermembers(){
     // console.log('API Response:', data);
     allmembersData = data;
     // console.log('====',allmembersData);
+
+    document.getElementById("startMonth").value = 4; // May
+    document.getElementById("endMonth").value = 7;   // September
+    document.getElementById("yearSelect").value = new Date().getFullYear();
+    let departmentSelect = document.getElementById("departmentSelect");
+    Array.from(departmentSelect.options).forEach(opt => opt.selected = true);
+    fetchAndRenderDashboard();
+
     populateMembersdash(data);
     })
     .catch(error => {
@@ -691,13 +699,13 @@ function displayAvailability(data) {
 
 // Get current date
 const today = new Date();
-const currentYear = today.getFullYear();
+const capcurrentYear = today.getFullYear();
 const currentMonth = today.getMonth() + 1;
 const currentDate = today.getDate();
 
 // Set default month and year
 document.getElementById('month').value = currentMonth;
-document.getElementById('year').value = currentYear;
+document.getElementById('year').value = capcurrentYear;
 
 // Function to get the last day of a month
 function getLastDayOfMonth(year, month) {
@@ -705,8 +713,8 @@ function getLastDayOfMonth(year, month) {
 }
 
 // Set default start and end dates for month view
-const defaultStartDate = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
-const defaultEndDate = `${currentYear}-${String(currentMonth).padStart(2, '0')}-${getLastDayOfMonth(currentYear, currentMonth)}`;
+const defaultStartDate = `${capcurrentYear}-${String(currentMonth).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
+const defaultEndDate = `${capcurrentYear}-${String(currentMonth).padStart(2, '0')}-${getLastDayOfMonth(capcurrentYear, currentMonth)}`;
 
 // Set initial values for custom date pickers
 document.getElementById('start-date').value = defaultStartDate;
@@ -758,3 +766,136 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 0);
     }
   });
+
+// ====================================================================================================================
+
+// ================================= all capacity dashboards may 13th=================================
+const months = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+
+
+  // Populate month/year dropdowns
+  let startMonth = document.getElementById("startMonth");
+  let endMonth = document.getElementById("endMonth");
+  let yearSelect = document.getElementById("yearSelect");
+
+  months.forEach((m, i) => {
+    startMonth.innerHTML += `<option value="${i}">${m}</option>`;
+    endMonth.innerHTML += `<option value="${i}">${m}</option>`;
+  });
+
+  const currentYear = new Date().getFullYear();
+  for (let y = currentYear - 1; y <= currentYear + 2; y++) {
+    yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+  }
+
+  let departmentSelect = document.getElementById("departmentSelect");
+
+  // Add event listeners
+  [startMonth, endMonth, yearSelect, departmentSelect].forEach(el =>
+    el.addEventListener("change", fetchAndRenderDashboard)
+  );
+
+  async function fetchAndRenderDashboard() {
+    let start = parseInt(startMonth.value);
+    let end = parseInt(endMonth.value);
+    let year = parseInt(yearSelect.value);
+    if (start > end) return;
+
+    let selectedDepartments = Array.from(departmentSelect.selectedOptions).map(o => o.value);
+    let startTime = new Date(year, start, 1);
+    let endTime = new Date(year, end + 1, 0);
+    let currentUserDetails = localStorage.getItem('userDetail');
+    // console.log(currentUserDetails);
+    let usermail = JSON.parse(currentUserDetails);
+    let response = await fetch(`https://projection-calc-function.onrender.com/api/get-capacity-dashboards/${usermail.email}`, {
+    // let response = await fetch(`http://localhost:3002/api/get-capacity-dashboards/${usermail.email}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ startTime, endTime, selectedDepartment: selectedDepartments })
+    });
+
+    let capdashdata = await response.json();
+    if (capdashdata.status === 200) {
+      renderDepartmentCapacity(capdashdata.capdash.DepartmentCapacityRows);
+      renderMonthWiseCapacity(capdashdata.capdash.DeptartmentCapcityMonthRows, start, end, year);
+      renderTeamMemberCapacity(capdashdata.capdash.TeamMemberCapacityRows);
+      renderProjectMemberCapacity(capdashdata.capdash.ProjectTeamMemberCapacityRows);
+    }
+  }
+
+  function getColorClass(percent) {
+    if (percent > 80) return "red";
+    if (percent >= 50) return "yellow";
+    return "green";
+  }
+
+  function renderDepartmentCapacity(rows) {
+    const table = document.getElementById("departmentCapacityTable");
+    table.innerHTML = `<tr><th>Department</th><th>Available hours</th><th>Allocated hours</th></tr>`;
+    rows.forEach(row => {
+      table.innerHTML += `
+        <tr>
+          <td>${row.department}</td>
+          <td>${row.availableHrs}</td>
+          <td class="${getColorClass(row.allocatedPercent)}">${row.allocatedHrs}</td>
+        </tr>`;
+    });
+  }
+
+  function renderMonthWiseCapacity(rows, startMonth, endMonth, year) {
+    const monthLabels = [];
+    for (let m = startMonth; m <= endMonth; m++) {
+      monthLabels.push(`${months[m]} ${year}`);
+    }
+
+    const table = document.getElementById("monthWiseCapacityTable");
+    let header = `<tr><th>Department</th>${monthLabels.map(m => `<th>${m}</th>`).join("")}</tr>`;
+    let body = rows.map(row => {
+      const monthMap = Object.fromEntries(row.months.map(m => [m.monthName, m]));
+      const cells = monthLabels.map(month => {
+        const val = monthMap[month];
+        return `<td class="${val ? getColorClass(val.allocatedPercent) : ""}">${val ? val.allocatedHrs : "-"}</td>`;
+      }).join("");
+      return `<tr><td>${row.department}</td>${cells}</tr>`;
+    }).join("");
+    table.innerHTML = header + body;
+  }
+
+  function renderTeamMemberCapacity(rows) {
+    const table = document.getElementById("teamMemberCapacityTable");
+    table.innerHTML = `<tr><th>Member</th><th>Available hours</th><th>Allocated hours</th><th>Allocated %</th></tr>`;
+    rows.forEach(row => {
+      table.innerHTML += `
+        <tr>
+          <td>${row.memberName}</td>
+          <td>${row.availableHrs}</td>
+          <td>${row.allocatedHrs}</td>
+          <td class="${getColorClass(row.allocatedPercent)}">${row.allocatedPercent}</td>
+        </tr>`;
+    });
+  }
+
+  function renderProjectMemberCapacity(rows) {
+const table = document.getElementById("projectMemberCapacityTable");
+
+// ✅ Fix: use 'allocatedProjectHrs' instead of 'projects'
+const projects = [...new Set(rows.flatMap(r =>
+  (r.allocatedProjectHrs || []).map(p => p.projectName.trim())
+))];
+
+let header = `<tr><th>Member</th>${projects.map(p => `<th>${p}</th>`).join("")}</tr>`;
+
+let body = rows.map(row => {
+  const map = Object.fromEntries(
+    (row.allocatedProjectHrs || []).map(p => [p.projectName.trim(), p.hrsTime])
+  );
+
+  const cells = projects.map(p => `<td>${map[p] ?? '-'}</td>`).join("");
+  return `<tr><td>${row.memberName}</td>${cells}</tr>`;
+}).join("");
+
+table.innerHTML = header + body;
+}

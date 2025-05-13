@@ -884,3 +884,97 @@ button#calculate-availability:hover {
     color: #666;
     margin-bottom: 3px;
   }
+
+
+  /* capacity dashboard new addition styles 13th may */
+  
+
+    .capdashboard h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+    }
+
+    .capdashboard select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    min-width: 200px;
+    }
+    .choices__inner {
+    min-height: 40px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 8px 8px;
+    margin-top: 10px;
+    width: 30%;
+    }
+
+    .choices__list--dropdown, .choices__list[aria-expanded]{
+        width: 30%;
+    }
+    .choices__item--selectable {
+    background-color: #e6f0f5;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-right: 4px;
+    font-size: 14px;
+    }
+
+    .choices__button {
+    margin-left: 6px;
+    }
+
+    .dashboard-section {
+    background: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+    }
+
+    .scroll-table {
+    overflow: auto;
+    max-height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    }
+
+    .capdashboard table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 600px;
+    }
+
+    .capdashboard table th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+    }
+
+    .capdashboard table th {
+    color:#fff;
+    background-color: #2c3e50; /* Dark background color */
+    font-weight: 600;
+    }
+
+
+    .twoboxes {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    justify-content: space-between;
+    }
+
+    .twoboxes .dashboard-section {
+    width: 50%;
+    }
+
+    .green { background-color: #c8f7c5; }
+    .yellow { background-color: #fff7aa; }
+    .red { background-color: #f7c5c5; }
+
+    .capdashboard{
+        padding: 20px;
+    }

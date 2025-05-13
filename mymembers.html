@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="myprojectsstyle.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- for multi select box -->
+    <link href="https://cdn.jsdelivr.net/npm/selectize/dist/css/selectize.default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
 
 <body onload="fetchcurrentusermembers()">
@@ -38,6 +41,61 @@
         </div>
     </div>
     <div class="header-btm"></div>
+
+    <!-- display 4 capacity dashboards -->
+    <div class="capdashboard">
+      <div class="dashboard-section">
+        <label>Select time range:</label>
+        <select id="startMonth"></select>
+        <select id="endMonth"></select>
+        <select id="yearSelect"></select>
+      </div>
+    
+      <div class="twoboxes">
+        <div class="dashboard-section">
+            <h2>Department Capacity</h2>
+            <div class="scroll-table">
+            <table id="departmentCapacityTable"></table>
+            </div>
+        </div>
+    
+        <div class="dashboard-section">
+            <h2>Month Wise - Department Capacity</h2>
+            <div class="scroll-table">
+            <table id="monthWiseCapacityTable"></table>
+            </div>
+        </div>
+      </div>
+    
+      <div class="dashboard-section">
+        <label for="departmentSelect">Select departments:</label>
+        <select id="departmentSelect" multiple>
+          <option value="Engineer" selected>Engineer</option>
+          <option value="Product">Product</option>
+          <option value="Design">Design</option>
+          <option value="Marketing">Marketing</option>
+          <option value="Others">Others</option>
+        </select>
+      </div>
+      
+      <div class="twoboxes">
+        <div class="dashboard-section">
+            <h2>Team Member Capacity</h2>
+            <div class="scroll-table">
+            <table id="teamMemberCapacityTable"></table>
+            </div>
+        </div>
+    
+        <div class="dashboard-section">
+            <h2>Project Wise Member Capacity</h2>
+            <div class="scroll-table">
+            <table id="projectMemberCapacityTable"></table>
+            </div>
+        </div>
+      </div>
+    </div>
+
+        <!-- availability container -->
     <div class="availability-container">
       <div class="controls">
           <div class="date-range-selector">
@@ -121,8 +179,9 @@
             </ol>
           </div>
         </div>
-      </div>
-  </div>
+    </div>
+    </div>
+    
     <!-- display saved projects -->
      <div class="members_info" id="members_info">
         <div id="memberstable" class="memberstable">
@@ -170,6 +229,19 @@
          </div>
      </div>
 
+     <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+     <script>
+       document.addEventListener('DOMContentLoaded', function () {
+         const departmentSelect = document.getElementById('departmentSelect');
+         const choices = new Choices(departmentSelect, {
+           removeItemButton: true,
+           placeholder: true,
+           placeholderValue: 'Select departments',
+           searchEnabled: false,
+           position: 'bottom'
+         });
+       });
+     </script>
      <script src="mymembers.js"></script>
 </body>
 </html>

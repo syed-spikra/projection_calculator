@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Capacity Dashboard</title>
+  <!-- Selectize CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/selectize/dist/css/selectize.default.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+  <style>
+    body {
+    font-family: "Segoe UI", sans-serif;
+    background-color: #f2f4f8;
+    margin: 0;
+    padding: 20px;
+    }
+
+    h2 {
+    margin-top: 0;
+    font-size: 18px;
+    color: #333;
+    }
+
+    select {
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    min-width: 200px;
+    }
+    .choices__inner {
+    min-height: 40px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    padding: 8px 8px;
+    margin-top: 10px;
+    width: 30%;
+    }
+
+    .choices__list--dropdown, .choices__list[aria-expanded]{
+        width: 30%;
+    }
+    .choices__item--selectable {
+    background-color: #e6f0f5;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-right: 4px;
+    font-size: 14px;
+    }
+
+    .choices__button {
+    margin-left: 6px;
+    }
+
+    .dashboard-section {
+    background: #ffffff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .scroll-table {
+    overflow: auto;
+    max-height: 300px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    }
+
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 600px;
+    }
+
+    th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ccc;
+    white-space: nowrap;
+    }
+
+    th {
+    background-color: #e6f0f5;
+    font-weight: 600;
+    }
+
+    .twoboxes {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    }
+
+    .twoboxes .dashboard-section {
+    width: 48%;
+    }
+
+    .green { background-color: #c8f7c5; }
+    .yellow { background-color: #fff7aa; }
+    .red { background-color: #f7c5c5; }
+
+  </style>
+</head>
+<body>
+
+  <div class="dashboard-section">
+    <label>Select time range:</label>
+    <select id="startMonth"></select>
+    <select id="endMonth"></select>
+    <select id="yearSelect"></select>
+  </div>
+
+  <div class="twoboxes">
+    <div class="dashboard-section">
+        <h2>Department Capacity</h2>
+        <div class="scroll-table">
+        <table id="departmentCapacityTable"></table>
+        </div>
+    </div>
+
+    <div class="dashboard-section">
+        <h2>Month Wise - Department Capacity</h2>
+        <div class="scroll-table">
+        <table id="monthWiseCapacityTable"></table>
+        </div>
+    </div>
+  </div>
+
+  <div class="dashboard-section">
+    <label for="departmentSelect">Select departments:</label>
+    <select id="departmentSelect" multiple>
+      <option value="Engineer" selected>Engineer</option>
+      <option value="Product">Product</option>
+      <option value="Design">Design</option>
+      <option value="Marketing">Marketing</option>
+      <option value="Others">Others</option>
+    </select>
+  </div>
+  
+  <div class="twoboxes">
+    <div class="dashboard-section">
+        <h2>Team Member Capacity</h2>
+        <div class="scroll-table">
+        <table id="teamMemberCapacityTable"></table>
+        </div>
+    </div>
+
+    <div class="dashboard-section">
+        <h2>Project Wise Member Capacity</h2>
+        <div class="scroll-table">
+        <table id="projectMemberCapacityTable"></table>
+        </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const departmentSelect = document.getElementById('departmentSelect');
+      const choices = new Choices(departmentSelect, {
+        removeItemButton: true,
+        placeholder: true,
+        placeholderValue: 'Select departments',
+        searchEnabled: false,
+        position: 'bottom'
+      });
+    });
+  </script>
+
+
+  <script>
+    const months = [
+      "January", "February", "March", "April", "May", "June",
+      "July", "August", "September", "October", "November", "December"
+    ];
+
+    let currentUserDetails = localStorage.getItem('userDetail');
+    // console.log(currentUserDetails);
+    let usermail = JSON.parse(currentUserDetails);
+
+    // Populate month/year dropdowns
+    let startMonth = document.getElementById("startMonth");
+    let endMonth = document.getElementById("endMonth");
+    let yearSelect = document.getElementById("yearSelect");
+
+    months.forEach((m, i) => {
+      startMonth.innerHTML += `<option value="${i}">${m}</option>`;
+      endMonth.innerHTML += `<option value="${i}">${m}</option>`;
+    });
+
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear - 1; y <= currentYear + 2; y++) {
+      yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
+    }
+
+    let departmentSelect = document.getElementById("departmentSelect");
+
+    // Add event listeners
+    [startMonth, endMonth, yearSelect, departmentSelect].forEach(el =>
+      el.addEventListener("change", fetchAndRenderDashboard)
+    );
+
+    async function fetchAndRenderDashboard() {
+      let start = parseInt(startMonth.value);
+      let end = parseInt(endMonth.value);
+      let year = parseInt(yearSelect.value);
+      if (start > end) return;
+
+      let selectedDepartments = Array.from(departmentSelect.selectedOptions).map(o => o.value);
+      let startTime = new Date(year, start, 1);
+      let endTime = new Date(year, end + 1, 0);
+
+      let response = await fetch(`http://localhost:3002/api/get-capacity-dashboards/${usermail}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ startTime, endTime, selectedDepartment: selectedDepartments })
+      });
+
+      let capdashdata = await response.json();
+      if (capdashdata.status === 200) {
+        renderDepartmentCapacity(capdashdata.capdash.DepartmentCapacityRows);
+        renderMonthWiseCapacity(capdashdata.capdash.DeptartmentCapcityMonthRows, start, end, year);
+        renderTeamMemberCapacity(capdashdata.capdash.TeamMemberCapacityRows);
+        renderProjectMemberCapacity(capdashdata.capdash.ProjectTeamMemberCapacityRows);
+      }
+    }
+
+    function getColorClass(percent) {
+      if (percent > 80) return "red";
+      if (percent >= 50) return "yellow";
+      return "green";
+    }
+
+    function renderDepartmentCapacity(rows) {
+      const table = document.getElementById("departmentCapacityTable");
+      table.innerHTML = `<tr><th>Department</th><th>Available hours</th><th>Allocated hours</th></tr>`;
+      rows.forEach(row => {
+        table.innerHTML += `
+          <tr>
+            <td>${row.department}</td>
+            <td>${row.availableHrs}</td>
+            <td class="${getColorClass(row.allocatedPercent)}">${row.allocatedHrs}</td>
+          </tr>`;
+      });
+    }
+
+    function renderMonthWiseCapacity(rows, startMonth, endMonth, year) {
+      const monthLabels = [];
+      for (let m = startMonth; m <= endMonth; m++) {
+        monthLabels.push(`${months[m]} ${year}`);
+      }
+
+      const table = document.getElementById("monthWiseCapacityTable");
+      let header = `<tr><th>Department</th>${monthLabels.map(m => `<th>${m}</th>`).join("")}</tr>`;
+      let body = rows.map(row => {
+        const monthMap = Object.fromEntries(row.months.map(m => [m.monthName, m]));
+        const cells = monthLabels.map(month => {
+          const val = monthMap[month];
+          return `<td class="${val ? getColorClass(val.allocatedPercent) : ""}">${val ? val.allocatedHrs : "-"}</td>`;
+        }).join("");
+        return `<tr><td>${row.department}</td>${cells}</tr>`;
+      }).join("");
+      table.innerHTML = header + body;
+    }
+
+    function renderTeamMemberCapacity(rows) {
+      const table = document.getElementById("teamMemberCapacityTable");
+      table.innerHTML = `<tr><th>Member</th><th>Available hours</th><th>Allocated hours</th><th>Allocated %</th></tr>`;
+      rows.forEach(row => {
+        table.innerHTML += `
+          <tr>
+            <td>${row.memberName}</td>
+            <td>${row.availableHrs}</td>
+            <td>${row.allocatedHrs}</td>
+            <td class="${getColorClass(row.allocatedPercent)}">${row.allocatedPercent}</td>
+          </tr>`;
+      });
+    }
+
+    function renderProjectMemberCapacity(rows) {
+  const table = document.getElementById("projectMemberCapacityTable");
+
+  // ✅ Fix: use 'allocatedProjectHrs' instead of 'projects'
+  const projects = [...new Set(rows.flatMap(r =>
+    (r.allocatedProjectHrs || []).map(p => p.projectName.trim())
+  ))];
+
+  let header = `<tr><th>Member</th>${projects.map(p => `<th>${p}</th>`).join("")}</tr>`;
+
+  let body = rows.map(row => {
+    const map = Object.fromEntries(
+      (row.allocatedProjectHrs || []).map(p => [p.projectName.trim(), p.hrsTime])
+    );
+
+    const cells = projects.map(p => `<td>${map[p] ?? '-'}</td>`).join("");
+    return `<tr><td>${row.memberName}</td>${cells}</tr>`;
+  }).join("");
+
+  table.innerHTML = header + body;
+}
+
+
+    // Trigger default data load
+    window.onload = () => {
+      startMonth.value = 4; // May
+      endMonth.value = 7;   // September
+      yearSelect.value = new Date().getFullYear();
+      Array.from(departmentSelect.options).forEach(opt => opt.selected = true);
+      fetchAndRenderDashboard();
+    };
+  </script>
+</body>
+</html>
