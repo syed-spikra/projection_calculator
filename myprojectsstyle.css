@@ -933,27 +933,28 @@ button#calculate-availability:hover {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
     }
 
-    .scroll-table {
+    .capdashboard .twoboxes .dashboard-section .scroll-table {
     overflow: auto;
     max-height: 300px;
     border: 1px solid #ddd;
     border-radius: 6px;
     }
 
-    .capdashboard table {
+    .capdashboard .twoboxes .dashboard-section .scroll-table table {
     border-collapse: collapse;
     width: 100%;
     min-width: 600px;
     }
 
-    .capdashboard table th, td {
+    .capdashboard .twoboxes .dashboard-section .scroll-table table th, 
+    .capdashboard .twoboxes .dashboard-section .scroll-table table td {
     padding: 10px;
     text-align: center;
     border: 1px solid #ccc;
     white-space: nowrap;
     }
 
-    .capdashboard table th {
+    .capdashboard .twoboxes .dashboard-section .scroll-table table th {
     color:#fff;
     background-color: #2c3e50; /* Dark background color */
     font-weight: 600;
