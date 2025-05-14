@@ -70,12 +70,12 @@ function fetchcurrentusermembers(){
     allmembersData = data;
     // console.log('====',allmembersData);
 
-    document.getElementById("startMonth").value = 4; // May
-    document.getElementById("endMonth").value = 7;   // September
-    document.getElementById("yearSelect").value = new Date().getFullYear();
-    let departmentSelect = document.getElementById("departmentSelect");
-    Array.from(departmentSelect.options).forEach(opt => opt.selected = true);
-    fetchAndRenderDashboard();
+    // document.getElementById("startMonth").value = 4; // May
+    // document.getElementById("endMonth").value = 7;   // September
+    // document.getElementById("yearSelect").value = new Date().getFullYear();
+    // let departmentSelect = document.getElementById("departmentSelect");
+    // Array.from(departmentSelect.options).forEach(opt => opt.selected = true);
+    // fetchAndRenderDashboard();
 
     populateMembersdash(data);
     })
@@ -529,6 +529,9 @@ function retomyhome(){
     window.location.href = "myprojects.html";
   }
   
+  function retocapdash(){
+    window.location.href = "capacity dashboard.html";
+}
   function curruserlogout(){
     localStorage.removeItem('userDetail');
     window.location.href = "index.html";
@@ -587,12 +590,13 @@ function setstartenddate(){
     const today = new Date();
     const currentMonth = today.getMonth() + 1;
     const currentYearNum = today.getFullYear();
-    const currentDate = today.getDate();
+    // const currentDate = today.getDate();
     if (rangeTypeSelector.value === 'month') {
         if (selectedYear === currentYearNum && selectedMonth === currentMonth) {
-            startDate = `${currentYearNum}-${String(currentMonth).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
+            // startDate = `${currentYearNum}-${String(currentMonth).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
+            startDate = `${currentYearNum}-${String(currentMonth).padStart(2, '0')}-${getfirstDayOfMonth(currentYearNum, currentMonth)}`;
         } else {
-            startDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-01`;
+            startDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-01`; 
         }
         endDate = `${selectedYear}-${String(selectedMonth).padStart(2, '0')}-${getLastDayOfMonth(selectedYear, selectedMonth)}`;
     } else {
@@ -712,8 +716,11 @@ function getLastDayOfMonth(year, month) {
     return new Date(year, month, 0).getDate();
 }
 
+function getfirstDayOfMonth(year, month) {
+    return new Date(year, month - 1, 1).getDate();
+}
 // Set default start and end dates for month view
-const defaultStartDate = `${capcurrentYear}-${String(currentMonth).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
+const defaultStartDate = `${capcurrentYear}-${String(currentMonth).padStart(2, '0')}-${getfirstDayOfMonth(capcurrentYear, currentMonth)}`;
 const defaultEndDate = `${capcurrentYear}-${String(currentMonth).padStart(2, '0')}-${getLastDayOfMonth(capcurrentYear, currentMonth)}`;
 
 // Set initial values for custom date pickers
@@ -803,8 +810,11 @@ const months = [
     let end = parseInt(endMonth.value);
     let year = parseInt(yearSelect.value);
     if (start > end) return;
+    // let selectedDepartments = Array.from(departmentSelect.selectedOptions).map(o => o.value);
+    let selectedDepartments = Array.from(departmentSelect.options)
+  .filter(option => option.selected)
+  .map(option => option.value);
 
-    let selectedDepartments = Array.from(departmentSelect.selectedOptions).map(o => o.value);
     let startTime = new Date(year, start, 1);
     let endTime = new Date(year, end + 1, 0);
     let currentUserDetails = localStorage.getItem('userDetail');

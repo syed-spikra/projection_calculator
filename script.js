@@ -1463,7 +1463,9 @@ function retomyprojects(){
 function retomymembers(){
   window.location.href = "mymembers.html";
 }
-
+function retocapdash(){
+  window.location.href = "capacity dashboard.html";
+}
 function curruserlogout(){
   localStorage.removeItem(userDetailKey);
   window.location.reload();

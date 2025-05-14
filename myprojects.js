@@ -22,12 +22,12 @@ function fetchcurrentuserprojects(){
     // console.log('API Response:', data);
     userprojectsData = data;
     populateProjsdash(data);
-    updateDashboardCards(data);
+    // updateDashboardCards(data);
     })
     .catch(error => {
     console.error('API call failed:', error);
     populateProjsdash([]);
-    updateDashboardCards([]);
+    // updateDashboardCards([]);
     });
 
     let fetchUrl2 = 'https://projection-calc-function.onrender.com/api/get-tokens-count/'+usermail.email;
@@ -717,6 +717,9 @@ function retomyhome(){
 }
 function retomymembers(){
     window.location.href = "mymembers.html";
+}
+function retocapdash(){
+    window.location.href = "capacity dashboard.html";
 }
 
 function curruserlogout(){

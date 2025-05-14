@@ -1,219 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Capacity Dashboard</title>
-  <!-- Selectize CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/selectize/dist/css/selectize.default.css" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project calculator</title>
+    <link rel="icon" href="images/Group 163.png" type="image/png">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="myprojectsstyle.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- for multi select box -->
+    <link href="https://cdn.jsdelivr.net/npm/selectize/dist/css/selectize.default.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
-<body>
+<body onload="calltwofns()">
+    <div class="header">
+        <div class="logo-area" id="logo-area" style="cursor: pointer;">
+          <img src="images/LOGO with text (4) 1.png" alt="logo" class="logo" />
+          <div>
+            <span class="tagline"> Project Profitability Estimator</span>
+          </div>
+        </div>
+        <div class="actions">
+          <div class="tokens-remian" id="tokens-remian" style="display: none;">
+            <span class="coins-icon"><img src="./images/Vector.png" height="22px" width="22px" alt=""></span>
+            <span class="token-count" id="token-count"></span>
+          </div>
+          <div class="toggle-theme" style="display: none;">
+            <span class="sun-dt"><i class='bx bxs-sun'></i></span>
+            <span class="moon-dt"><i class='bx bx-moon'></i></span>
+          </div>
+          <button class="signup-btn" id="signup-btn">Log in</button>
+          <!-- <button class="signup-btn" id="signup-btn">Log In</button> -->
+          <div id="dropdownList" class="dropdown-content" style="display: none;">
+            <a onclick="retomyhome()">New Estimator</a>
+            <a onclick="retomyprojects()">My Estimates</a>
+            <a onclick="retomymembers()">My Members</a>
+            <a onclick="curruserlogout()">Sign Out</a>
+          </div>
+        </div>
+    </div>
+    <div class="header-btm"></div>
 
-  <div class="dashboard-section">
-    <label>Select time range:</label>
-    <select id="startMonth"></select>
-    <select id="endMonth"></select>
-    <select id="yearSelect"></select>
-  </div>
-
-  <div class="twoboxes">
-    <div class="dashboard-section">
-        <h2>Department Capacity</h2>
-        <div class="scroll-table">
-        <table id="departmentCapacityTable"></table>
+    <!-- five cards -->
+    <div class="fivecard-title" id="fivecard-title" style="display: none;">
+        <h1>ESTIMATES OVERVIEW</h1>
+    </div>
+    <div class="dashboard-cards" id="dashboard-cards" style="display: none;">
+        <div class="card">
+          <div class="card-value" id="total-projects"></div>
+          <div class="card-title">Total Estimates</div>
+        </div>
+        <div class="card">
+          <div class="card-value" id="average-duration"></div>
+          <div class="card-title">Average Project Duration (d)</div>
+        </div>
+        <div class="card">
+          <div class="card-value" id="average-revenue"></div>
+          <div class="card-title">Average Quoted Amount</div>
+        </div>
+        <div class="card">
+          <div class="card-value" id="total-forecast"></div>
+          <div class="card-title">Total Revenue Forecast</div>
+        </div>
+        <div class="card">
+          <div class="card-value" id="total-hours"></div>
+          <div class="card-title">Total Estimated Hours</div>
         </div>
     </div>
 
-    <div class="dashboard-section">
-        <h2>Month Wise - Department Capacity</h2>
-        <div class="scroll-table">
-        <table id="monthWiseCapacityTable"></table>
+    <!-- display 4 capacity dashboards -->
+    <div class="fivecard-title" id="fivecard-title" style="display: block;">
+        <h1>INSIGHTS</h1>
+    </div>
+    <div class="capdashboard">
+        <div class="dashboard-section">
+            <label>Select time range:</label>
+            <select id="startMonth"></select>
+            <select id="endMonth"></select>
+            <select id="yearSelect"></select>
+        </div>
+        
+        <div class="twoboxes">
+            <div class="dashboard-section">
+                <h2>Department Capacity</h2>
+                <div class="scroll-table">
+                <table id="departmentCapacityTable"></table>
+                </div>
+            </div>
+        
+            <div class="dashboard-section">
+                <h2>Month Wise - Department Capacity</h2>
+                <div class="scroll-table">
+                <table id="monthWiseCapacityTable"></table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="dashboard-section">
+            <label for="departmentSelect">Select departments:</label>
+            <select id="departmentSelect" multiple>
+            <option value="Engineer" selected>Engineer</option>
+            <option value="Product">Product</option>
+            <option value="Design">Design</option>
+            <option value="Marketing">Marketing</option>
+            <option value="Others">Others</option>
+            </select>
+        </div>
+        
+        <div class="twoboxes">
+            <div class="dashboard-section">
+                <h2>Team Member Capacity</h2>
+                <div class="scroll-table">
+                <table id="teamMemberCapacityTable"></table>
+                </div>
+            </div>
+        
+            <div class="dashboard-section">
+                <h2>Project Wise Member Capacity</h2>
+                <div class="scroll-table">
+                <table id="projectMemberCapacityTable"></table>
+                </div>
+            </div>
         </div>
     </div>
-  </div>
-
-  <div class="dashboard-section">
-    <label for="departmentSelect">Select departments:</label>
-    <select id="departmentSelect" multiple>
-      <option value="Engineer" selected>Engineer</option>
-      <option value="Product">Product</option>
-      <option value="Design">Design</option>
-      <option value="Marketing">Marketing</option>
-      <option value="Others">Others</option>
-    </select>
-  </div>
-  
-  <div class="twoboxes">
-    <div class="dashboard-section">
-        <h2>Team Member Capacity</h2>
-        <div class="scroll-table">
-        <table id="teamMemberCapacityTable"></table>
-        </div>
-    </div>
-
-    <div class="dashboard-section">
-        <h2>Project Wise Member Capacity</h2>
-        <div class="scroll-table">
-        <table id="projectMemberCapacityTable"></table>
-        </div>
-    </div>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const departmentSelect = document.getElementById('departmentSelect');
-      const choices = new Choices(departmentSelect, {
-        removeItemButton: true,
-        placeholder: true,
-        placeholderValue: 'Select departments',
-        searchEnabled: false,
-        position: 'bottom'
-      });
-    });
-  </script>
 
 
-  <script>
-    const months = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
-
-    let currentUserDetails = localStorage.getItem('userDetail');
-    // console.log(currentUserDetails);
-    let usermail = JSON.parse(currentUserDetails);
-
-    // Populate month/year dropdowns
-    let startMonth = document.getElementById("startMonth");
-    let endMonth = document.getElementById("endMonth");
-    let yearSelect = document.getElementById("yearSelect");
-
-    months.forEach((m, i) => {
-      startMonth.innerHTML += `<option value="${i}">${m}</option>`;
-      endMonth.innerHTML += `<option value="${i}">${m}</option>`;
-    });
-
-    const currentYear = new Date().getFullYear();
-    for (let y = currentYear - 1; y <= currentYear + 2; y++) {
-      yearSelect.innerHTML += `<option value="${y}">${y}</option>`;
-    }
-
-    let departmentSelect = document.getElementById("departmentSelect");
-
-    // Add event listeners
-    [startMonth, endMonth, yearSelect, departmentSelect].forEach(el =>
-      el.addEventListener("change", fetchAndRenderDashboard)
-    );
-
-    async function fetchAndRenderDashboard() {
-      let start = parseInt(startMonth.value);
-      let end = parseInt(endMonth.value);
-      let year = parseInt(yearSelect.value);
-      if (start > end) return;
-
-      let selectedDepartments = Array.from(departmentSelect.selectedOptions).map(o => o.value);
-      let startTime = new Date(year, start, 1);
-      let endTime = new Date(year, end + 1, 0);
-
-      let response = await fetch(`http://localhost:3002/api/get-capacity-dashboards/${usermail}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ startTime, endTime, selectedDepartment: selectedDepartments })
-      });
-
-      let capdashdata = await response.json();
-      if (capdashdata.status === 200) {
-        renderDepartmentCapacity(capdashdata.capdash.DepartmentCapacityRows);
-        renderMonthWiseCapacity(capdashdata.capdash.DeptartmentCapcityMonthRows, start, end, year);
-        renderTeamMemberCapacity(capdashdata.capdash.TeamMemberCapacityRows);
-        renderProjectMemberCapacity(capdashdata.capdash.ProjectTeamMemberCapacityRows);
-      }
-    }
-
-    function getColorClass(percent) {
-      if (percent > 80) return "red";
-      if (percent >= 50) return "yellow";
-      return "green";
-    }
-
-    function renderDepartmentCapacity(rows) {
-      const table = document.getElementById("departmentCapacityTable");
-      table.innerHTML = `<tr><th>Department</th><th>Available hours</th><th>Allocated hours</th></tr>`;
-      rows.forEach(row => {
-        table.innerHTML += `
-          <tr>
-            <td>${row.department}</td>
-            <td>${row.availableHrs}</td>
-            <td class="${getColorClass(row.allocatedPercent)}">${row.allocatedHrs}</td>
-          </tr>`;
-      });
-    }
-
-    function renderMonthWiseCapacity(rows, startMonth, endMonth, year) {
-      const monthLabels = [];
-      for (let m = startMonth; m <= endMonth; m++) {
-        monthLabels.push(`${months[m]} ${year}`);
-      }
-
-      const table = document.getElementById("monthWiseCapacityTable");
-      let header = `<tr><th>Department</th>${monthLabels.map(m => `<th>${m}</th>`).join("")}</tr>`;
-      let body = rows.map(row => {
-        const monthMap = Object.fromEntries(row.months.map(m => [m.monthName, m]));
-        const cells = monthLabels.map(month => {
-          const val = monthMap[month];
-          return `<td class="${val ? getColorClass(val.allocatedPercent) : ""}">${val ? val.allocatedHrs : "-"}</td>`;
-        }).join("");
-        return `<tr><td>${row.department}</td>${cells}</tr>`;
-      }).join("");
-      table.innerHTML = header + body;
-    }
-
-    function renderTeamMemberCapacity(rows) {
-      const table = document.getElementById("teamMemberCapacityTable");
-      table.innerHTML = `<tr><th>Member</th><th>Available hours</th><th>Allocated hours</th><th>Allocated %</th></tr>`;
-      rows.forEach(row => {
-        table.innerHTML += `
-          <tr>
-            <td>${row.memberName}</td>
-            <td>${row.availableHrs}</td>
-            <td>${row.allocatedHrs}</td>
-            <td class="${getColorClass(row.allocatedPercent)}">${row.allocatedPercent}</td>
-          </tr>`;
-      });
-    }
-
-    function renderProjectMemberCapacity(rows) {
-  const table = document.getElementById("projectMemberCapacityTable");
-
-  // ✅ Fix: use 'allocatedProjectHrs' instead of 'projects'
-  const projects = [...new Set(rows.flatMap(r =>
-    (r.allocatedProjectHrs || []).map(p => p.projectName.trim())
-  ))];
-
-  let header = `<tr><th>Member</th>${projects.map(p => `<th>${p}</th>`).join("")}</tr>`;
-
-  let body = rows.map(row => {
-    const map = Object.fromEntries(
-      (row.allocatedProjectHrs || []).map(p => [p.projectName.trim(), p.hrsTime])
-    );
-
-    const cells = projects.map(p => `<td>${map[p] ?? '-'}</td>`).join("");
-    return `<tr><td>${row.memberName}</td>${cells}</tr>`;
-  }).join("");
-
-  table.innerHTML = header + body;
-}
-
-
-    // Trigger default data load
-    window.onload = () => {
-      startMonth.value = 4; // May
-      endMonth.value = 7;   // September
-      yearSelect.value = new Date().getFullYear();
-      Array.from(departmentSelect.options).forEach(opt => opt.selected = true);
-      fetchAndRenderDashboard();
-    };
-  </script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        const departmentSelect = document.getElementById('departmentSelect');
+        const choices = new Choices(departmentSelect, {
+            removeItemButton: true,
+            placeholder: true,
+            placeholderValue: 'Select departments',
+            searchEnabled: false,
+            position: 'bottom'
+        });
+        });
+    </script>
+    <script src="capacitydash.js"></script>
+    <!-- <script src="myprojects.js"></script>
+    <script src="mymembers.js"></script> -->
 </body>
 </html>
