@@ -260,7 +260,13 @@ const months = [
   }
 
   let departmentSelect = document.getElementById("departmentSelect");
-
+  let choices = new Choices(departmentSelect, {
+      removeItemButton: true,
+      placeholder: true,
+      placeholderValue: 'Select departments',
+      searchEnabled: false,
+      position: 'bottom'
+  });
   // Add event listeners
   [startMonth, endMonth, yearSelect, departmentSelect].forEach(el =>
     el.addEventListener("change", fetchAndRenderDashboard)
@@ -273,10 +279,35 @@ const months = [
     if (start > end) return;
     // let selectedDepartments = Array.from(departmentSelect.selectedOptions).map(o => o.value);
     
-    let selectedDepartments = Array.from(departmentSelect.options)
-  .filter(option => option.selected)
-  .map(option => option.value);
+//     let selectedDepartments = Array.from(departmentSelect.options)
+//   .filter(option => option.selected)
+//   .map(option => option.value);
 
+    let selectedDepartments = choices.getValue(true);
+    
+    if (selectedDepartments == [] || selectedDepartments.length === 0) {
+        choices.destroy();
+        choices = new Choices(departmentSelect, {
+            removeItemButton: true,
+            placeholder: true,
+            placeholderValue: 'All departments',
+            searchEnabled: false,
+            position: 'bottom'
+        });
+      selectedDepartments = ['Engineer', 'Product', 'Design', 'Marketing', 'Others'];
+    }else{
+        letchecksel = choices.getValue(true);
+        if(choices._placeholderValue == "All departments" && (letchecksel.lenght != 0 && letchecksel != [])){
+            choices.destroy();
+            choices = new Choices(departmentSelect, {
+                removeItemButton: true,
+                placeholder: true,
+                placeholderValue: 'Select departments',
+                searchEnabled: false,
+                position: 'bottom'
+            });
+        }
+    }
     let startTime = new Date(year, start, 1);
     let endTime = new Date(year, end + 1, 0);
     let currentUserDetails = localStorage.getItem('userDetail');

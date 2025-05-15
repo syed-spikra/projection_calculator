@@ -14,6 +14,7 @@
     <!-- for multi select box -->
     <link href="https://cdn.jsdelivr.net/npm/selectize/dist/css/selectize.default.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 </head>
 <body onload="calltwofns()">
     <div class="header">
@@ -103,7 +104,7 @@
             <label for="departmentSelect">Select departments:</label>
             <select id="departmentSelect" multiple>
             <option value="Engineer" selected>Engineer</option>
-            <option value="Product">Product</option>
+            <option value="Product" selected>Product</option>
             <option value="Design">Design</option>
             <option value="Marketing">Marketing</option>
             <option value="Others">Others</option>
@@ -128,19 +129,7 @@
     </div>
 
 
-    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-        const departmentSelect = document.getElementById('departmentSelect');
-        const choices = new Choices(departmentSelect, {
-            removeItemButton: true,
-            placeholder: true,
-            placeholderValue: 'Select departments',
-            searchEnabled: false,
-            position: 'bottom'
-        });
-        });
-    </script>
+    
     <script src="capacitydash.js"></script>
     <!-- <script src="myprojects.js"></script>
     <script src="mymembers.js"></script> -->
