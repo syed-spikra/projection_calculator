@@ -1,6 +1,8 @@
 var userprojectsData;
+var dashVerticalchartData;
 var EprofitChart,Ebillablechart;
 function fetchcurrentuserprojects(){
+    setDefaultMonths();
     let currentUserDetails = localStorage.getItem('userDetail');
     // console.log(currentUserDetails);
     let usermail = JSON.parse(currentUserDetails);
@@ -22,6 +24,7 @@ function fetchcurrentuserprojects(){
     // console.log('API Response:', data);
     userprojectsData = data;
     populateProjsdash(data);
+    updateCharts();
     // updateDashboardCards(data);
     })
     .catch(error => {
@@ -110,6 +113,261 @@ function fetchcurrentuserprojects(){
     }
 }
 
+const departmentColors = {
+    Engineer: '#23459E',   // blue
+    Design: '#4F793F',     // green
+    Marketing: '#D24D57',  // red
+    Product: '#F1C40F',    // yellow
+    Others: '#8E44AD'      // purple
+  };
+  
+  function setDefaultMonths() {
+    const startInput = document.getElementById('startMonth');
+    const endInput = document.getElementById('endMonth');
+  
+    const now = new Date();
+    const getMonthString = (offset) => {
+      const date = new Date(now.getFullYear(), now.getMonth() + offset, 1);
+      return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+    };
+  
+    startInput.value = getMonthString(-2); // 2 months ago
+    endInput.value = getMonthString(2);    // 2 months ahead
+  }
+  
+  function getWorkingDaysInMonth(year, month) {
+    let count = 0;
+    const date = new Date(year, month, 1);
+    while (date.getMonth() === month) {
+      const day = date.getDay();
+      if (day !== 0 && day !== 6) count++;
+      date.setDate(date.getDate() + 1);
+    }
+    return count;
+  }
+  
+  function getMonthKey(date) {
+    return date.toLocaleString('default', { month: 'short', year: 'numeric' });
+  }
+  
+  function calculateMonthlyFinancials(data, startMonthStr, endMonthStr) {
+    const startDate = new Date(`${startMonthStr}-01`);
+    const endDate = new Date(new Date(`${endMonthStr}-01`).getFullYear(), new Date(`${endMonthStr}-01`).getMonth() + 1, 0);
+  
+    const resultMap = {};
+  
+    // Step 1: Generate all months in range with default 0s
+    const iter = new Date(startDate);
+    iter.setDate(1);
+  
+    while (iter <= endDate) {
+      const key = getMonthKey(iter);
+      resultMap[key] = { revenue: 0, teamCost: 0, profit: 0 };
+      iter.setMonth(iter.getMonth() + 1);
+    }
+  
+    // Step 2: Calculate project contributions
+    for (const project of data) {
+      const input = project.projectDetails.projectinput;
+      const output = project.projectDetails.projectoutput;
+  
+      const projStart = new Date(input.startDate);
+      const projEnd = new Date(output.projectedEndDate);
+  
+      const actualStart = projStart > startDate ? projStart : startDate;
+      const actualEnd = projEnd < endDate ? projEnd : endDate;
+      if (actualStart > actualEnd) continue;
+  
+      let totalWorkingDays = 0;
+      const monthWiseDays = {};
+  
+      const projectIter = new Date(actualStart);
+      projectIter.setDate(1);
+  
+      while (projectIter <= actualEnd) {
+        const month = projectIter.getMonth();
+        const year = projectIter.getFullYear();
+        const key = getMonthKey(projectIter);
+        const days = getWorkingDaysInMonth(year, month);
+        monthWiseDays[key] = days;
+        totalWorkingDays += days;
+        projectIter.setMonth(projectIter.getMonth() + 1);
+      }
+  
+      for (const [monthKey, days] of Object.entries(monthWiseDays)) {
+        const share = days / totalWorkingDays;
+  
+        if (!resultMap[monthKey]) {
+          resultMap[monthKey] = { revenue: 0, teamCost: 0, profit: 0 };
+        }
+  
+        const revenueShare = output.mainRevenue * share;
+        const teamCostShare = output.teamCosts * share;
+        const profitShare = revenueShare - teamCostShare;
+  
+        resultMap[monthKey].revenue += revenueShare;
+        resultMap[monthKey].teamCost += teamCostShare;
+        resultMap[monthKey].profit += profitShare;
+      }
+    }
+  
+    const sortedMonths = Object.keys(resultMap).sort((a, b) => {
+      const [ma, ya] = a.split(' ');
+      const [mb, yb] = b.split(' ');
+      return new Date(`${ya}-${ma}-01`) - new Date(`${yb}-${mb}-01`);
+    });
+  
+    return {
+      labels: sortedMonths,
+      datasets: [
+        {
+          label: 'Revenue',
+          data: sortedMonths.map(m => Math.round(resultMap[m].revenue)),
+          backgroundColor: '#23459E'
+        },
+        {
+          label: 'Team Costs',
+          data: sortedMonths.map(m => Math.round(resultMap[m].teamCost)),
+          backgroundColor: '#D24D57'
+        },
+        {
+          label: 'Profit',
+          data: sortedMonths.map(m => Math.round(resultMap[m].profit)),
+          backgroundColor: '#4F793F'
+        }
+      ]
+    };
+  }
+  
+  
+  function calculateEffortDistribution(data, startMonthStr, endMonthStr) {
+    const startDate = new Date(`${startMonthStr}-01`);
+    const endDate = new Date(new Date(`${endMonthStr}-01`).getFullYear(), new Date(`${endMonthStr}-01`).getMonth() + 1, 0);
+  
+    const deptEfforts = {
+      Engineer: 0,
+      Design: 0,
+      Product: 0,
+      Marketing: 0,
+      Others: 0
+    };
+  
+    for (const project of data) {
+      const input = project.projectDetails.projectinput;
+      const teamMembers = input.teamMembers;
+      const workWeekDays = parseInt(input.workWeekDays);
+  
+      const projectStart = new Date(input.startDate);
+      const projectEnd = new Date(project.projectDetails.projectoutput.projectedEndDate);
+  
+      const actualStart = projectStart > startDate ? projectStart : startDate;
+      const actualEnd = projectEnd < endDate ? projectEnd : endDate;
+  
+      if (actualStart > actualEnd) continue;
+  
+      const workingDays = [];
+      const tempDate = new Date(actualStart);
+      while (tempDate <= actualEnd) {
+        const day = tempDate.getDay();
+        if (
+          (workWeekDays === 5 && day >= 1 && day <= 5) || // Mon-Fri
+          (workWeekDays === 6 && day >= 1 && day <= 6)    // Mon-Sat
+        ) {
+          workingDays.push(new Date(tempDate));
+        }
+        tempDate.setDate(tempDate.getDate() + 1);
+      }
+  
+      const totalWorkingDays = workingDays.length;
+  
+      for (const member of teamMembers) {
+        const dept = deptEfforts.hasOwnProperty(member.department) ? member.department : 'Others';
+        const memberEffort = totalWorkingDays * member.hours_day;
+        deptEfforts[dept] += memberEffort;
+      }
+    }
+  
+    return {
+    //   labels: Object.keys(deptEfforts),
+      datasets: [
+        {
+          data: Object.values(deptEfforts),
+          backgroundColor: Object.keys(deptEfforts).map(dept => departmentColors[dept])
+        }
+      ]
+    };
+  }
+  
+  
+  let myChart;
+  let effortChart;
+  
+  function generateChart(Sampledata) {
+    const startMonth = document.getElementById('startMonth').value;
+    const endMonth = document.getElementById('endMonth').value;
+    if (!startMonth || !endMonth) return;
+  
+    const chartData = calculateMonthlyFinancials(Sampledata, startMonth, endMonth);
+    const ctx = document.getElementById('financeChart').getContext('2d');
+    if (myChart) myChart.destroy();
+    myChart = new Chart(ctx, {
+        type: 'bar',
+        data: chartData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { position: 'bottom',
+              labels:{
+                  usePointStyle: true,
+                  pointStyle: 'rect',
+                  boxWidth:16,
+                  boxHeight:16,
+                  font: {weight:400,size: 20},
+                  padding: 30
+              }
+             },
+            title: { display: true, text: 'Monthly Revenue, Costs, and Profit'}
+          },
+          scales: {
+            y: {
+                beginAtZero: true,
+                ticks: {
+                  callback: function (value) {
+                    return (value / 1000) + 'K';
+                  }
+                }
+              }
+          }
+        }
+      });
+  }
+  
+  function generateEffortChart(projectData) {
+    const startMonth = document.getElementById('startMonth').value;
+    const endMonth = document.getElementById('endMonth').value;
+    if (!startMonth || !endMonth) return;
+    const chartData = calculateEffortDistribution(projectData, startMonth, endMonth);
+    const ctx = document.getElementById('effortChart').getContext('2d');
+    if (effortChart) effortChart.destroy();
+    effortChart = new Chart(ctx, {
+        type: 'pie',
+        data: chartData,
+        options: {
+          responsive: true,
+          plugins: {
+                tooltip: {enabled: false},
+                legend: {onHover: null}
+            },
+          hover: {mode: null}
+        }
+      });
+      
+  }
+  
+  function updateCharts() {
+    generateChart(userprojectsData);
+    generateEffortChart(userprojectsData);
+  }
 function updateDashboardCards(data) {
     if(data.length > 0){
         const totalProjectsElement = document.getElementById('total-projects');
@@ -437,7 +695,6 @@ let Sampledata=[
         "__v": 0
     }
 ];
-
 // populateProjsdash(Sampledata);
 
 function updateprojectstaus(o_id, email, projectTitle, stausVal) {

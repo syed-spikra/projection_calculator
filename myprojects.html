@@ -42,6 +42,65 @@
     </div>
     <div class="header-btm"></div>
 
+
+    <div class="monthscharts">
+        <h2 style="margin-bottom: 15px;">Monthly Financial Report</h2>
+        <div class="controls">
+            <input type="month" id="startMonth" onchange="updateCharts()">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.0039 20.0028C4.48107 20.0028 0.00390625 15.5257 0.00390625 10.0028C0.00390625 4.47996 4.48107 0.00280762 10.0039 0.00280762C15.5267 0.00280762 20.0039 4.47996 20.0039 10.0028C20.0039 15.5257 15.5267 20.0028 10.0039 20.0028ZM10.0039 18.0028C14.4222 18.0028 18.0039 14.4211 18.0039 10.0028C18.0039 5.58453 14.4222 2.00281 10.0039 2.00281C5.58563 2.00281 2.00391 5.58453 2.00391 10.0028C2.00391 14.4211 5.58563 18.0028 10.0039 18.0028ZM5.00391 11.0028H14.0039V13.0028H10.0039V16.0028L5.00391 11.0028ZM10.0039 7.00281V4.00281L15.0039 9.00276H6.00391V7.00281H10.0039Z" fill="#5C5F62"/>
+            </svg>                
+            <input type="month" id="endMonth" onchange="updateCharts()">
+        </div>
+        <div class="allcharts" style="display: flex;">
+            <div class="divsec">
+                <div class="card1">
+                    <div class="subtitle_container">
+                        <div class="sidesubtitle_name">
+                            Profitability Analysis
+                        </div>
+                    </div>
+                    <div class="chart1">
+                        <canvas id="financeChart"></canvas>
+                    </div>
+                </div>
+                <div class="card2">
+                    <div class="subtitle_container">
+                        <div class="sidesubtitle_name">
+                            Department Effort Distribution
+                        </div>
+                        <div class="pielabelcard">
+                            <div class="label-box">
+                                <span class="dot" style="background-color: #23459E;"></span>
+                                <span class="label-text">ENGINEERING</span>
+                            </div>
+                            <div class="label-box">
+                                <span class="dot" style="background-color: #4F793F;"></span>
+                                <span class="label-text">DESIGN</span>
+                            </div>
+                            <div class="label-box">
+                                <span class="dot" style="background-color: #F1C40F;"></span>
+                                <span class="label-text">Product</span>
+                            </div>
+                            <div class="label-box">
+                                <span class="dot" style="background-color: #D24D57;"></span>
+                                <span class="label-text">MARKETING</span>
+                            </div>
+                            <div class="label-box">
+                                <span class="dot" style="background-color: #8E44AD;"></span>
+                                <span class="label-text">Others</span>
+                            </div>
+                        </div>                          
+                    </div>
+                    <div class="chart2">
+                        <canvas id="effortChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
     <!-- five cards -->
     <!-- <div class="fivecard-title" id="fivecard-title" style="display: none;">
         <h1>ESTIMATES OVERVIEW</h1>
