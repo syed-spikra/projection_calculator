@@ -374,6 +374,7 @@
 
 /* Style for the project details content area */
 #projectDetailsContent {
+    background-color: #fff;
     margin-top: 20px;
     width: 100%;
     padding: 0;
