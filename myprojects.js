@@ -24,6 +24,7 @@ function fetchcurrentuserprojects(){
     // console.log('API Response:', data);
     userprojectsData = data;
     populateProjsdash(data);
+    renderKanbanBoard();
     updateCharts();
     // updateDashboardCards(data);
     })
@@ -113,6 +114,198 @@ function fetchcurrentuserprojects(){
     }
 }
 
+// kanban view - functions
+const KANBAN_COLUMNS = ['Scoping', 'Proposed', 'Negotiation', 'Approved'];
+const kanbanBoard = document.querySelector('.kanban-board');
+let draggedCard = null;
+
+// --- Helper function to format dates ---
+function formatDate(dateString) {
+  if (!dateString) return 'N/A';
+  const date = new Date(dateString);
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  const year = date.getFullYear();
+  return `${month}-${day}-${year}`;
+}
+
+function renderKanbanBoard() {
+  kanbanBoard.innerHTML = ''; // Clear existing board
+
+  KANBAN_COLUMNS.forEach(status => {
+      const columnDiv = document.createElement('div');
+      columnDiv.classList.add('kanban-column');
+      columnDiv.dataset.status = status; // Store status in data attribute
+
+      const titleDiv = document.createElement('div');
+      titleDiv.classList.add('column-title');
+      titleDiv.textContent = `${status} (${userprojectsData.filter(p => p.projectDetails.projectStatus === status && KANBAN_COLUMNS.includes(p.projectDetails.projectStatus)).length})`;
+
+      const cardsDiv = document.createElement('div');
+      cardsDiv.classList.add('project-cards');
+      cardsDiv.dataset.statusTarget = status; // For drop identification
+
+      columnDiv.appendChild(titleDiv);
+      columnDiv.appendChild(cardsDiv);
+      kanbanBoard.appendChild(columnDiv);
+
+      // Add drag and drop listeners to the card container div
+      cardsDiv.addEventListener('dragover', dragOver);
+      cardsDiv.addEventListener('dragenter', dragEnter);
+      cardsDiv.addEventListener('dragleave', dragLeave);
+      cardsDiv.addEventListener('drop', drop);
+      columnDiv.addEventListener('drop', dropOnColumn); // Allow dropping on column too
+  });
+
+  populateCards();
+}
+
+// --- Populate Cards ---
+function populateCards() {
+  userprojectsData.forEach((project, index) => {
+      if (!project.projectDetails || !KANBAN_COLUMNS.includes(project.projectDetails.projectStatus)) {
+          return; // Skip if status is not one of the 4 or data is malformed
+      }
+
+      const status = project.projectDetails.projectStatus;
+      const columnCardsDiv = kanbanBoard.querySelector(`.kanban-column[data-status="${status}"] .project-cards`);
+
+      if (columnCardsDiv) {
+          const card = document.createElement('div');
+          card.classList.add('project-card');
+          card.draggable = true;
+          card.dataset.projectId = project._id; // Store project's main _id
+          card.dataset.index = index; // Store original index if needed
+
+          const projectTitle = project.projectDetails.projectTitle || 'N/A';
+          const projectDescription = project.projectDetails.projectDescription || 'No description available.';
+          const startDate = formatDate(project.projectDetails.projectinput?.startDate);
+          const projectedEndDate = formatDate(project.projectDetails.projectoutput?.projectedEndDate);
+          const mainRevenue = project.projectDetails.projectoutput?.mainRevenue !== undefined
+                              ? parseFloat(project.projectDetails.projectoutput.mainRevenue).toFixed(2)
+                              : 'N/A';
+          const projectedDuration = project.projectDetails.projectoutput?.projectedDuration !== undefined
+                                    ? `${project.projectDetails.projectoutput.projectedDuration} days`
+                                    : 'N/A';
+
+          card.innerHTML = `
+              <div class="card-header">
+                  <div class="project-title">${projectTitle}</div>
+                  <div class="project-amount">$${mainRevenue}</div>
+              </div>
+              <div class="project-description">${projectDescription}</div>
+              <div class="project-dates">
+                  <div class="start-date">
+                      <span class="date-label">Starts:</span> ${startDate}
+                  </div>
+                  <div class="end-date-duration">
+                      <span class="date-label">Ends:</span> ${projectedEndDate}<br>
+                      (${projectedDuration})
+                  </div>
+              </div>
+          `;
+
+          // Add click event listener
+          card.addEventListener('click', () => {
+              const projid = `project-${project._id}`; // Unique ID for the DOM element if needed
+              const ptitle = project.projectDetails.projectTitle;
+              const pdescp = project.projectDetails.projectDescription;
+              displayProjectDetails(projid, ptitle, pdescp);
+          });
+
+          // Add drag event listeners
+          card.addEventListener('dragstart', dragStart);
+          card.addEventListener('dragend', dragEnd);
+
+          columnCardsDiv.appendChild(card);
+      }
+  });
+}
+
+// --- Drag and Drop Event Handlers ---
+function dragStart(event) {
+  draggedCard = event.target;
+  event.dataTransfer.setData('text/plain', event.target.dataset.projectId);
+  setTimeout(() => {
+      event.target.classList.add('dragging');
+  }, 0);
+  console.log("Drag Start:", event.target.dataset.projectId);
+}
+
+function dragEnd(event) {
+  event.target.classList.remove('dragging');
+  draggedCard = null;
+  console.log("Drag End");
+}
+
+function dragOver(event) {
+  event.preventDefault(); // Necessary to allow drop
+}
+
+function dragEnter(event) {
+  event.preventDefault();
+  if (event.target.classList.contains('project-cards') || event.target.closest('.project-cards')) {
+     const targetCardsContainer = event.target.closest('.project-cards') || event.target;
+     targetCardsContainer.style.border = '2px dashed rgb(130, 130, 130)'; // Visual feedback
+  }
+}
+
+function dragLeave(event) {
+  if (event.target.classList.contains('project-cards') || event.target.closest('.project-cards')) {
+      const targetCardsContainer = event.target.closest('.project-cards') || event.target;
+      targetCardsContainer.style.border = ''; // Remove visual feedback
+  }
+}
+
+function drop(event) {
+  event.preventDefault();
+  const targetCardsContainer = event.target.closest('.project-cards');
+  if (targetCardsContainer && draggedCard) {
+      targetCardsContainer.style.border = ''; // Remove visual feedback
+      const targetStatus = targetCardsContainer.dataset.statusTarget;
+      handleDrop(targetStatus, targetCardsContainer);
+  }
+}
+function dropOnColumn(event) {
+  event.preventDefault();
+  const columnDiv = event.target.closest('.kanban-column');
+  if (columnDiv && draggedCard) {
+      const targetStatus = columnDiv.dataset.status;
+      const targetCardsContainer = columnDiv.querySelector('.project-cards');
+      handleDrop(targetStatus, targetCardsContainer);
+  }
+}
+
+
+function handleDrop(targetStatus, targetCardsContainer) {
+  const projectId = draggedCard.dataset.projectId;
+  const project = userprojectsData.find(p => p._id === projectId);
+
+  if (project) {
+      const oldStatus = project.projectDetails.projectStatus;
+      if (oldStatus !== targetStatus) {
+          // Call your update function
+          updateprojectstaus(
+              project._id,
+              project.userDetails.email,
+              project.projectDetails.projectTitle,
+              targetStatus
+          );
+          // The updateprojectstaus function now handles local data update and re-render.
+          // If it didn't, you would manually move the card in the DOM here:
+          // targetCardsContainer.appendChild(draggedCard);
+          // And then update the local array and re-render titles or counts.
+      } else {
+           // If dropped in the same column, just append it back if it was visually moved
+          targetCardsContainer.appendChild(draggedCard);
+          console.log("Card dropped in the same column.");
+      }
+  }
+  draggedCard = null; // Reset dragged card
+}
+
+
+// two charts generation codes
 const departmentColors = {
     Engineer: '#23459E',   // blue
     Design: '#4F793F',     // green
@@ -368,6 +561,8 @@ const departmentColors = {
     generateChart(userprojectsData);
     generateEffortChart(userprojectsData);
   }
+
+// project updates functions
 function updateDashboardCards(data) {
     if(data.length > 0){
         const totalProjectsElement = document.getElementById('total-projects');
@@ -584,7 +779,8 @@ let Sampledata=[
                 "profitLoss": 1600,
                 "profitMargin": 25,
                 "_id": "67f791055bd1f337f6659d40"
-            }
+            },
+            "projectStatus": "Proposed"
         },
         "_id": "67f791055bd1f337f6659d3c",
         "__v": 0
@@ -689,7 +885,8 @@ let Sampledata=[
                 "profitLoss": 3419.2307692307695,
                 "profitMargin": 35,
                 "_id": "67f7c6f66a6ddd00fd075577"
-            }
+            },
+            "projectStatus": "Proposed"
         },
         "_id": "67f7c6f66a6ddd00fd075573",
         "__v": 0
