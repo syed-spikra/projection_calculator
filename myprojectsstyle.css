@@ -1052,26 +1052,30 @@ input[type="month"]::-webkit-clear-button {
 .centerkanban {
     font-family: Inter;
     margin: 0;
-    padding: 0px 35px;
+    padding: 10px 25px;
     width: 100%;
     display: flex;
     justify-content: space-around;
+    overflow-x: auto;
 }
-   
+
 .kanban-board {
     display: flex;
     gap: 30px;
     width: 100%;
-    align-items: flex-start; /* Align columns at the top */
+    padding: 10px;
+    align-items: flex-start;
+    overflow-x:scroll;
 }
 
 .kanban-column {
     background-color: #e9ecef; /* Light grey background for columns */
     border-radius: 8px;
     padding: 15px;
-    width: 24%; /* Distribute width among 4 columns */
+    /* width: 24%; */
+    min-width: 25%;
     min-height: 750px; /* Minimum height for empty columns */
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 8px;
 }
 .kanban-column:nth-child(1) {
     background: linear-gradient(125.35deg, #FFF4DD 0%, #FFFFFF 151.51%);
@@ -1082,13 +1086,22 @@ input[type="month"]::-webkit-clear-button {
     border: 1.3px solid #007DE333;
 }
 .kanban-column:nth-child(3) {
-    background: linear-gradient(185.24deg, #FFE8E8 10.64%, #FFFFFF 150.01%);
-    border: 1.3px solid #FF161633;
+    background: linear-gradient(186.59deg, #F5EBFA 12.54%, #FFFFFF 164.77%);
+    border: 1px solid #9933CC33;
 }
 .kanban-column:nth-child(4) {
     background: linear-gradient(185.24deg, #E8FAE6 10.64%, #FFFFFF 150.01%);
     border: 1.3px solid #10CC0033;
 }
+.kanban-column:nth-child(5) {
+    background: linear-gradient(185.24deg, #EBEBEB 10.64%, #FFFFFF 150.01%);
+    border: 1px solid #32323233;
+}
+.kanban-column:nth-child(6) {
+    background: linear-gradient(185.24deg, #FFE8E8 10.64%, #FFFFFF 150.01%);
+    border: 1.3px solid #FF161633;
+}
+
 .column-title {
     font-family: Inter;
     font-size: 1.2em;
@@ -1108,7 +1121,7 @@ input[type="month"]::-webkit-clear-button {
     flex-grow: 1;
     padding-right: 5px;
     overflow-y: auto;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 .project-card {
@@ -1120,6 +1133,25 @@ input[type="month"]::-webkit-clear-button {
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
+.kanban-column:nth-child(1) .project-cards{
+    border-color: #FFB51E;
+}
+.kanban-column:nth-child(2) .project-cards{
+    border-color: #007DE3;
+}
+.kanban-column:nth-child(3) .project-cards{
+    border-color: #9933CC;
+}
+.kanban-column:nth-child(4) .project-cards{
+    border-color: #10CC00;
+}
+.kanban-column:nth-child(5) .project-cards{
+    border-color: #323232;
+}
+.kanban-column:nth-child(6) .project-cards{
+    border-color: #FF1616;
+}
+
 .kanban-column:nth-child(1) .project-cards .project-card{
     border-left: 5px solid #FFB51E;
 }
@@ -1127,10 +1159,16 @@ input[type="month"]::-webkit-clear-button {
     border-left: 5px solid #007DE3;
 }
 .kanban-column:nth-child(3) .project-cards .project-card{
-    border-left: 5px solid #FF1616;
+    border-left: 5px solid #9933CC;
 }
 .kanban-column:nth-child(4) .project-cards .project-card{
     border-left: 5px solid #10CC00;
+}
+.kanban-column:nth-child(5) .project-cards .project-card{
+    border-left: 5px solid #323232;
+}
+.kanban-column:nth-child(6) .project-cards .project-card{
+    border-left: 5px solid #FF1616;
 }
 
 

@@ -115,7 +115,7 @@ function fetchcurrentuserprojects(){
 }
 
 // kanban view - functions
-const KANBAN_COLUMNS = ['Scoping', 'Proposed', 'Negotiation', 'Approved'];
+const KANBAN_COLUMNS = ['Scoping', 'Proposed', 'Negotiation', 'Approved', 'Rejected', 'Cancelled'];
 const kanbanBoard = document.querySelector('.kanban-board');
 let draggedCard = null;
 
@@ -229,13 +229,13 @@ function dragStart(event) {
   setTimeout(() => {
       event.target.classList.add('dragging');
   }, 0);
-  console.log("Drag Start:", event.target.dataset.projectId);
+  // console.log("Drag Start:", event.target.dataset.projectId);
 }
 
 function dragEnd(event) {
   event.target.classList.remove('dragging');
   draggedCard = null;
-  console.log("Drag End");
+  // console.log("Drag End");
 }
 
 function dragOver(event) {
@@ -246,14 +246,18 @@ function dragEnter(event) {
   event.preventDefault();
   if (event.target.classList.contains('project-cards') || event.target.closest('.project-cards')) {
      const targetCardsContainer = event.target.closest('.project-cards') || event.target;
-     targetCardsContainer.style.border = '2px dashed rgb(130, 130, 130)'; // Visual feedback
+     let computedStyles = window.getComputedStyle(targetCardsContainer);
+     let targetBorderColor = computedStyles.borderColor;
+     targetCardsContainer.style.border = '2px dashed ' + targetBorderColor;
+     targetCardsContainer.style.padding = '10px';
   }
 }
 
 function dragLeave(event) {
   if (event.target.classList.contains('project-cards') || event.target.closest('.project-cards')) {
       const targetCardsContainer = event.target.closest('.project-cards') || event.target;
-      targetCardsContainer.style.border = ''; // Remove visual feedback
+      targetCardsContainer.style.border = '';
+      targetCardsContainer.style.padding = '';
   }
 }
 
@@ -261,7 +265,8 @@ function drop(event) {
   event.preventDefault();
   const targetCardsContainer = event.target.closest('.project-cards');
   if (targetCardsContainer && draggedCard) {
-      targetCardsContainer.style.border = ''; // Remove visual feedback
+      targetCardsContainer.style.border = ''; 
+      targetCardsContainer.style.padding = '';
       const targetStatus = targetCardsContainer.dataset.statusTarget;
       handleDrop(targetStatus, targetCardsContainer);
   }
@@ -593,6 +598,7 @@ function populateProjsdash(projectData) {
     const statusOptions = ['Scoping', 'Proposed', 'Negotiation', 'Approved', 'Rejected', 'Cancelled'];
     if (projectData && projectData.length > 0) {
         projectData.forEach((project, index) => {
+          // if(project.projectDetails.projectStatus == "Rejected" || project.projectDetails.projectStatus == "Cancelled"){
             const row = projectListBody.insertRow();
             row.id = `project-${index}`;
             row.classList.add('project-row');
@@ -664,6 +670,7 @@ function populateProjsdash(projectData) {
             row.addEventListener('mouseout', function() {
                 openButton.style.display = "none";
             });
+          // }
         });
     } else {
         // Optionally display a message if there are no projects
