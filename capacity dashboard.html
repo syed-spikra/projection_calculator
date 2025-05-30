@@ -49,6 +49,13 @@
     <div class="fivecard-title" id="fivecard-title" style="display: none;">
         <h1>ESTIMATES OVERVIEW</h1>
     </div>
+    <div class="dashboard-status-select">
+      <label for="project-status-select">Status</label>
+      <select id="project-status-select">
+        <option value="Approved" selected>Approved</option>
+        <option value="Cancelled">Closed</option>
+      </select>
+    </div>
     <div class="dashboard-cards" id="dashboard-cards" style="display: none;">
         <div class="card">
           <div class="card-value" id="total-projects"></div>
@@ -74,9 +81,9 @@
 
     <!-- display 4 capacity dashboards -->
     <div class="fivecard-title" id="fivecard-title" style="display: block;">
-        <h1>INSIGHTS</h1>
+        <h1 id="fivecard-title-h1">INSIGHTS</h1>
     </div>
-    <div class="capdashboard">
+    <div class="capdashboard" id="capdashboard">
         <div class="dashboard-section">
             <label>Select time range:</label>
             <select id="startMonth"></select>

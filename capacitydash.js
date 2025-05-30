@@ -267,15 +267,22 @@ const months = [
       searchEnabled: false,
       position: 'bottom'
   });
+
+  // change select status filter 
+  let projectStatusSelect = document.getElementById("project-status-select");
+
   // Add event listeners
-  [startMonth, endMonth, yearSelect, departmentSelect].forEach(el =>
+  [startMonth, endMonth, yearSelect, departmentSelect, projectStatusSelect].forEach(el =>
     el.addEventListener("change", fetchAndRenderDashboard)
   );
 
   async function fetchAndRenderDashboard() {
+    if(projectStatusSelect.value != 'Cancelled'){
     let start = parseInt(startMonth.value);
     let end = parseInt(endMonth.value);
     let year = parseInt(yearSelect.value);
+    // selected status 
+    let selectedStatus = projectStatusSelect.value || "Approved";
     if (start > end) return;
     // let selectedDepartments = Array.from(departmentSelect.selectedOptions).map(o => o.value);
     
@@ -317,7 +324,7 @@ const months = [
     // let response = await fetch(`http://localhost:3002/api/get-capacity-dashboards/${usermail.email}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ startTime, endTime, selectedDepartment: selectedDepartments })
+      body: JSON.stringify({ startTime, endTime, selectedDepartment: selectedDepartments, selectedStatus: selectedStatus})
     });
 
     let capdashdata = await response.json();
@@ -326,6 +333,14 @@ const months = [
       renderMonthWiseCapacity(capdashdata.capdash.DeptartmentCapcityMonthRows, start, end, year);
       renderTeamMemberCapacity(capdashdata.capdash.TeamMemberCapacityRows);
       renderProjectMemberCapacity(capdashdata.capdash.ProjectTeamMemberCapacityRows);
+      document.getElementById("fivecard-title").style.display = 'block';
+      document.getElementById("fivecard-title-h1").style.display = 'block';
+      document.getElementById("capdashboard").style.display = 'block';
+    }}
+    else{
+      document.getElementById("fivecard-title").style.display = 'none';
+      document.getElementById("fivecard-title-h1").style.display = 'none';
+      document.getElementById("capdashboard").style.display = 'none';
     }
   }
 
@@ -519,30 +534,82 @@ function fetchcurrentuserprojects(){
     }
 }
 
+// function updateDashboardCards(data) {
+//     if(data.length > 0){
+//         const totalProjectsElement = document.getElementById('total-projects');
+//         const averageDurationElement = document.getElementById('average-duration');
+//         const averageRevenueElement = document.getElementById('average-revenue');
+//         const totalForecastElement = document.getElementById('total-forecast');
+//         const totalHoursElement = document.getElementById('total-hours');
+//         const totalProjects = data.length;
+//         const totalDuration = data.reduce((sum, project) => sum + project.projectDetails.projectoutput.projectedDuration, 0);
+//         const averageDuration = totalDuration / totalProjects || 0;
+//         const totalMainRevenue = data.reduce((sum, project) => sum + project.projectDetails.projectoutput.mainRevenue, 0);
+//         const averageRevenue = totalMainRevenue / totalProjects || 0;
+//         const totalForecast = data.reduce((sum, project) => sum + project.projectDetails.projectoutput.revenueBreakdown.totalRevenue, 0);
+//         const totalHours = data.reduce((sum, project) => sum + project.projectDetails.projectinput.totalProjectHours, 0);
+//         totalProjectsElement.textContent = totalProjects;
+//         averageDurationElement.textContent = averageDuration.toFixed(2);
+//         averageRevenueElement.textContent = `$${averageRevenue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+//         totalForecastElement.textContent = `$${totalForecast.toLocaleString('en-IN')}`;
+//         totalHoursElement.textContent = totalHours;
+//         document.getElementById('fivecard-title').style.display = "block";
+//         document.getElementById("dashboard-cards").style.display = "flex";
+//     }
+// }
+
 function updateDashboardCards(data) {
-    if(data.length > 0){
-        const totalProjectsElement = document.getElementById('total-projects');
-        const averageDurationElement = document.getElementById('average-duration');
-        const averageRevenueElement = document.getElementById('average-revenue');
-        const totalForecastElement = document.getElementById('total-forecast');
-        const totalHoursElement = document.getElementById('total-hours');
-        const totalProjects = data.length;
-        const totalDuration = data.reduce((sum, project) => sum + project.projectDetails.projectoutput.projectedDuration, 0);
-        const averageDuration = totalDuration / totalProjects || 0;
-        const totalMainRevenue = data.reduce((sum, project) => sum + project.projectDetails.projectoutput.mainRevenue, 0);
-        const averageRevenue = totalMainRevenue / totalProjects || 0;
-        const totalForecast = data.reduce((sum, project) => sum + project.projectDetails.projectoutput.revenueBreakdown.totalRevenue, 0);
-        const totalHours = data.reduce((sum, project) => sum + project.projectDetails.projectinput.totalProjectHours, 0);
-        totalProjectsElement.textContent = totalProjects;
-        averageDurationElement.textContent = averageDuration.toFixed(2);
-        averageRevenueElement.textContent = `$${averageRevenue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
-        totalForecastElement.textContent = `$${totalForecast.toLocaleString('en-IN')}`;
-        totalHoursElement.textContent = totalHours;
-        document.getElementById('fivecard-title').style.display = "block";
-        document.getElementById("dashboard-cards").style.display = "flex";
-    }
+  const statusSelect = document.getElementById('project-status-select');
+  const selectedStatus = statusSelect.value;
+  // alert(`Selected Status: ${selectedStatus}`);
+  const statusFilterMap = {
+    "Approved": ["Approved"],
+    "Cancelled": ["Cancelled", "Rejected"],
+  };
+  const allowedStatuses = statusFilterMap[selectedStatus] || [];
+  const filteredData = data.filter(project =>
+    allowedStatuses.includes(project.projectDetails.projectStatus)
+  );
+
+  if (filteredData.length > 0) {
+    const totalProjectsElement = document.getElementById('total-projects');
+    const averageDurationElement = document.getElementById('average-duration');
+    const averageRevenueElement = document.getElementById('average-revenue');
+    const totalForecastElement = document.getElementById('total-forecast');
+    const totalHoursElement = document.getElementById('total-hours');
+
+    const totalProjects = filteredData.length;
+    const totalDuration = filteredData.reduce((sum, project) => sum + project.projectDetails.projectoutput.projectedDuration, 0);
+    const averageDuration = totalDuration / totalProjects || 0;
+    const totalMainRevenue = filteredData.reduce((sum, project) => sum + project.projectDetails.projectoutput.mainRevenue, 0);
+    const averageRevenue = totalMainRevenue / totalProjects || 0;
+    const totalForecast = filteredData.reduce((sum, project) => sum + project.projectDetails.projectoutput.revenueBreakdown.totalRevenue, 0);
+    const totalHours = filteredData.reduce((sum, project) => sum + project.projectDetails.projectinput.totalProjectHours, 0);
+
+    totalProjectsElement.textContent = totalProjects;
+    averageDurationElement.textContent = averageDuration.toFixed(2);
+    averageRevenueElement.textContent = `$${averageRevenue.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+    totalForecastElement.textContent = `$${totalForecast.toLocaleString('en-IN')}`;
+    totalHoursElement.textContent = totalHours;
+
+    document.getElementById('fivecard-title').style.display = "block";
+    document.getElementById("dashboard-cards").style.display = "flex";
+  } else {
+    // Optionally clear the dashboard cards if no data
+    document.getElementById('total-projects').textContent = '0';
+    document.getElementById('average-duration').textContent = '0.00';
+    document.getElementById('average-revenue').textContent = '$0.00';
+    document.getElementById('total-forecast').textContent = '$0';
+    document.getElementById('total-hours').textContent = '0';
+
+    document.getElementById('fivecard-title').style.display = "none";
+    document.getElementById("dashboard-cards").style.display = "none";
+  }
 }
 
+document.getElementById('project-status-select').addEventListener('change', function () {
+  updateDashboardCards(userprojectsData);
+});
 
 
 document.getElementById('logo-area').addEventListener('click', function(){

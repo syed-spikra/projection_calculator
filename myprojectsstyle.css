@@ -29,11 +29,25 @@
     /* -webkit-background-clip: text; */
     color: white;
   }
+
+  .dashboard-status-select {
+    background: #ffffff;
+    padding: 20px;
+    margin: 20px 35px;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+    display: flex;
+    gap: 30px;
+    font-family: Inter;
+    }
+    .dashboard-status-select label{
+        font-size: 20px;
+    }
 .dashboard-cards {
     display: flex;
     gap: 20px;
     padding: 35px;
-    justify-content: space-around;
+    justify-content: space-between;
 }
 .card {
     /* background-color: #ffd0d0; */
